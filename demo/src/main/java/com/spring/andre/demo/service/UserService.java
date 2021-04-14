@@ -3,24 +3,24 @@ package com.spring.andre.demo.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.spring.andre.demo.dto.ClientDTO;
-import com.spring.andre.demo.model.Client;
-import com.spring.andre.demo.repository.ClientRepository;
+import com.spring.andre.demo.dto.UserDTO;
+import com.spring.andre.demo.model.User;
+import com.spring.andre.demo.repository.UserRepository;
 
 @Component
 public class UserService {
 	
 	@Autowired
-	ClientRepository clientRepository;
+	UserRepository userRepository;
 	
-	public Client registerClient(ClientDTO clientDTO) {
-		Client client = new Client();
+	public User registerUser(UserDTO userDTO) {
 		
-		client.setName(clientDTO.getName());
-		client.setEmail(clientDTO.getEmail());
-		client.setPassword(clientDTO.getPassword());
+		User user = new User();
 		
-		return clientRepository.save(client);
+		user.setName(userDTO.getName());
+		user.setEmail(userDTO.getEmail());
+		user.setPassword(userDTO.getPassword());
+		
+		return userRepository.save(user);	
 	}
-
 }
