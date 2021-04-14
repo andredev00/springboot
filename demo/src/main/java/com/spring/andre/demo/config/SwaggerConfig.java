@@ -33,7 +33,7 @@ public class SwaggerConfig {
      }
 
      private SecurityContext securityContext() {
-       return SecurityContext.builder().securityReferences(defaultAuth()).forPaths(PathSelectors.regex("/.*")).build();
+       return SecurityContext.builder().securityReferences(defaultAuth()).build();
      }
 
      private List<SecurityReference> defaultAuth() {
