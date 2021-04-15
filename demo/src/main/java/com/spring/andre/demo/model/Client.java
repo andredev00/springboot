@@ -21,19 +21,25 @@ public class Client {
 	private String name;
 	@Column(name = "password")
 	private String password;
-	@Column(name = "email")
-	//@Email(regexp = "Por favor introduza um email valido")
-	private String email;
+	@Column(name = "username")
+	private String username;
 	
 	public Client() {
 		
 	}
 	
-	public Client(String name, String password, String email) {
+	public Client(Long id, String name, String password, String username) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.password = password;
-		this.email = email;
+		this.username = username;
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -47,10 +53,10 @@ public class Client {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getEmail() {
-		return email;
+	public String getUsername() {
+		return username;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 }
