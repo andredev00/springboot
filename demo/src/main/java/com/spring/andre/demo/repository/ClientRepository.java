@@ -8,6 +8,6 @@ import com.spring.andre.demo.model.Client;
 @Repository
 public interface ClientRepository extends CrudRepository<Client, String>  {
 	
-	Client findByName(String name);
+	Client findByUsername(String username);
 
 }

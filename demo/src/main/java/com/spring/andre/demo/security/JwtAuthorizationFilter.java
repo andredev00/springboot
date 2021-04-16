@@ -24,7 +24,7 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JwtAuthorizationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
-    }
+    } 
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,

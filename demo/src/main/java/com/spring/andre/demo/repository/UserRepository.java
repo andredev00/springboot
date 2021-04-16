@@ -8,6 +8,6 @@ import com.spring.andre.demo.model.User;
 @Repository
 public interface UserRepository extends CrudRepository<User, String>{
 	
-	User findByName(String name);
+	User findByUsername(String username);
 
 }
