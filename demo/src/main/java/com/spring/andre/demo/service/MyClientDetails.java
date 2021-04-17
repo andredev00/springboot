@@ -40,6 +40,14 @@ public class MyClientDetails implements UserDetails {
 	public String getUsername() {
 		return client.getUsername();
 	}
+	
+	public String getName() {
+		return client.getName();
+	}
+	
+	public Long getId() {
+		return client.getId();
+	}
 
 	@Override
 	public boolean isAccountNonExpired() {

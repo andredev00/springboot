@@ -12,8 +12,8 @@ public class SecurityConstants {
     public static final String TOKEN_HEADER = "Authorization";
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String TOKEN_TYPE = "JWT";
-    public static final String TOKEN_ISSUER = "secure-api";
-    public static final String TOKEN_AUDIENCE = "secure-app";
+    public static final String TOKEN_ISSUER = "secure-api"; //proteções que são adicionadas diretamente no momento que o token é gerado
+    public static final String TOKEN_AUDIENCE = "secure-app"; //proteções que são adicionadas diretamente no momento que o token é gerado
 
     private SecurityConstants() {
         throw new IllegalStateException("Cannot create instance of static util class");

@@ -41,13 +41,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         return authenticationManager.authenticate(authenticationToken);
     }
-
-    //https://gitlab.com/Daniel.Coimbra/VET-PROJECT/-/commit/24a8db01ac4fb22f60fe5342d1fc86133445e6fe
-    
-    //https://gitlab.com/decode-tech/vetlab/-/blob/0c9814798563164fa126239948a8c9f3fd536dd6/src/main/java/com/decode/lucimar/VetProject/security/AuthenticationFilter.java
-    
-    //https://dev.to/kubadlo/spring-security-with-jwt-3j76
-    
+   
     private com.spring.andre.demo.model.User parseUser(HttpServletRequest request) {
     	try {
 			ObjectMapper mapper = new ObjectMapper();
@@ -62,19 +56,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException {
 		if (authentication.getPrincipal() instanceof MyClientDetails) {
 			MyClientDetails user = (MyClientDetails) authentication.getPrincipal();
+			
 			byte[] signingKey = SecurityConstants.JWT_SECRET.getBytes();
 
 			String token = Jwts.builder().signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
 					.setHeaderParam("typ", SecurityConstants.TOKEN_TYPE).setIssuer(SecurityConstants.TOKEN_ISSUER)
 					.setAudience(SecurityConstants.TOKEN_AUDIENCE).setSubject(user.getUsername())
-					.setSubject(user.getPassword()).setExpiration(new Date(System.currentTimeMillis() + 864000000))
+					.setSubject(user.getPassword()).setSubject(user.getName()).setExpiration(new Date(System.currentTimeMillis() + 864000000))
 					.compact();
+			
+			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
 
 			response.setContentType("application/json");
 			PrintWriter printer = response.getWriter();
 			printer.print("{\"token\": " + gson.toJson(token) + "}");
 			printer.flush();
-			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
+
 		
 		} else if (authentication.getPrincipal() instanceof MyUserDetails) {
 			
@@ -84,15 +81,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			String token = Jwts.builder().signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
 					.setHeaderParam("typ", SecurityConstants.TOKEN_TYPE).setIssuer(SecurityConstants.TOKEN_ISSUER)
 					.setAudience(SecurityConstants.TOKEN_AUDIENCE).setSubject(user.getUsername())
-					.setSubject(user.getPassword()).setExpiration(new Date(System.currentTimeMillis() + 864000000))
+					.setSubject(user.getPassword()).setSubject(user.getName()).setExpiration(new Date(System.currentTimeMillis() + 864000000))
 					.compact();
+			
+			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
 			
 			response.setContentType("application/json");
 			PrintWriter printer = response.getWriter();
 			printer.print("{\"token\": " + gson.toJson(token) + "}");
 			printer.flush();
 			
-			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
+			
 		}
 
 	}
