@@ -34,5 +34,10 @@ public class AuthenticationController {
 		return userService.registerUser(userDTO);	
 	
 	}
+	
+	@PostMapping(value = "/helloWorld")
+	public String helloWorld(@RequestBody UserDTO userDTO) {
+		return "Hello World";
+	}
 
 }

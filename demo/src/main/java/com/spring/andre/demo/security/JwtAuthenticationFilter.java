@@ -60,8 +60,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	@Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, Authentication authentication) throws IOException {
-		if (authentication.getPrincipal() instanceof MyUserDetails) {
-			MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
+		if (authentication.getPrincipal() instanceof MyClientDetails) {
+			MyClientDetails user = (MyClientDetails) authentication.getPrincipal();
 			byte[] signingKey = SecurityConstants.JWT_SECRET.getBytes();
 
 			String token = Jwts.builder().signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
@@ -70,14 +70,15 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 					.setSubject(user.getPassword()).setExpiration(new Date(System.currentTimeMillis() + 864000000))
 					.compact();
 
-			response.setStatus(HttpServletResponse.SC_OK);
-			response.getWriter().print("Bearer " + token); // vai retornar o token no momento do pedido de POST para
-															// confirmar se está correto
-			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token); // vai confirmar o token mas não faz o return da String no resultado do POST
+			response.setContentType("application/json");
+			PrintWriter printer = response.getWriter();
+			printer.print("{\"token\": " + gson.toJson(token) + "}");
+			printer.flush();
+			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
 		
-		} else if (authentication.getPrincipal() instanceof MyClientDetails) {
+		} else if (authentication.getPrincipal() instanceof MyUserDetails) {
 			
-			MyClientDetails user = (MyClientDetails) authentication.getPrincipal();
+			MyUserDetails user = (MyUserDetails) authentication.getPrincipal();
 			byte[] signingKey = SecurityConstants.JWT_SECRET.getBytes();
 
 			String token = Jwts.builder().signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
@@ -88,12 +89,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			
 			response.setContentType("application/json");
 			PrintWriter printer = response.getWriter();
-			
-			printer.print(gson.toJson(token));
-			//printer.print("{\"token\": " + gson.toJson(token) + "}");
+			printer.print("{\"token\": " + gson.toJson(token) + "}");
 			printer.flush();
 			
-			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token); // vai confirmar o token mas não faz o return da String no resultado do POST
+			response.addHeader(SecurityConstants.TOKEN_HEADER, SecurityConstants.TOKEN_PREFIX + token);
 		}
 
 	}
