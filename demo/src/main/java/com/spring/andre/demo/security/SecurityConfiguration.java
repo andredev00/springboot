@@ -23,15 +23,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	private final String[] WHITELIST = {"/sign-up/client", "/sign-up/user", "/login", "/swagger-ui/"};
+	private final String[] WHITELIST = {"/sign-up/client", "/sign-up/user", "/login", "/swagger-ui/", "h2-console"};
 	
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and()
+        http.headers().frameOptions().sameOrigin().and().cors().and()
             .csrf().disable()
             .authorizeRequests()
-            .antMatchers(WHITELIST).permitAll()
-            .anyRequest().authenticated()
+            .antMatchers("/").permitAll()
+            .antMatchers("/h2-console/**").permitAll()
             .and()
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))
             .addFilter(new JwtAuthorizationFilter(authenticationManager()))

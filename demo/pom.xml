@@ -79,7 +79,12 @@
     	<dependency>
     		<groupId>com.google.code.gson</groupId>
     		<artifactId>gson</artifactId>
-    		</dependency>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.192</version>
+        </dependency>
 		</dependencies>
 
 	<build>

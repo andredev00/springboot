@@ -29,38 +29,38 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws IOException, ServletException, java.io.IOException {
-        var authentication = getAuthentication(request);
+        /*long authentication = getAuthentication(request);
         if (authentication == null) {
             filterChain.doFilter(request, response);
             return;
-        }
+        }*/
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-        var token = request.getHeader(SecurityConstants.TOKEN_HEADER);
-        if (StringUtils.isNotEmpty(token) && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
+        //var token = request.getHeader(SecurityConstants.TOKEN_HEADER);
+        /*if (StringUtils.isNotEmpty(token) && token.startsWith(SecurityConstants.TOKEN_PREFIX)) {
             try {
                 byte[] signingKey = SecurityConstants.JWT_SECRET.getBytes();
 
-                var parsedToken = Jwts.parser()
+                /*var parsedToken = Jwts.parser()
                     .setSigningKey(signingKey)
-                    .parseClaimsJws(token.replace("Bearer ", ""));
+                    .parseClaimsJws(token.replace("Bearer ", ""));*/
 
-                var username = parsedToken
+              /*  var username = parsedToken
                     .getBody()
-                    .getSubject();
+                    .getSubject();*/
 
                /* var authorities = ((List<?>) parsedToken.getBody()
                     .get("rol")).stream()
                     .map(authority -> new SimpleGrantedAuthority((String) authority))
                     .collect(Collectors.toList());*/
 
-                if (StringUtils.isNotEmpty(username)) {
+               /* if (StringUtils.isNotEmpty(username)) {
                     return new UsernamePasswordAuthenticationToken(username, null);
-                }
+                }*/
            /* } catch (ExpiredJwtException exception) {
                 log.warn("Request to parse expired JWT : {} failed : {}", token, exception.getMessage());
             } catch (UnsupportedJwtException exception) {
@@ -69,10 +69,10 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
                 log.warn("Request to parse invalid JWT : {} failed : {}", token, exception.getMessage());
             } catch (SignatureException exception) {
                 log.warn("Request to parse JWT with invalid signature : {} failed : {}", token, exception.getMessage());
-            }*/ }catch (IllegalArgumentException exception) {
-                log.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
+             }catch (IllegalArgumentException exception) {
+                //log.warn("Request to parse empty or null JWT : {} failed : {}", token, exception.getMessage());
             }
-        }
+        }}*/
 
         return null;
     }
