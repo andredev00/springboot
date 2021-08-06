@@ -28,7 +28,7 @@ public class Client {
 		
 	}
 	
-	public Client(Long id, String name, String password, String username) {
+	public Client(Long id,String name, String password, String username) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -1,5 +1,6 @@
 package com.spring.andre.demo.security;
 
+import com.spring.andre.demo.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -23,14 +24,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailsService;
 	
-	private final String[] WHITELIST = {"/sign-up/client", "/sign-up/user", "/login", "/swagger-ui/", "h2-console"};
-	
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.headers().frameOptions().sameOrigin().and().cors().and()
             .csrf().disable()
             .authorizeRequests()
             .antMatchers("/").permitAll()
+            .antMatchers(Constants.Security.WHITELIST).permitAll()
             .antMatchers("/h2-console/**").permitAll()
             .and()
             .addFilter(new JwtAuthenticationFilter(authenticationManager()))

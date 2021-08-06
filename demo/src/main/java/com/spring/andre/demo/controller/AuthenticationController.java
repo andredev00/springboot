@@ -27,18 +27,17 @@ public class AuthenticationController {
 	
 	@PostMapping(value = "/client")
 	public Client registerClient(@RequestBody ClientDTO clientDTO) {
-		return clientService.registerClient(clientDTO);
+	    return clientService.registerClient(clientDTO);
 	}
 	
 	@PostMapping(value = "/user")
 	public User registerUser(@RequestBody UserDTO userDTO) {
-		return userService.registerUser(userDTO);	
-	
+		return userService.registerUser(userDTO);
 	}
 	
 	@GetMapping(value = "/helloWorld")
 	public String helloWorld(@RequestBody UserDTO userDTO) {
-		return "Hello World";
+	    return "Hello World";
 	}
 
 }
