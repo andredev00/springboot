@@ -36,7 +36,7 @@ public class AuthenticationController {
 	}
 	
 	@GetMapping(value = "/helloWorld")
-	public String helloWorld(@RequestBody UserDTO userDTO) {
+	public String helloWorld() {
 	    return "Hello World";
 	}
 
