@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RegisterHomeController {
 
     @Autowired
-    private RegisterHomeService registerHomeService;
+    RegisterHomeService registerHomeService;
 	
 	@PostMapping(value = "/register/home")
     public RegisterHome registerHome(@RequestBody RegisterHomeDTO registerhomeDTO){

@@ -10,4 +10,7 @@ public interface ClientRepository extends CrudRepository<Client, String>  {
 	
 	Client findByUsername(String username);
 
+    String findByEmail(String email);
+
+    Long findByid(Long id);
 }

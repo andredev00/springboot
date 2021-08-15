@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public class RegisterHomeService {
 
     @Autowired
-   private  RegisterHomeRepository registerHomeRepository;
+    RegisterHomeRepository registerHomeRepository;
 
     public RegisterHome registerHome(RegisterHomeDTO registerHomeDTO){
         RegisterHome home = new RegisterHome();
