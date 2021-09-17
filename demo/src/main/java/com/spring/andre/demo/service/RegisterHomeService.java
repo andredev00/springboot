@@ -9,23 +9,34 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegisterHomeService {
 
-    @Autowired
-    RegisterHomeRepository registerHomeRepository;
+	@Autowired
+	RegisterHomeRepository registerHomeRepository;
 
-    public RegisterHome registerHome(RegisterHomeDTO registerHomeDTO){
-        RegisterHome home = new RegisterHome();
+	public RegisterHome registerHome(RegisterHomeDTO registerHomeDTO) {
+		RegisterHome home = new RegisterHome();
 
-        home.setAreaBruta(registerHomeDTO.getAreaBruta());
-        home.setEstacionamento(registerHomeDTO.getEstacionamento());
-        home.setAnoDeConstrucao(registerHomeDTO.getAnoDeConstrucao());
-        home.setLocation(registerHomeDTO.getLocation());
-        home.setPiso(registerHomeDTO.getPiso());
-        home.setQuartos(registerHomeDTO.getQuartos());
-        home.setTotalDoLote(registerHomeDTO.getTotalDoLote());
-        home.setWcs(registerHomeDTO.getWcs());
+		home.setAreaBruta(registerHomeDTO.getAreaBruta());
+		home.setEstacionamento(registerHomeDTO.getEstacionamento());
+		home.setAnoDeConstrucao(registerHomeDTO.getAnoDeConstrucao());
+		home.setLocation(registerHomeDTO.getLocation());
+		home.setPiso(registerHomeDTO.getPiso());
+		home.setQuartos(registerHomeDTO.getQuartos());
+		home.setTotalDoLote(registerHomeDTO.getTotalDoLote());
+		home.setWcs(registerHomeDTO.getWcs());
+		return registerHomeRepository.save(home);
 
-        return registerHomeRepository.save(home);
+	}
 
-    }
+	public void deleteHome(Long id) {
+		registerHomeRepository.deleteById(id);
+	}
+
+	public RegisterHome getAllHomes(RegisterHomeDTO regiserHomeDTO) {
+		return (RegisterHome) registerHomeRepository.findAll();
+	}
+
+	public void getHome(Long id) {
+		registerHomeRepository.findById(id);
+	}
 
 }
