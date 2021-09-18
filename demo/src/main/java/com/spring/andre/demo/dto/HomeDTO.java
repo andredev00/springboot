@@ -1,64 +1,20 @@
-package com.spring.andre.demo.model;
+package com.spring.andre.demo.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+public class HomeDTO {
 
-@Entity
-@Table(name = "registHome")
-public class RegisterHome {
-
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private Long id;
-	@Column(name = "localizacao")
 	private String location;
-	@Column(name = "areaBruta")
 	private Long areaBruta;
-	@Column(name = "totalDoLote")
 	private Long totalDoLote;
-	@Column(name = "quartos")
 	private Long quartos;
-	@Column(name = "piso")
 	private String piso;
-	@Column(name = "anoDeConstrucao")
 	private Long anoDeConstrucao;
-	@Column(name = "wcs")
 	private Long wcs;
-	@Column(name = "estacionamento")
 	private Boolean estacionamento;
 	
-	public RegisterHome() {
-		
-	}
-
-	public RegisterHome(String location, Long areaBruta, Long totalDoLote, Long quartos, String piso, Long anoDeConstrucao,
-			Long wcs, Boolean estacionamento) {
-		super();
-		this.location = location;
-		this.areaBruta = areaBruta;
-		this.totalDoLote = totalDoLote;
-		this.quartos = quartos;
-		this.piso = piso;
-		this.anoDeConstrucao = anoDeConstrucao;
-		this.wcs = wcs;
-		this.estacionamento = estacionamento;
-	}
-	public Long getId() {
-		return id;
-	}
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 	public String getLocation() {
 		return location;
 	}
-
 	public void setLocation(String location) {
 		this.location = location;
 	}
