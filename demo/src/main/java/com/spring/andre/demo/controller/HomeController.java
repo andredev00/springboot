@@ -9,17 +9,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.andre.demo.dto.RegisterHomeDTO;
-import com.spring.andre.demo.model.RegisterHome;
-import com.spring.andre.demo.service.RegisterHomeService;
+import com.spring.andre.demo.model.Home;
+import com.spring.andre.demo.service.HomeService;
 
 @RestController
-public class RegisterHomeController {
+public class HomeController {
 
     @Autowired
-    RegisterHomeService registerHomeService;
+    HomeService registerHomeService;
 	
 	@PostMapping(value = "/register/home")
-    public RegisterHome registerHome(@RequestBody RegisterHomeDTO registerhomeDTO){
+    public Home registerHome(@RequestBody RegisterHomeDTO registerhomeDTO){
 	    return registerHomeService.registerHome(registerhomeDTO);
     }
 	
@@ -29,8 +29,8 @@ public class RegisterHomeController {
 	}
 	
 	@GetMapping(value = "/allHomes")
-	public RegisterHome getAllHomes(@RequestBody RegisterHomeDTO registerhomeDTO) {
-		return registerHomeService.getAllHomes(registerhomeDTO);
+	public Iterable<Home> getAllHomes() {
+		return registerHomeService.getAllHomes();
 	}
 	
 	@GetMapping(value = "/findHome/{id}")

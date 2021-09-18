@@ -34,10 +34,4 @@ public class AuthenticationController {
 	public User registerUser(@RequestBody UserDTO userDTO) {
 		return userService.registerUser(userDTO);
 	}
-	
-	@GetMapping(value = "/helloWorld")
-	public String helloWorld() {
-	    return "Hello World";
-	}
-
 }

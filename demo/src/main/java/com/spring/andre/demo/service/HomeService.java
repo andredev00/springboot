@@ -1,19 +1,19 @@
 package com.spring.andre.demo.service;
 
 import com.spring.andre.demo.dto.RegisterHomeDTO;
-import com.spring.andre.demo.model.RegisterHome;
-import com.spring.andre.demo.repository.RegisterHomeRepository;
+import com.spring.andre.demo.model.Home;
+import com.spring.andre.demo.repository.HomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RegisterHomeService {
+public class HomeService {
 
 	@Autowired
-	RegisterHomeRepository registerHomeRepository;
+	HomeRepository registerHomeRepository;
 
-	public RegisterHome registerHome(RegisterHomeDTO registerHomeDTO) {
-		RegisterHome home = new RegisterHome();
+	public Home registerHome(RegisterHomeDTO registerHomeDTO) {
+		Home home = new Home();
 
 		home.setAreaBruta(registerHomeDTO.getAreaBruta());
 		home.setEstacionamento(registerHomeDTO.getEstacionamento());
@@ -30,9 +30,9 @@ public class RegisterHomeService {
 	public void deleteHome(Long id) {
 		registerHomeRepository.deleteById(id);
 	}
-
-	public RegisterHome getAllHomes(RegisterHomeDTO regiserHomeDTO) {
-		return (RegisterHome) registerHomeRepository.findAll();
+	
+	public Iterable<Home> getAllHomes() {
+		return registerHomeRepository.findAll();
 	}
 
 	public void getHome(Long id) {

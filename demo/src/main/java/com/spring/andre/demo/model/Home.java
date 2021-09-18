@@ -8,8 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "registHome")
-public class RegisterHome {
+@Table(name = "Home")
+public class Home {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,11 +32,11 @@ public class RegisterHome {
 	@Column(name = "estacionamento")
 	private Boolean estacionamento;
 
-	public RegisterHome() {
+	public Home() {
 
 	}
 
-	public RegisterHome(String location, Long areaBruta, Long totalDoLote, Long quartos, String piso,
+	public Home(String location, Long areaBruta, Long totalDoLote, Long quartos, String piso,
 			Long anoDeConstrucao, Long wcs, Boolean estacionamento) {
 		super();
 		this.location = location;
