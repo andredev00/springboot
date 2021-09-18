@@ -1,6 +1,6 @@
 package com.spring.andre.demo.dto;
 
-public class RegisterHomeDTO {
+public class HomeDTO {
 
 	private String location;
 	private Long areaBruta;
