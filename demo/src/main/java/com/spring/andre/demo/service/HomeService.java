@@ -1,42 +1,43 @@
 package com.spring.andre.demo.service;
 
-import com.spring.andre.demo.dto.RegisterHomeDTO;
-import com.spring.andre.demo.model.Home;
-import com.spring.andre.demo.repository.HomeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.spring.andre.demo.dto.HomeDTO;
+import com.spring.andre.demo.model.Home;
+import com.spring.andre.demo.repository.HomeRepository;
 
 @Component
 public class HomeService {
 
 	@Autowired
-	HomeRepository registerHomeRepository;
+	HomeRepository homeRepository;
 
-	public Home registerHome(RegisterHomeDTO registerHomeDTO) {
+	public Home registerHome(HomeDTO homeDTO) {
 		Home home = new Home();
 
-		home.setAreaBruta(registerHomeDTO.getAreaBruta());
-		home.setEstacionamento(registerHomeDTO.getEstacionamento());
-		home.setAnoDeConstrucao(registerHomeDTO.getAnoDeConstrucao());
-		home.setLocation(registerHomeDTO.getLocation());
-		home.setPiso(registerHomeDTO.getPiso());
-		home.setQuartos(registerHomeDTO.getQuartos());
-		home.setTotalDoLote(registerHomeDTO.getTotalDoLote());
-		home.setWcs(registerHomeDTO.getWcs());
-		return registerHomeRepository.save(home);
+		home.setAreaBruta(homeDTO.getAreaBruta());
+		home.setEstacionamento(homeDTO.getEstacionamento());
+		home.setAnoDeConstrucao(homeDTO.getAnoDeConstrucao());
+		home.setLocation(homeDTO.getLocation());
+		home.setPiso(homeDTO.getPiso());
+		home.setQuartos(homeDTO.getQuartos());
+		home.setTotalDoLote(homeDTO.getTotalDoLote());
+		home.setWcs(homeDTO.getWcs());
+		return homeRepository.save(home);
 
 	}
 
 	public void deleteHome(Long id) {
-		registerHomeRepository.deleteById(id);
+		homeRepository.deleteById(id);
 	}
 	
 	public Iterable<Home> getAllHomes() {
-		return registerHomeRepository.findAll();
+		return homeRepository.findAll();
 	}
 
 	public void getHome(Long id) {
-		registerHomeRepository.findById(id);
+		homeRepository.findById(id);
 	}
 
 }
