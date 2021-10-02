@@ -6,11 +6,11 @@ import org.springframework.stereotype.Repository;
 import com.spring.andre.demo.model.Client;
 
 @Repository
-public interface ClientRepository extends CrudRepository<Client, String>  {
+public interface ClientRepository extends CrudRepository<Client, Long>  {
 	
 	Client findByUsername(String username);
 
     String findByEmail(String email);
 
-    Long findByid(Long id);
+    //Long findByid(Long id);
 }
