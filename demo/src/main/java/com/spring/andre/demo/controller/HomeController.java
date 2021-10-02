@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.andre.demo.dto.RegisterHomeDTO;
+import com.spring.andre.demo.dto.HomeDTO;
 import com.spring.andre.demo.model.Home;
 import com.spring.andre.demo.service.HomeService;
 
@@ -16,26 +16,26 @@ import com.spring.andre.demo.service.HomeService;
 public class HomeController {
 
     @Autowired
-    HomeService registerHomeService;
+    HomeService homeService;
 	
 	@PostMapping(value = "/register/home")
-    public Home registerHome(@RequestBody RegisterHomeDTO registerhomeDTO){
-	    return registerHomeService.registerHome(registerhomeDTO);
+    public Home registerHome(@RequestBody HomeDTO homeDTO){
+	    return homeService.registerHome(homeDTO);
     }
 	
 	@DeleteMapping(value = "/delete/{id}")
 	public void deleteHome(@RequestParam Long id) {
-		 registerHomeService.deleteHome(id);
+		 homeService.deleteHome(id);
 	}
 	
 	@GetMapping(value = "/allHomes")
 	public Iterable<Home> getAllHomes() {
-		return registerHomeService.getAllHomes();
+		return homeService.getAllHomes();
 	}
 	
 	@GetMapping(value = "/findHome/{id}")
 	public void getHome(@RequestParam Long id) {
-		 registerHomeService.getHome(id);
+		 homeService.getHome(id);
 	}
 	
 }
