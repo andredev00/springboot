@@ -1,16 +1,16 @@
 package com.spring.andre.demo.repository;
 
-import com.spring.andre.demo.model.Client;
-import org.assertj.core.api.Assertions;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.BooleanAssert.*;
+import com.spring.andre.demo.model.Client;
 
 @DataJpaTest
+@Test
 class ClientRepositoryTest {
 
     @Autowired
@@ -52,7 +52,7 @@ class ClientRepositoryTest {
     @Order(3)
     void findById() {
         long id = 1;
-        assertThat(clientRepository.findByid(id)).isEqualTo(1);
+        assertThat(clientRepository.findById(id)).isEqualTo(1);
     }
 
 }
