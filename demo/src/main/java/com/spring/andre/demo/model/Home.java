@@ -14,21 +14,21 @@ public class Home {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
-	private Long id;
+	private int id;
 	@Column(name = "localizacao")
 	private String location;
 	@Column(name = "areaBruta")
-	private Long areaBruta;
+	private int areaBruta;
 	@Column(name = "totalDoLote")
-	private Long totalDoLote;
+	private int totalDoLote;
 	@Column(name = "quartos")
-	private Long quartos;
+	private int quartos;
 	@Column(name = "piso")
 	private String piso;
 	@Column(name = "anoDeConstrucao")
-	private Long anoDeConstrucao;
+	private int anoDeConstrucao;
 	@Column(name = "wcs")
-	private Long wcs;
+	private int wcs;
 	@Column(name = "estacionamento")
 	private Boolean estacionamento;
 
@@ -36,8 +36,22 @@ public class Home {
 
 	}
 
-	public Home(String location, Long areaBruta, Long totalDoLote, Long quartos, String piso,
-			Long anoDeConstrucao, Long wcs, Boolean estacionamento) {
+	public Home(int id, String location, int areaBruta, int totalDoLote, int quartos, String piso,
+			int anoDeConstrucao, int wcs, Boolean estacionamento) {
+		super();
+		this.id = id;
+		this.location = location;
+		this.areaBruta = areaBruta;
+		this.totalDoLote = totalDoLote;
+		this.quartos = quartos;
+		this.piso = piso;
+		this.anoDeConstrucao = anoDeConstrucao;
+		this.wcs = wcs;
+		this.estacionamento = estacionamento;
+	}
+	
+	public Home(String location, int areaBruta, int totalDoLote, int quartos, String piso,
+			int anoDeConstrucao, int wcs, Boolean estacionamento) {
 		super();
 		this.location = location;
 		this.areaBruta = areaBruta;
@@ -49,11 +63,11 @@ public class Home {
 		this.estacionamento = estacionamento;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -65,27 +79,27 @@ public class Home {
 		this.location = location;
 	}
 
-	public Long getAreaBruta() {
+	public int getAreaBruta() {
 		return areaBruta;
 	}
 
-	public void setAreaBruta(Long areaBruta) {
+	public void setAreaBruta(int areaBruta) {
 		this.areaBruta = areaBruta;
 	}
 
-	public Long getTotalDoLote() {
+	public int getTotalDoLote() {
 		return totalDoLote;
 	}
 
-	public void setTotalDoLote(Long totalDoLote) {
+	public void setTotalDoLote(int totalDoLote) {
 		this.totalDoLote = totalDoLote;
 	}
 
-	public Long getQuartos() {
+	public int getQuartos() {
 		return quartos;
 	}
 
-	public void setQuartos(Long quartos) {
+	public void setQuartos(int quartos) {
 		this.quartos = quartos;
 	}
 
@@ -97,19 +111,19 @@ public class Home {
 		this.piso = piso;
 	}
 
-	public Long getAnoDeConstrucao() {
+	public int getAnoDeConstrucao() {
 		return anoDeConstrucao;
 	}
 
-	public void setAnoDeConstrucao(Long anoDeConstrucao) {
+	public void setAnoDeConstrucao(int anoDeConstrucao) {
 		this.anoDeConstrucao = anoDeConstrucao;
 	}
 
-	public Long getWcs() {
+	public int getWcs() {
 		return wcs;
 	}
 
-	public void setWcs(Long wcs) {
+	public void setWcs(int wcs) {
 		this.wcs = wcs;
 	}
 

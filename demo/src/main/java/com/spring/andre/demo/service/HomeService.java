@@ -18,15 +18,9 @@ public class HomeService {
 	HomeRepository homeRepository;
 
 	public Home registerHome(HomeDTO homeDTO) {
-		Home home = new Home();
-		home.setAreaBruta(homeDTO.getAreaBruta());
-		home.setEstacionamento(homeDTO.getEstacionamento());
-		home.setAnoDeConstrucao(homeDTO.getAnoDeConstrucao());
-		home.setLocation(homeDTO.getLocation());
-		home.setPiso(homeDTO.getPiso());
-		home.setQuartos(homeDTO.getQuartos());
-		home.setTotalDoLote(homeDTO.getTotalDoLote());
-		home.setWcs(homeDTO.getWcs());
+		Home home = new Home(homeDTO.getLocation(), homeDTO.getAreaBruta(), homeDTO.getTotalDoLote(),
+				homeDTO.getQuartos(), homeDTO.getPiso(), homeDTO.getAnoDeConstrucao(), homeDTO.getWcs(),
+				homeDTO.getEstacionamento());
 		return homeRepository.save(home);
 	}
 
@@ -45,5 +39,18 @@ public class HomeService {
 		log.info("Fetchin a specific home by its id");
 		homeRepository.findById(id);
 	}
-
+	
+	//TODO, it will be improved
+	public void updateHome(int id, HomeDTO homeDTO) {
+		Home home = homeRepository.findOne(id);
+		home.setLocation(homeDTO.getLocation());
+		home.setAreaBruta(homeDTO.getAreaBruta());
+		home.setTotalDoLote(homeDTO.getTotalDoLote());
+		home.setQuartos(homeDTO.getQuartos());
+		home.setPiso(homeDTO.getPiso());
+		home.setAnoDeConstrucao(homeDTO.getAnoDeConstrucao());
+		home.setWcs(homeDTO.getWcs());
+		home.setEstacionamento(homeDTO.getEstacionamento());
+		homeRepository.save(home);
+	}
 }

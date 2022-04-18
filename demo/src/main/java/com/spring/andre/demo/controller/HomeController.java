@@ -23,11 +23,10 @@ public class HomeController {
 	HomeService homeService;
 
 	@PostMapping(value = "/register/home")
-	public Home registerHome(@RequestBody HomeDTO homeDTO) {
-		log.info("Inside the registerHome endpoint");
-		return homeService.registerHome(homeDTO);
-	}
-
+    public Home registerHome(@RequestBody HomeDTO homeDTO){
+	    return homeService.registerHome(homeDTO);
+    }
+	
 	@DeleteMapping(value = "/delete/{id}")
 	public void deleteHome(@RequestParam Long id) {
 		log.info("Inside the deleteHome endpoint");
@@ -45,5 +44,9 @@ public class HomeController {
 		log.info("Inside the getHome endpoint");
 		homeService.getHome(id);
 	}
-
+	
+	@PostMapping(value = "/update/home/{id}")
+	public void updateHome(@RequestParam int id, @RequestBody HomeDTO homeDTO) {
+		homeService.updateHome(id, homeDTO);
+	}
 }

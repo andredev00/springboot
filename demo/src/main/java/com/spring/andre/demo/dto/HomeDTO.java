@@ -2,38 +2,44 @@ package com.spring.andre.demo.dto;
 
 public class HomeDTO {
 
+	private int id;
 	private String location;
-	private Long areaBruta;
-	private Long totalDoLote;
-	private Long quartos;
+	private int areaBruta;
+	private int totalDoLote;
+	private int quartos;
 	private String piso;
-	private Long anoDeConstrucao;
-	private Long wcs;
+	private int anoDeConstrucao;
+	private int wcs;
 	private Boolean estacionamento;
 	
-	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getLocation() {
 		return location;
 	}
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public Long getAreaBruta() {
+	public int getAreaBruta() {
 		return areaBruta;
 	}
-	public void setAreaBruta(Long areaBruta) {
+	public void setAreaBruta(int areaBruta) {
 		this.areaBruta = areaBruta;
 	}
-	public Long getTotalDoLote() {
+	public int getTotalDoLote() {
 		return totalDoLote;
 	}
-	public void setTotalDoLote(Long totalDoLote) {
+	public void setTotalDoLote(int totalDoLote) {
 		this.totalDoLote = totalDoLote;
 	}
-	public Long getQuartos() {
+	public int getQuartos() {
 		return quartos;
 	}
-	public void setQuartos(Long quartos) {
+	public void setQuartos(int quartos) {
 		this.quartos = quartos;
 	}
 	public String getPiso() {
@@ -42,16 +48,16 @@ public class HomeDTO {
 	public void setPiso(String piso) {
 		this.piso = piso;
 	}
-	public Long getAnoDeConstrucao() {
+	public int getAnoDeConstrucao() {
 		return anoDeConstrucao;
 	}
-	public void setAnoDeConstrucao(Long anoDeConstrucao) {
+	public void setAnoDeConstrucao(int anoDeConstrucao) {
 		this.anoDeConstrucao = anoDeConstrucao;
 	}
-	public Long getWcs() {
+	public int getWcs() {
 		return wcs;
 	}
-	public void setWcs(Long wcs) {
+	public void setWcs(int wcs) {
 		this.wcs = wcs;
 	}
 	public Boolean getEstacionamento() {
