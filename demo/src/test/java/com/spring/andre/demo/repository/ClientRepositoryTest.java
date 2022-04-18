@@ -11,7 +11,6 @@ import com.spring.andre.demo.model.Client;
 
 @DataJpaTest
 class ClientRepositoryTest {
-
     @Autowired
     private ClientRepository clientRepository;
 
@@ -51,7 +50,6 @@ class ClientRepositoryTest {
     @Order(3)
     void findById() {
         long id = 1;
-        assertThat(clientRepository.findByid(id)).isEqualTo(1);
+        assertThat(clientRepository.findById(id)).isEqualTo(1);
     }
-
 }
