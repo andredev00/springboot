@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.spring.andre.demo.dto.RegisterHomeDTO;
+import com.spring.andre.demo.dto.HomeDTO;
 import com.spring.andre.demo.model.Home;
 import com.spring.andre.demo.service.HomeService;
 
@@ -19,8 +19,8 @@ public class HomeController {
     HomeService registerHomeService;
 	
 	@PostMapping(value = "/register/home")
-    public Home registerHome(@RequestBody RegisterHomeDTO registerhomeDTO){
-	    return registerHomeService.registerHome(registerhomeDTO);
+    public Home registerHome(@RequestBody HomeDTO homeDTO){
+	    return registerHomeService.registerHome(homeDTO);
     }
 	
 	@DeleteMapping(value = "/delete/{id}")
@@ -37,5 +37,11 @@ public class HomeController {
 	public void getHome(@RequestParam Long id) {
 		 registerHomeService.getHome(id);
 	}
+	
+	@PostMapping(value = "/update/home/{id}")
+	public void updateHome(@RequestParam int id, @RequestBody HomeDTO homeDTO) {
+		registerHomeService.updateHome(id, homeDTO);
+	}
+	
 	
 }
