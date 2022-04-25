@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -29,6 +30,7 @@ public class Client {
 	private String name;
 	@Column(name = "password")
 	@NotNull
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	@Column(name = "email")
 	@NotNull

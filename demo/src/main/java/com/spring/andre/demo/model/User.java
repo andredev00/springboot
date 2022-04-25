@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -33,6 +34,7 @@ public class User {
 	public String email;
 	@Column(name = "password")
 	@NotNull
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public String password;
 	
 	@ManyToMany(fetch = FetchType.LAZY)
