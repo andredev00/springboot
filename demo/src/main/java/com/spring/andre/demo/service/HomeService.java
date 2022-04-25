@@ -13,23 +13,24 @@ import com.spring.andre.demo.repository.HomeRepository;
 public class HomeService {
 
 	private static final Logger log = LoggerFactory.getLogger(HomeService.class);
-	
+
 	@Autowired
 	HomeRepository homeRepository;
 
 	public Home registerHome(HomeDTO homeDTO) {
-		Home home = new Home(homeDTO.getLocation(), homeDTO.getAreaBruta(), homeDTO.getTotalDoLote(),
-				homeDTO.getQuartos(), homeDTO.getPiso(), homeDTO.getAnoDeConstrucao(), homeDTO.getWcs(),
-				homeDTO.getEstacionamento());
+		log.info("Creating a new home");
+		Home home = new Home(homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(), homeDTO.getRoom(),
+				homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(), homeDTO.getParking());
+		log.info("New home created with this properties: " + home);
 		return homeRepository.save(home);
 	}
 
 	public void deleteHome(Long id) {
 		log.info("Deleting home " + id);
-		homeRepository.deleteById(id);	
+		homeRepository.deleteById(id);
 		log.info("Home deleted");
 	}
-	
+
 	public Iterable<Home> getAllHomes() {
 		log.info("Fetching all homes");
 		return homeRepository.findAll();
@@ -39,18 +40,14 @@ public class HomeService {
 		log.info("Fetchin a specific home by its id");
 		homeRepository.findById(id);
 	}
-	
-	//TODO, it will be improved
+
 	public void updateHome(int id, HomeDTO homeDTO) {
+		log.info("Updating home with this id: " + id);
 		Home home = homeRepository.findOne(id);
-		home.setLocation(homeDTO.getLocation());
-		home.setAreaBruta(homeDTO.getAreaBruta());
-		home.setTotalDoLote(homeDTO.getTotalDoLote());
-		home.setQuartos(homeDTO.getQuartos());
-		home.setPiso(homeDTO.getPiso());
-		home.setAnoDeConstrucao(homeDTO.getAnoDeConstrucao());
-		home.setWcs(homeDTO.getWcs());
-		home.setEstacionamento(homeDTO.getEstacionamento());
-		homeRepository.save(home);
+		Home homeUpdated = new Home(home.getId(), homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(),
+				homeDTO.getRoom(), homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(),
+				homeDTO.getParking());
+		log.info("Finished updating home with this id: " + id);
+		homeRepository.save(homeUpdated);
 	}
 }

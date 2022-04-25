@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
 @EnableSwagger2
+
 public class DemoApplication {
 
 	public static void main(String[] args) {

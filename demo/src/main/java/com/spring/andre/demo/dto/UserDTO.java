@@ -3,7 +3,7 @@ package com.spring.andre.demo.dto;
 public class UserDTO {
 	
 	public String name;
-	public String username;
+	public String email;
 	public String password;
 	
 	public String getName() {
@@ -12,11 +12,11 @@ public class UserDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;

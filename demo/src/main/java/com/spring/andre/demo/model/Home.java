@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.sun.istack.NotNull;
+
 @Entity
 @Table(name = "Home")
 public class Home {
@@ -15,52 +17,53 @@ public class Home {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	@Column(name = "localizacao")
+	@Column(name = "location")
+	@NotNull
 	private String location;
-	@Column(name = "areaBruta")
-	private int areaBruta;
-	@Column(name = "totalDoLote")
-	private int totalDoLote;
-	@Column(name = "quartos")
-	private int quartos;
-	@Column(name = "piso")
-	private String piso;
-	@Column(name = "anoDeConstrucao")
-	private int anoDeConstrucao;
+	@Column(name = "gross_Area")
+	private int grossArea;
+	@Column(name = "lot_Total")
+	private int lotTotal;
+	@Column(name = "room")
+	private int room;
+	@Column(name = "floor")
+	private String floor;
+	@Column(name = "construction_Year")
+	private int constructionYear;
 	@Column(name = "wcs")
 	private int wcs;
-	@Column(name = "estacionamento")
-	private Boolean estacionamento;
+	@Column(name = "parking")
+	private Boolean parking;
 
 	public Home() {
 
 	}
 
-	public Home(int id, String location, int areaBruta, int totalDoLote, int quartos, String piso,
-			int anoDeConstrucao, int wcs, Boolean estacionamento) {
+	public Home(int id, String location, int grossArea, int lotTotal, int room, String floor,
+			int constructionYear, int wcs, Boolean parking) {
 		super();
 		this.id = id;
 		this.location = location;
-		this.areaBruta = areaBruta;
-		this.totalDoLote = totalDoLote;
-		this.quartos = quartos;
-		this.piso = piso;
-		this.anoDeConstrucao = anoDeConstrucao;
+		this.grossArea = grossArea;
+		this.lotTotal = lotTotal;
+		this.room = room;
+		this.floor = floor;
+		this.constructionYear = constructionYear;
 		this.wcs = wcs;
-		this.estacionamento = estacionamento;
+		this.parking = parking;
 	}
 	
-	public Home(String location, int areaBruta, int totalDoLote, int quartos, String piso,
-			int anoDeConstrucao, int wcs, Boolean estacionamento) {
+	public Home(String location, int grossArea, int lotTotal, int room, String floor,
+			int constructionYear, int wcs, Boolean parking) {
 		super();
 		this.location = location;
-		this.areaBruta = areaBruta;
-		this.totalDoLote = totalDoLote;
-		this.quartos = quartos;
-		this.piso = piso;
-		this.anoDeConstrucao = anoDeConstrucao;
+		this.grossArea = grossArea;
+		this.lotTotal = lotTotal;
+		this.room = room;
+		this.floor = floor;
+		this.constructionYear = constructionYear;
 		this.wcs = wcs;
-		this.estacionamento = estacionamento;
+		this.parking = parking;
 	}
 
 	public int getId() {
@@ -79,44 +82,44 @@ public class Home {
 		this.location = location;
 	}
 
-	public int getAreaBruta() {
-		return areaBruta;
+	public int getGrossArea() {
+		return grossArea;
 	}
 
-	public void setAreaBruta(int areaBruta) {
-		this.areaBruta = areaBruta;
+	public void setAreaBruta(int grossArea) {
+		this.grossArea = grossArea;
 	}
 
-	public int getTotalDoLote() {
-		return totalDoLote;
+	public int getLotTotal() {
+		return lotTotal;
 	}
 
-	public void setTotalDoLote(int totalDoLote) {
-		this.totalDoLote = totalDoLote;
+	public void setLotTotal(int lotTotal) {
+		this.lotTotal = lotTotal;
 	}
 
-	public int getQuartos() {
-		return quartos;
+	public int getRoom() {
+		return room;
 	}
 
-	public void setQuartos(int quartos) {
-		this.quartos = quartos;
+	public void setRoom(int room) {
+		this.room = room;
 	}
 
-	public String getPiso() {
-		return piso;
+	public String getFloor() {
+		return floor;
 	}
 
-	public void setPiso(String piso) {
-		this.piso = piso;
+	public void setFloor(String floor) {
+		this.floor = floor;
 	}
 
-	public int getAnoDeConstrucao() {
-		return anoDeConstrucao;
+	public int getConstructionYear() {
+		return constructionYear;
 	}
 
-	public void setAnoDeConstrucao(int anoDeConstrucao) {
-		this.anoDeConstrucao = anoDeConstrucao;
+	public void setConstructionYear(int constructionYear) {
+		this.constructionYear = constructionYear;
 	}
 
 	public int getWcs() {
@@ -127,11 +130,11 @@ public class Home {
 		this.wcs = wcs;
 	}
 
-	public Boolean getEstacionamento() {
-		return estacionamento;
+	public Boolean getParking() {
+		return parking;
 	}
 
-	public void setEstacionamento(Boolean estacionamento) {
-		this.estacionamento = estacionamento;
+	public void setParking(Boolean parking) {
+		this.parking = parking;
 	}
 }
