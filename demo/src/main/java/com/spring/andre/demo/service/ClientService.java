@@ -1,31 +1,45 @@
 package com.spring.andre.demo.service;
 
+import java.util.Collections;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import com.spring.andre.demo.dto.ClientDTO;
 import com.spring.andre.demo.model.Client;
 import com.spring.andre.demo.repository.ClientRepository;
+import com.spring.andre.demo.security.JWTUtil;
 
 @Component
 public class ClientService {
+
+	private static final Logger log = LoggerFactory.getLogger(ClientService.class);
 	
 	@Autowired
 	ClientRepository clientRepository;
+
+	@Autowired private JWTUtil jwtUtil;
 	
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 	
-	public Client registerClient(ClientDTO clientDTO) {
-		Client client = new Client();
+	
+	public Map<String, String> registerClient(ClientDTO clientDTO) {
+		log.info("Creating a new user with credentials: " + clientDTO.getName() + " " + clientDTO.getPassword() + " " + clientDTO.getEmail());
 		
-		client.setName(clientDTO.getName());
-		client.setUsername(clientDTO.getUsername());
-		client.setPassword(passwordEncoder().encode(clientDTO.getPassword()));
+		Client client = new Client(clientDTO.getName(), passwordEncoder().encode(clientDTO.getPassword()), clientDTO.getEmail());
 		
-		return clientRepository.save(client);
+		log.info("Finished creating a new user with credenials: " + " " + clientDTO.getName() + " " + clientDTO.getPassword() + " " + clientDTO.getEmail());
+		client = clientRepository.save(client);
+		String token = jwtUtil.generateToken(client.getEmail());
+		return Collections.singletonMap("jwt-token", token);
 	}
 
 }
+

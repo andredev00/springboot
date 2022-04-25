@@ -1,11 +1,21 @@
 package com.spring.andre.demo.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name = "user")
@@ -13,25 +23,32 @@ public class User {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name= "id")
 	public Long id;
 	@Column(name = "name")
+	@NotNull
 	public String name;
-	@Column(name = "username")
-	public String username;
+	@Column(name = "email")
+	@NotNull
+	public String email;
 	@Column(name = "password")
+	@NotNull
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public String password;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	public Set<Role> roles = new HashSet<>();
 	
 	public User() {
 		
 	}
 	
-	public User(Long id, String name, String username, String password) {
+	public User(String name, String email, String password) {
 		super();
-		this.id = id;
 		this.name = name;
-		this.username = username;
+		this.email = email;
 		this.password = password;
 	}
 	public Long getId() {
@@ -46,16 +63,24 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getUsername() {
-		return username;
+	public String getEmail() {
+		return email;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	public String getPassword() {
 		return password;
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
 	}
 }

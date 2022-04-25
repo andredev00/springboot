@@ -4,13 +4,13 @@ public class HomeDTO {
 
 	private int id;
 	private String location;
-	private int areaBruta;
-	private int totalDoLote;
-	private int quartos;
-	private String piso;
-	private int anoDeConstrucao;
+	private int grossArea;
+	private int lotTotal;
+	private int room;
+	private String floor;
+	private int constructionYear;
 	private int wcs;
-	private Boolean estacionamento;
+	private Boolean parking;
 	
 	public int getId() {
 		return id;
@@ -24,35 +24,35 @@ public class HomeDTO {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public int getAreaBruta() {
-		return areaBruta;
+	public int getGrossArea() {
+		return grossArea;
 	}
-	public void setAreaBruta(int areaBruta) {
-		this.areaBruta = areaBruta;
+	public void setGrossArea(int grossArea) {
+		this.grossArea = grossArea;
 	}
-	public int getTotalDoLote() {
-		return totalDoLote;
+	public int getLotTotal() {
+		return lotTotal;
 	}
-	public void setTotalDoLote(int totalDoLote) {
-		this.totalDoLote = totalDoLote;
+	public void setLotTotal(int lotTotal) {
+		this.lotTotal = lotTotal;
 	}
-	public int getQuartos() {
-		return quartos;
+	public int getRoom() {
+		return room;
 	}
-	public void setQuartos(int quartos) {
-		this.quartos = quartos;
+	public void setRoom(int room) {
+		this.room = room;
 	}
-	public String getPiso() {
-		return piso;
+	public String getFloor() {
+		return floor;
 	}
-	public void setPiso(String piso) {
-		this.piso = piso;
+	public void setFloor(String floor) {
+		this.floor = floor;
 	}
-	public int getAnoDeConstrucao() {
-		return anoDeConstrucao;
+	public int getConstructionYear() {
+		return constructionYear;
 	}
-	public void setAnoDeConstrucao(int anoDeConstrucao) {
-		this.anoDeConstrucao = anoDeConstrucao;
+	public void setConstructionYear(int constructionYear) {
+		this.constructionYear = constructionYear;
 	}
 	public int getWcs() {
 		return wcs;
@@ -60,10 +60,10 @@ public class HomeDTO {
 	public void setWcs(int wcs) {
 		this.wcs = wcs;
 	}
-	public Boolean getEstacionamento() {
-		return estacionamento;
+	public Boolean getParking() {
+		return parking;
 	}
-	public void setEstacionamento(Boolean estacionamento) {
-		this.estacionamento = estacionamento;
+	public void setParking(Boolean parking) {
+		this.parking = parking;
 	}
 }
