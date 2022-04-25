@@ -54,6 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		
 		http.addFilterBefore(filter, UsernamePasswordAuthenticationFilter.class);
+		//disabled frameOptions for h2-console
+		http.headers().frameOptions().disable();
 	}
 	
 	@Bean
