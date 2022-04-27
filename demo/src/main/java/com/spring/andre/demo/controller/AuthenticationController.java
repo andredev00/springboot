@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.andre.demo.dto.ClientDTO;
 import com.spring.andre.demo.dto.UserDTO;
+import com.spring.andre.demo.model.Client;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.service.ClientService;
@@ -27,7 +28,7 @@ public class AuthenticationController {
 	UserService userService;
 	
 	@PostMapping(value = "/client")
-	public Map<String, String> registerClient(@RequestBody ClientDTO clientDTO) {
+	public Client registerClient(@RequestBody ClientDTO clientDTO) {
 	    return clientService.registerClient(clientDTO);
 	}
 	

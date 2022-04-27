@@ -12,3 +12,8 @@ CREATE TABLE user(id INT auto_increment, name VARCHAR(250) not null, email VARCH
 CREATE TABLE home(id INT auto_increment, location varchar(250) not null, gross_Area int, lot_Total int, room int, floor varchar(250), construction_Year int, wcs int, parking boolean);
 
 CREATE TABLE roles(id int auto_increment, name varchar(250));
+
+
+INSERT INTO client (name, email, password) values ('André Ferreira', 'andreferrreira6578@gmail.com', '*Z!Ka<n5H~F[6^M}');
+
+INSERT INTO user(name, email, password) values ('André Filipe', 'andrefilipe@gmail.com', '!AW2<gA`UF2>a2%%');

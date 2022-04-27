@@ -44,6 +44,7 @@ public class UserService {
 		return userRepository.save(user);	
 	}
 	
+	//TODO, this is here because all the authentication logic with be refactor, for using only one object/entity, avoiding repeating code
 	public Map<String, Object> login(LoginCredentials body){
 		try {
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
