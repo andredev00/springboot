@@ -35,10 +35,21 @@ public class UserService {
 		return new BCryptPasswordEncoder();
 	}
 	
+	public User registerClient(UserDTO userDTO) {
+		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getPassword() + " " + userDTO.getEmail());
+		
+		User client = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "USER");
+		
+		log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " " + userDTO.getPassword() + " " + userDTO.getEmail());
+		client = userRepository.save(client);
+		return client;
+	}
+	
 	public User registerUser(UserDTO userDTO) {
 		log.info("Creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " " + userDTO.getPassword());
+
 		
-		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+		User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getPassword(), "ADMIN");
 		
 		log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " " + userDTO.getPassword());
 		return userRepository.save(user);	
@@ -51,7 +62,7 @@ public class UserService {
 			
 			authenticationManager.authenticate(authInputToken);
 						
-			String token = jwtUtil.generateToken(body.getEmail());
+			String token = jwtUtil.generateToken(body.getEmail(), body.getRoles().toString());
 			
 			return Collections.singletonMap("jwt-token", token);
 		} catch (Exception e) {

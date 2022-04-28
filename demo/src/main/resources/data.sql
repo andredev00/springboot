@@ -13,7 +13,6 @@ CREATE TABLE home(id INT auto_increment, location varchar(250) not null, gross_A
 
 CREATE TABLE roles(id int auto_increment, name varchar(250));
 
-
 INSERT INTO client (name, email, password) values ('André Ferreira', 'andreferrreira6578@gmail.com', '*Z!Ka<n5H~F[6^M}');
 
 INSERT INTO user(name, email, password) values ('André Filipe', 'andrefilipe@gmail.com', '!AW2<gA`UF2>a2%%');
