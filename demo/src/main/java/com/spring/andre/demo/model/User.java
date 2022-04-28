@@ -1,17 +1,10 @@
 package com.spring.andre.demo.model;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -36,20 +29,21 @@ public class User {
 	@NotNull
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	public String password;
-	
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-	public Set<Role> roles = new HashSet<>();
+	@Column(name = "roles")
+	@NotNull
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	public String roles;
 	
 	public User() {
 		
 	}
 	
-	public User(String name, String email, String password) {
+	public User(String name, String email, String password, String roles) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.roles = roles;
 	}
 	public Long getId() {
 		return id;
@@ -76,11 +70,12 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
+	public String getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(String roles) {
 		this.roles = roles;
 	}
+	
 }
