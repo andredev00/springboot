@@ -16,11 +16,10 @@ public class JWTUtil {
 	private String secret;
 	
 	//this method will be responsive for generating our app token
-	public String generateToken(String email, String roles) {
+	public String generateToken(String email) {
 		return JWT.create()
 				.withSubject("User Details")
 				.withClaim("email", email)
-				.withClaim("role", roles)
 				.withIssuedAt(new Date())
 				.withIssuer("Demo App")
 				.sign(Algorithm.HMAC256(secret));
