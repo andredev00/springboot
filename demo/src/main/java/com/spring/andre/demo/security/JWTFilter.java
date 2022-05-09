@@ -54,9 +54,18 @@ public class JWTFilter extends OncePerRequestFilter {
 				&& !request.getRequestURL().toString().contains("swagger")
 				&& !request.getRequestURL().toString().contains("/h2-console")
 				&& !request.getRequestURL().toString().contains("/sign-up")
-				&& !request.getRequestURL().toString().contains("/login")) {
+				&& !request.getRequestURL().toString().contains("/login")
+				//TODO, dont commit this
+				&& !request.getRequestURL().toString().contains("/allHomes")
+				&& !request.getRequestURL().toString().contains("register")) {
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
 		} else {
+		 	response.addHeader("Access-Control-Allow-Origin", "*");
+	        response.addHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, PUT, PATCH, HEAD");
+	        response.addHeader("Access-Control-Allow-Headers", "Origin, Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
+	        response.addHeader("Access-Control-Expose-Headers", "Access-Control-Allow-Origin, Access-Control-Allow-Credentials");
+	        response.addHeader("Access-Control-Allow-Credentials", "true");
+	        response.addIntHeader("Access-Control-Max-Age", 10);
 			filterChain.doFilter(request, response);
 		}
 	}
