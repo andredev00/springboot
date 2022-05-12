@@ -36,11 +36,11 @@ public class UserService {
 	}
 	
 	public User registerClient(UserDTO userDTO) {
-		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getPassword() + " " + userDTO.getEmail());
+		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getEmail());
 		
 		User client = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
 		
-		log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " " + userDTO.getPassword() + " " + userDTO.getEmail());
+		log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " " + userDTO.getEmail());
 		client = userRepository.save(client);
 		return client;
 	}
@@ -64,7 +64,7 @@ public class UserService {
 						
 			String token = jwtUtil.generateToken(body.getEmail());
 			
-			return Collections.singletonMap("jwt-token", token);
+			return Collections.singletonMap("jwt", token);
 		} catch (Exception e) {
 			throw new RuntimeException("Invalid Login Credentials");
 		}
