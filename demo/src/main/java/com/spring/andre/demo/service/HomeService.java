@@ -20,7 +20,7 @@ public class HomeService {
 	public Home registerHome(HomeDTO homeDTO) {
 		log.info("Creating a new home");
 		Home home = new Home(homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(), homeDTO.getRoom(),
-				homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(), homeDTO.getParking());
+				homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(), homeDTO.getParking(), homeDTO.getDescription(), homeDTO.getHomeType());
 		log.info("New home created with this properties: " + home);
 		return homeRepository.save(home);
 	}
@@ -46,7 +46,7 @@ public class HomeService {
 		Home home = homeRepository.findOne(id);
 		Home homeUpdated = new Home(home.getId(), homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(),
 				homeDTO.getRoom(), homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(),
-				homeDTO.getParking());
+				homeDTO.getParking(), homeDTO.getDescription(), homeDTO.getHomeType());
 		log.info("Finished updating home with this id: " + id);
 		homeRepository.save(homeUpdated);
 	}
