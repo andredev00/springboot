@@ -13,6 +13,8 @@ public class HomeDTO {
 	private Boolean parking;
 	private String description;
 	private String homeType;
+	private String imagePath;
+	private String imageFileName;
 	
 	public int getId() {
 		return id;
@@ -79,5 +81,17 @@ public class HomeDTO {
 	}
 	public void setHomeType(String homeType) {
 		this.homeType = homeType;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }

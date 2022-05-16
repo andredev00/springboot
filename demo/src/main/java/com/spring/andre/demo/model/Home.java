@@ -38,6 +38,10 @@ public class Home {
 	private String description;
 	@Column(name = "homeType")
 	private String homeType;
+	@Column(name = "image")
+	private String imagePath;
+	@Column(name="imageFileName")
+	private String imageFileName;
 
 	public Home() {
 
@@ -160,5 +164,21 @@ public class Home {
 
 	public void setHomeType(String homeType) {
 		this.homeType = homeType;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }
