@@ -11,6 +11,8 @@ public class HomeDTO {
 	private int constructionYear;
 	private int wcs;
 	private Boolean parking;
+	private String description;
+	private String homeType;
 	
 	public int getId() {
 		return id;
@@ -65,5 +67,17 @@ public class HomeDTO {
 	}
 	public void setParking(Boolean parking) {
 		this.parking = parking;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getHomeType() {
+		return homeType;
+	}
+	public void setHomeType(String homeType) {
+		this.homeType = homeType;
 	}
 }

@@ -34,13 +34,17 @@ public class Home {
 	private int wcs;
 	@Column(name = "parking")
 	private Boolean parking;
+	@Column(name = "description")
+	private String description;
+	@Column(name = "homeType")
+	private String homeType;
 
 	public Home() {
 
 	}
 
 	public Home(int id, String location, int grossArea, int lotTotal, int room, String floor,
-			int constructionYear, int wcs, Boolean parking) {
+			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
 		super();
 		this.id = id;
 		this.location = location;
@@ -51,10 +55,12 @@ public class Home {
 		this.constructionYear = constructionYear;
 		this.wcs = wcs;
 		this.parking = parking;
+		this.description = description;
+		this.homeType = homeType;
 	}
 	
 	public Home(String location, int grossArea, int lotTotal, int room, String floor,
-			int constructionYear, int wcs, Boolean parking) {
+			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
 		super();
 		this.location = location;
 		this.grossArea = grossArea;
@@ -64,6 +70,8 @@ public class Home {
 		this.constructionYear = constructionYear;
 		this.wcs = wcs;
 		this.parking = parking;
+		this.description = description;
+		this.homeType = homeType;
 	}
 
 	public int getId() {
@@ -86,7 +94,7 @@ public class Home {
 		return grossArea;
 	}
 
-	public void setAreaBruta(int grossArea) {
+	public void setGrossArea(int grossArea) {
 		this.grossArea = grossArea;
 	}
 
@@ -136,5 +144,21 @@ public class Home {
 
 	public void setParking(Boolean parking) {
 		this.parking = parking;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getHomeType() {
+		return homeType;
+	}
+
+	public void setHomeType(String homeType) {
+		this.homeType = homeType;
 	}
 }
