@@ -1,6 +1,6 @@
 package com.spring.andre.demo.security;
 
-import static com.spring.andre.demo.utils.Constants.Security.WHITELIST;
+import static com.spring.andre.demo.utils.Utils.Security.WHITELIST;
 
 import javax.servlet.http.HttpServletResponse;
 
