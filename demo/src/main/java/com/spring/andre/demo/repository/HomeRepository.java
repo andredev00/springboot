@@ -15,9 +15,13 @@ import com.spring.andre.demo.model.Home;
 public interface HomeRepository extends JpaRepository<Home, Serializable> {
 
 	Home findByLocation(String location);
-	
+
 	@Transactional
 	@Query("select h from Home h where id = :id")
 	Home findOne(int id);
+	
+	@Transactional
+	@Query("select h from Home h where image_file_name = :imageName")
+	Home findByTitle(String imageName);
 
 }

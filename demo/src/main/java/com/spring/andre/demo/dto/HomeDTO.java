@@ -1,8 +1,10 @@
 package com.spring.andre.demo.dto;
 
-public class HomeDTO {
+import io.swagger.annotations.ApiModelProperty;
 
-	private int id;
+public class HomeDTO {
+	
+	@ApiModelProperty(hidden = true)
 	private String location;
 	private int grossArea;
 	private int lotTotal;
@@ -13,13 +15,11 @@ public class HomeDTO {
 	private Boolean parking;
 	private String description;
 	private String homeType;
+	@ApiModelProperty(hidden = true)
+	private String imagePath;
+	@ApiModelProperty(hidden = true)
+	private String imageFileName;
 	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
 	public String getLocation() {
 		return location;
 	}
@@ -79,5 +79,17 @@ public class HomeDTO {
 	}
 	public void setHomeType(String homeType) {
 		this.homeType = homeType;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }

@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "Home")
 public class Home {
@@ -33,11 +35,15 @@ public class Home {
 	@Column(name = "wcs")
 	private int wcs;
 	@Column(name = "parking")
-	private Boolean parking;
+	private boolean parking;
 	@Column(name = "description")
 	private String description;
 	@Column(name = "homeType")
 	private String homeType;
+	@Column(name = "image")
+	private String imagePath;
+	@Column(name="imageFileName")
+	private String imageFileName;
 
 	public Home() {
 
@@ -160,5 +166,21 @@ public class Home {
 
 	public void setHomeType(String homeType) {
 		this.homeType = homeType;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }
