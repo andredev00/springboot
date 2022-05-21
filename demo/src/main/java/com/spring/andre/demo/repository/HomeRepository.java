@@ -19,8 +19,9 @@ public interface HomeRepository extends JpaRepository<Home, Serializable> {
 	@Transactional
 	@Query("select h from Home h where id = :id")
 	Home findOne(int id);
-
-	// it will be resposible to returning the image by searching from is name
+	
+	@Transactional
+	@Query("select h from Home h where image_file_name = :imageName")
 	Home findByTitle(String imageName);
 
 }

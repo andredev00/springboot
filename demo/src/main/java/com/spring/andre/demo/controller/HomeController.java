@@ -1,6 +1,7 @@
 package com.spring.andre.demo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,9 +21,21 @@ public class HomeController {
 	@Autowired
 	HomeService homeService;
 
-	@PostMapping(value = "/register/home")
-    public Home registerHome(@RequestBody HomeDTO homeDTO, @RequestPart(value="file") MultipartFile file){
+	@PostMapping(value = "/register/home", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public Home registerHome(@RequestPart("file") MultipartFile file){
+		HomeDTO homeDTO = new HomeDTO();
+		homeDTO.setLocation("teste");
+		homeDTO.setGrossArea(0);
+		homeDTO.setLotTotal(0);
+		homeDTO.setRoom(4);
+		homeDTO.setFloor("2");
+		homeDTO.setConstructionYear(0);
+		homeDTO.setWcs(0);
+		homeDTO.setParking(false);
+		homeDTO.setDescription("werqwer");
+		homeDTO.setHomeType("qwerqwer");
 	    return homeService.registerHome(homeDTO, file);
+		//return homeService.registerHome(homeDTO, file);
     }
 	
 	@DeleteMapping(value = "/delete/{id}")
