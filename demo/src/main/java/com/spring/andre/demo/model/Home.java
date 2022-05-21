@@ -18,7 +18,6 @@ public class Home {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	@ApiModelProperty(hidden = true)
 	private int id;
 	@Column(name = "location")
 	@NotNull
@@ -42,10 +41,8 @@ public class Home {
 	@Column(name = "homeType")
 	private String homeType;
 	@Column(name = "image")
-	 @ApiModelProperty(hidden = true)
 	private String imagePath;
 	@Column(name="imageFileName")
-	 @ApiModelProperty(hidden = true)
 	private String imageFileName;
 
 	public Home() {
