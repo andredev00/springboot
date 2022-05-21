@@ -20,7 +20,7 @@ import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
 @Service
-public class AmazonClient {
+public class AmazonService {
 
 	private AmazonS3 s3client;
 
@@ -57,18 +57,18 @@ public class AmazonClient {
 	}
 
 	public String uploadFile(MultipartFile multipartFile) {
-
 		String fileUrl = "";
+		String fileName = "";
 		try {
 			File file = convertMultiPartToFile(multipartFile);
-			String fileName = generateFileName(multipartFile);
+			fileName = generateFileName(multipartFile);
 			fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
 			uploadFileTos3bucket(fileName, file);
 			file.delete();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return fileUrl;
+		return fileUrl + " " + fileName;
 	}
 
 	public String deleteFileFromS3Bucket(String fileUrl) {

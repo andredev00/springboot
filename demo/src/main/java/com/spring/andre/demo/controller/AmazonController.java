@@ -8,16 +8,16 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.spring.andre.demo.service.AmazonClient;
+import com.spring.andre.demo.service.AmazonService;
 
 @RestController
 @RequestMapping("/storage/")
 public class AmazonController {
 
-	private AmazonClient amazonClient;
+	private AmazonService amazonClient;
 
 	@Autowired
-     void BucketController(AmazonClient amazonClient) {
+     void BucketController(AmazonService amazonClient) {
         this.amazonClient = amazonClient;
     }
 

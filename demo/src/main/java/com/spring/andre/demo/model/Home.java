@@ -9,6 +9,8 @@ import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @Table(name = "Home")
 public class Home {
@@ -16,6 +18,7 @@ public class Home {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
+	@ApiModelProperty(hidden = true)
 	private int id;
 	@Column(name = "location")
 	@NotNull
@@ -33,14 +36,16 @@ public class Home {
 	@Column(name = "wcs")
 	private int wcs;
 	@Column(name = "parking")
-	private Boolean parking;
+	private boolean parking;
 	@Column(name = "description")
 	private String description;
 	@Column(name = "homeType")
 	private String homeType;
 	@Column(name = "image")
+	 @ApiModelProperty(hidden = true)
 	private String imagePath;
 	@Column(name="imageFileName")
+	 @ApiModelProperty(hidden = true)
 	private String imageFileName;
 
 	public Home() {

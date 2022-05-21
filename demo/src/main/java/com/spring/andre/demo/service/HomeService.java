@@ -17,13 +17,22 @@ public class HomeService {
 	
 	@Autowired
 	HomeRepository homeRepository;
+	
+	@Autowired
+	AmazonService amazonService;
 
 	public Home registerHome(HomeDTO homeDTO, MultipartFile multiPartfile) {
-		String fileUrl = "";
-		
 		log.info("Creating a new home");
 		Home home = new Home(homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(), homeDTO.getRoom(),
 				homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(), homeDTO.getParking(), homeDTO.getDescription(), homeDTO.getHomeType());
+		
+		String file = amazonService.uploadFile(multiPartfile);
+		
+		String fileUrl = file.substring(0, file.indexOf(" "));
+		String fileName = file.substring(file.indexOf(" ") + 1);
+		home.setImagePath(fileUrl);
+		home.setImageFileName(fileName);
+		
 		log.info("New home created with this properties: " + home);
 		return homeRepository.save(home);
 	}
