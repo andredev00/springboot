@@ -20,7 +20,6 @@ public class Home {
 	@Column(name = "id")
 	private int id;
 	@Column(name = "location")
-	@NotNull
 	private String location;
 	@Column(name = "gross_Area")
 	private int grossArea;
@@ -30,7 +29,7 @@ public class Home {
 	private int room;
 	@Column(name = "floor")
 	private String floor;
-	@Column(name = "construction_Year")
+	@Column(name = "constructionYear")
 	private int constructionYear;
 	@Column(name = "wcs")
 	private int wcs;
@@ -183,4 +182,14 @@ public class Home {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
+	
+	@Override
+	public String toString() {
+		return "location: " + this.location + " + " + "grossArea: " + this.grossArea + " + " + "lotTotal: "
+				+ this.lotTotal + " + " + "room: " + this.room + " + " + "floor" + this.floor + " + "
+				+ "constructionYear: " + this.constructionYear + " + " + "wcs: " + this.wcs + " + " + "parking: "
+				+ this.parking + " + " + "description: " + this.description + " + " + "homeType: " + this.homeType
+				+ " + " + "imagePath: " + this.imagePath + " + " + "imageFileName: " + this.imageFileName;
+	}
+	
 }

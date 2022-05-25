@@ -1,5 +1,7 @@
 package com.spring.andre.demo.service;
 
+import java.util.ArrayList;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +30,11 @@ public class HomeService {
 		
 		String file = amazonService.uploadFile(multiPartfile);
 		
-		String fileUrl = file.substring(0, file.indexOf(" "));
 		String fileName = file.substring(file.indexOf(" ") + 1);
-		home.setImagePath(fileUrl);
+		home.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
 		home.setImageFileName(fileName);
 		
-		log.info("New home created with this properties: " + home);
+		log.info("New home created with this properties: " + home.toString());
 		return homeRepository.save(home);
 	}
 
@@ -48,15 +49,23 @@ public class HomeService {
 		return homeRepository.findAll();
 	}
 
-	public void getHome(Long id) {
-		log.info("Fetchin a specific home by its id");
-		homeRepository.findById(id);
+	public ArrayList<Home> getHome(int id) {
+		ArrayList<Home> home = new ArrayList<Home>();
+		try {
+			log.info("Fetchin a specific home by its id");
+			home = homeRepository.findOne(id);
+			log.info("Fetched home with following properties " + home.toString());
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return home;
 	}
 
 	public void updateHome(int id, HomeDTO homeDTO) {
 		log.info("Updating home with this id: " + id);
-		Home home = homeRepository.findOne(id);
-		Home homeUpdated = new Home(home.getId(), homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(),
+		ArrayList<Home> home = homeRepository.findOne(id);
+		Home homeUpdated = new Home(home.get(0).getId(), homeDTO.getLocation(), homeDTO.getGrossArea(), homeDTO.getLotTotal(),
 				homeDTO.getRoom(), homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(),
 				homeDTO.getParking(), homeDTO.getDescription(), homeDTO.getHomeType());
 		log.info("Finished updating home with this id: " + id);

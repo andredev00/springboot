@@ -58,7 +58,9 @@ public class JWTFilter extends OncePerRequestFilter {
 				&& !request.getRequestURL().toString().contains("/allHomes")
 				&& !request.getRequestURL().toString().contains("register")
 				&& !request.getRequestURL().toString().contains("/uploadFile")
-				&& !request.getRequestURL().toString().contains("/deleteFile")) {
+				&& !request.getRequestURL().toString().contains("/deleteFile")
+				&& !request.getRequestURL().toString().contains("/getFile")
+				&& !request.getRequestURL().toString().contains("/findHome")){
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
 		} else {
 		 	response.addHeader("Access-Control-Allow-Origin", "*");

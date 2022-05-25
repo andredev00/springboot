@@ -13,11 +13,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.dynamodbv2.datamodeling.S3ClientCache;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.model.S3Object;
 
 @Service
 public class AmazonService {
@@ -75,6 +77,11 @@ public class AmazonService {
 		String fileName = fileUrl.substring(fileUrl.lastIndexOf("/") + 1);
 		s3client.deleteObject(new DeleteObjectRequest(bucketName + "/", fileName));
 		return "Successfully deleted";
+	}
+	
+	public S3Object getFile(String filename) {
+		S3Object amazonImage = s3client.getObject(bucketName, filename);
+		return amazonImage;
 	}
 
 }

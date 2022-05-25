@@ -1,5 +1,7 @@
 package com.spring.andre.demo.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,10 +39,11 @@ public class HomeController {
 		return homeService.getAllHomes();
 	}
 
-	@GetMapping(value = "/findHome/{id}")
-	public void getHome(@RequestParam Long id) {
-		homeService.getHome(id);
-	}
+	@GetMapping(value = "/findHome/")
+	public ArrayList<Home> getHome(@RequestParam int id) {
+		ArrayList<Home> home = homeService.getHome(id);
+		return home;
+	} 
 	
 	@PostMapping(value = "/update/home/{id}")
 	public void updateHome(@RequestParam int id, @RequestBody HomeDTO homeDTO) {

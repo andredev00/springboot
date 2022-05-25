@@ -9,7 +9,7 @@ CREATE TABLE client (id INT auto_increment, name VARCHAR(250) not null, email VA
 
 CREATE TABLE user(id INT auto_increment, name VARCHAR(250) not null, email VARCHAR(250) not null, password VARCHAR(250) not null);
 
-CREATE TABLE home(id INT auto_increment, location varchar(250) not null, gross_Area int, lot_Total int, room int, floor varchar(250), construction_Year int, wcs int, parking boolean);
+CREATE TABLE home(id INT auto_increment, location varchar(250) not null, grossArea int, lotTotal int, room int, floor varchar(250), constructionYear int, wcs int, parking boolean, description varchar(255), homeType varchar(50), imagePath varchar(255), imageFileName varchar(255));
 
 CREATE TABLE roles(id int auto_increment, name varchar(250));
 

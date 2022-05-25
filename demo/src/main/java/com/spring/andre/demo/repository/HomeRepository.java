@@ -1,6 +1,7 @@
 package com.spring.andre.demo.repository;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -18,7 +19,7 @@ public interface HomeRepository extends JpaRepository<Home, Serializable> {
 
 	@Transactional
 	@Query("select h from Home h where id = :id")
-	Home findOne(int id);
+	ArrayList<Home> findOne(int id);
 	
 	@Transactional
 	@Query("select h from Home h where image_file_name = :imageName")
