@@ -1,12 +1,14 @@
 package com.spring.andre.demo.dto;
 
+import com.spring.andre.demo.model.User;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class HomeDTO {
 	
 	@ApiModelProperty(hidden = true)
 	private String location;
-	private int grossArea;
+	private String price;
 	private int lotTotal;
 	private int room;
 	private String floor;
@@ -26,11 +28,11 @@ public class HomeDTO {
 	public void setLocation(String location) {
 		this.location = location;
 	}
-	public int getGrossArea() {
-		return grossArea;
+	public String getPrice() {
+		return price;
 	}
-	public void setGrossArea(int grossArea) {
-		this.grossArea = grossArea;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 	public int getLotTotal() {
 		return lotTotal;

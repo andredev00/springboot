@@ -1,10 +1,13 @@
 package com.spring.andre.demo.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.sun.istack.NotNull;
@@ -19,10 +22,12 @@ public class Home {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
+	@Column(name = "parameterValue")
+	private int parameterValue;
 	@Column(name = "location")
 	private String location;
-	@Column(name = "gross_Area")
-	private int grossArea;
+	@Column(name = "price")
+	private String price;
 	@Column(name = "lot_Total")
 	private int lotTotal;
 	@Column(name = "room")
@@ -43,17 +48,21 @@ public class Home {
 	private String imagePath;
 	@Column(name="imageFileName")
 	private String imageFileName;
+	
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "user_home", referencedColumnName = "id")
+//	private User user;
 
 	public Home() {
 
 	}
 
-	public Home(int id, String location, int grossArea, int lotTotal, int room, String floor,
+	public Home(int id, String location, String price, int lotTotal, int room, String floor,
 			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
 		super();
 		this.id = id;
 		this.location = location;
-		this.grossArea = grossArea;
+		this.price = price;
 		this.lotTotal = lotTotal;
 		this.room = room;
 		this.floor = floor;
@@ -64,11 +73,10 @@ public class Home {
 		this.homeType = homeType;
 	}
 	
-	public Home(String location, int grossArea, int lotTotal, int room, String floor,
+	public Home(String location, int lotTotal, int room, String floor,
 			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
 		super();
 		this.location = location;
-		this.grossArea = grossArea;
 		this.lotTotal = lotTotal;
 		this.room = room;
 		this.floor = floor;
@@ -86,6 +94,14 @@ public class Home {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public int getParameterValue() {
+		return parameterValue;
+	}
+
+	public void setParameterValue(int parameterValue) {
+		this.parameterValue = parameterValue;
+	}
 
 	public String getLocation() {
 		return location;
@@ -95,12 +111,12 @@ public class Home {
 		this.location = location;
 	}
 
-	public int getGrossArea() {
-		return grossArea;
+	public String getPrice() {
+		return price;
 	}
 
-	public void setGrossArea(int grossArea) {
-		this.grossArea = grossArea;
+	public void setPrice(String price) {
+		this.price = price;
 	}
 
 	public int getLotTotal() {
@@ -143,11 +159,11 @@ public class Home {
 		this.wcs = wcs;
 	}
 
-	public Boolean getParking() {
+	public boolean getParking() {
 		return parking;
 	}
 
-	public void setParking(Boolean parking) {
+	public void setParking(boolean parking) {
 		this.parking = parking;
 	}
 
@@ -182,10 +198,10 @@ public class Home {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "location: " + this.location + " + " + "grossArea: " + this.grossArea + " + " + "lotTotal: "
+		return "location: " + this.location + " + " + "price: " + this.price + " + " + "lotTotal: "
 				+ this.lotTotal + " + " + "room: " + this.room + " + " + "floor" + this.floor + " + "
 				+ "constructionYear: " + this.constructionYear + " + " + "wcs: " + this.wcs + " + " + "parking: "
 				+ this.parking + " + " + "description: " + this.description + " + " + "homeType: " + this.homeType

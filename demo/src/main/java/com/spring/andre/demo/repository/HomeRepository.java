@@ -2,7 +2,6 @@ package com.spring.andre.demo.repository;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.transaction.Transactional;
 
