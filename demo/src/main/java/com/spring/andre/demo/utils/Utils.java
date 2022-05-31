@@ -30,7 +30,7 @@ public class Utils {
 		formatter.setMinimumFractionDigits(2);
 		formatter.setMaximumFractionDigits(2);
 		
-		String finalPrice = formatter.format(price);
+		String finalPrice = formatter.format(Integer.valueOf(price));
 		return finalPrice;
 	}
 	
