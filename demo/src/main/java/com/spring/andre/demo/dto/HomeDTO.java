@@ -1,12 +1,9 @@
 package com.spring.andre.demo.dto;
 
-import com.spring.andre.demo.model.User;
-
 import io.swagger.annotations.ApiModelProperty;
 
 public class HomeDTO {
 	
-	@ApiModelProperty(hidden = true)
 	private String location;
 	private String price;
 	private int lotTotal;
