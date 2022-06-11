@@ -1,5 +1,22 @@
 amazonProperties:
-  endpointUrl: https://s3.us-east-2.amazonaws.com
-  accessKey: AKIAU3LSQWSZF5FTKGD6
-  secretKey: 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
-  bucketName: spring-boot-imobiliaria-images-upload
+    endpointUrl: https://s3.us-east-2.amazonaws.com
+    accessKey: AKIAU3LSQWSZF5FTKGD6
+    secretKey: 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
+    bucketName: spring-boot-imobiliaria-images-upload
+
+spring:
+    mail:
+        default-encoding: UTF-8
+        host: smtp.gmail.com
+        port: 587
+        username: andreferreira6578@gmail.com
+        password: 54tn<en@8(zGhX=?
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+                debug: true
+        protocol: smtp
+        test-connection: false
