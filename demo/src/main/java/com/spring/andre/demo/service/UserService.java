@@ -2,6 +2,7 @@ package com.spring.andre.demo.service;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,21 +39,32 @@ public class UserService {
 	public User registerClient(UserDTO userDTO) {
 		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getEmail());
 		
-		User client = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 		
-		log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " " + userDTO.getEmail());
-		client = userRepository.save(client);
-		return client;
+		if(userExists == null || userExists.isEmpty()) {
+			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+			
+			log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " " + userDTO.getEmail());
+			user = userRepository.save(user);
+			return user;
+		}
+		
+		return null;
 	}
 	
 	public User registerUser(UserDTO userDTO) {
 		log.info("Creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " " + userDTO.getPassword());
 
+		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 		
-		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+		if(userExists == null || userExists.isEmpty()) {
+			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+			
+			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " " + userDTO.getPassword());
+			return userRepository.save(user);	
+		}
 		
-		log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " " + userDTO.getPassword());
-		return userRepository.save(user);	
+		return null;
 	}
 	
 	//TODO, this is here because all the authentication logic with be refactor, for using only one object/entity, avoiding repeating code
@@ -68,6 +80,24 @@ public class UserService {
 		} catch (Exception e) {
 			throw new RuntimeException("Invalid Login Credentials");
 		}
+	}
+
+	public User editUser(UserDTO userDTO) {
+		log.info("Updating information for user: " + userDTO.getEmail());
+		
+		User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth());
+		
+		log.info("Finished updating information for user: " + userDTO.getEmail());
+		return userRepository.save(user);
+	}
+
+	public User resetPassword(UserDTO userDTO) {
+		log.info("Updating password for user: " + userDTO.getEmail());
+		
+		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+		
+		log.info("Finished updating password for user: " + userDTO.getEmail());
+		return userRepository.save(user);
 	}
 	
 }

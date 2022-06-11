@@ -1,7 +1,5 @@
 package com.spring.andre.demo.model;
 
-import java.util.Map;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 
 public class Email {
@@ -17,6 +15,7 @@ public class Email {
 	@Schema(example = "welcome-email.html")
 	private String template;
 	private String url;
+	private String name;
 	
 	public String getTo() {
 		return to;
@@ -48,10 +47,16 @@ public class Email {
 	public void setTemplate(String template) {
 		this.template = template;
 	}
-	public Map<String, Object> getProperties() {
-		return properties;
+	public String getUrl() {
+		return url;
 	}
-	public void setProperties(Map<String, Object> properties) {
-		this.properties = properties;
+	public void setUrl(String url) {
+		this.url = url;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
 	}
 }

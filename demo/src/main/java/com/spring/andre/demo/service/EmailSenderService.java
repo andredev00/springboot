@@ -31,7 +31,8 @@ public class EmailSenderService {
 		MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
 				StandardCharsets.UTF_8.name());
 		Context context = new Context();
-		context.setVariables(email.getProperties());
+		context.setVariable("url", email.getUrl());
+		context.setVariable("name", email.getName());
 		helper.setFrom(email.getFrom());
 		helper.setTo(email.getTo());
 		helper.setSubject(email.getSubject());

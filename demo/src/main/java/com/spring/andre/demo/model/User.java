@@ -1,5 +1,7 @@
 package com.spring.andre.demo.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,6 +12,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
+import io.swagger.v3.oas.annotations.media.Schema;
+
 @Entity
 @Table(name = "user")
 public class User {
@@ -17,17 +21,25 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	public Long id;
+	private Long id;
 	@Column(name = "name")
 	@NotNull
-	public String name;
+	@Schema(example = "André Ferreira")
+	private String name;
 	@Column(name = "email")
 	@NotNull
-	public String email;
+	@Schema(example = "andreferreira6578@gmail.com")
+	private String email;
 	@Column(name = "password")
 	@NotNull
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	public String password;
+	private String password;
+	@Schema(example = "My address")
+	private String address;
+	@Schema(example = "My Phone Number")
+	private int phoneNumber;
+	@Schema(example = "My Birth Date")
+	private Date dateBirth;
 
 	public User() {
 
@@ -38,6 +50,14 @@ public class User {
 		this.name = name;
 		this.email = email;
 		this.password = password;
+	}
+	
+	public User(String name, String email, String address, int phoneNumber, Date dateBirth) {
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.dateBirth = dateBirth;
 	}
 
 	public Long getId() {
@@ -70,5 +90,29 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public int getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(int phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
+
+	public Date getDateBirth() {
+		return dateBirth;
+	}
+
+	public void setDateBirth(Date dateBirth) {
+		this.dateBirth = dateBirth;
 	}
 }

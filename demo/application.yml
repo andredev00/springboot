@@ -7,10 +7,10 @@ amazonProperties:
 spring:
     mail:
         default-encoding: UTF-8
-        host: smtp.gmail.com
+        host: smtp-mail.outlook.com
         port: 587
-        username: andreferreira6578@gmail.com
-        password: 54tn<en@8(zGhX=?
+        username: andre.ferreira@decode.pt	
+        password: FEx#@6%Bd8
         properties:
             mail:
                 smtp:
