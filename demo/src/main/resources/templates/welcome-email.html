@@ -3,15 +3,21 @@
     <head>
         <title th:remove="all">Template for HTML email</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <!-- CSS only -->
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
     </head>
     <body>
         <p>
-            Hello, <span th:text="${name}"></span>!
+            Olá, <span th:text="${name}"></span>!
         </p>
-        <p th:if="${name.length() > 10}">
-            Wow! You've got a long name (more than 10 chars)!
-        </p>
-  			
+    <p>
+        Esperemos que se encontre bem, em baixo enviamos um link para que possa reverter a sua password!
+    </p>
+        <button style="background-color: darkcyan; width:250px; height:50px; font-weight: 500; color: white; margin: 0 auto; display: block;" type="button" class="btn btn-primary" th:href="@{https://reddit.com/}">Nova Password</button>
+
+    <p>
+        Qualquer tipo de dúvida ou questão, disponha do email <a href="mailto:andreferreira6578@outlook.pt">andreferreira6578@outlook.pt</a>
+    </p>
      <!--    <p>
             Regards, <br/>
             <em>The CodingNConcepts Team</em>
