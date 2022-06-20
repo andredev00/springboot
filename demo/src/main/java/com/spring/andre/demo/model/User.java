@@ -40,16 +40,22 @@ public class User {
 	private int phoneNumber;
 	@Schema(example = "My Birth Date")
 	private Date dateBirth;
-
+	@Schema(example = "Roles")
+	private String permissions;
+	
 	public User() {
 
 	}
 
-	public User(String name, String email, String password) {
+	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth, String permissions) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.dateBirth = dateBirth;
+		this.permissions = permissions;
 	}
 	
 	public User(String name, String email, String address, int phoneNumber, Date dateBirth) {
@@ -114,5 +120,13 @@ public class User {
 
 	public void setDateBirth(Date dateBirth) {
 		this.dateBirth = dateBirth;
+	}
+
+	public String getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
 	}
 }

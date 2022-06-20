@@ -4,12 +4,13 @@ import java.sql.Date;
 
 public class UserDTO {
 	
-	public String name;
-	public String email;
-	public String password;
+	private String name;
+	private String email;
+	private String password;
 	private String address;
 	private int phoneNumber;
 	private Date dateBirth;
+	private String permissions;
 	
 	public String getName() {
 		return name;
@@ -46,5 +47,11 @@ public class UserDTO {
 	}
 	public void setDateBirth(Date dateBirth) {
 		this.dateBirth = dateBirth;
+	}
+	public String getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
 	}
 }

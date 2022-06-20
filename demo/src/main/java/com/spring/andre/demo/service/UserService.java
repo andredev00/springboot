@@ -41,8 +41,8 @@ public class UserService {
 		
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 		
-		if(userExists == null || userExists.isEmpty()) {
-			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+		if(userExists.isEmpty()) {
+			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()),  userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth(), "USER");
 			
 			log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " " + userDTO.getEmail());
 			user = userRepository.save(user);
@@ -58,7 +58,7 @@ public class UserService {
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 		
 		if(userExists == null || userExists.isEmpty()) {
-			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth(), "ADMIN");
 			
 			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " " + userDTO.getPassword());
 			return userRepository.save(user);	
@@ -70,11 +70,17 @@ public class UserService {
 	//TODO, this is here because all the authentication logic with be refactor, for using only one object/entity, avoiding repeating code
 	public Map<String, Object> login(LoginCredentials body){
 		try {
+			String permissions = "";
 			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.getEmail(), body.getPassword());
 			
 			authenticationManager.authenticate(authInputToken);
-						
-			String token = jwtUtil.generateToken(body.getEmail());
+			
+			Optional<User> userExists = userRepository.findByEmail(body.getEmail());
+			if(userExists.isPresent()) {
+				permissions = userExists.get().getPermissions();	
+			}
+				
+			String token = jwtUtil.generateToken(body.getEmail(), permissions);
 			
 			return Collections.singletonMap("jwt", token);
 		} catch (Exception e) {
@@ -94,7 +100,7 @@ public class UserService {
 	public User resetPassword(UserDTO userDTO) {
 		log.info("Updating password for user: " + userDTO.getEmail());
 		
-		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()));
+		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()),  userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth(), userDTO.getPermissions());
 		
 		log.info("Finished updating password for user: " + userDTO.getEmail());
 		return userRepository.save(user);
