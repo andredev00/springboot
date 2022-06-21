@@ -1,6 +1,7 @@
 package com.spring.andre.demo.service;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
@@ -31,6 +33,9 @@ public class UserService {
 	
 	@Autowired
 	private AuthenticationManager authenticationManager;
+	
+	@Autowired
+	private AmazonService amazonService;
 	
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -88,10 +93,14 @@ public class UserService {
 		}
 	}
 
-	public User editUser(UserDTO userDTO) {
+	public User editUser(UserDTO userDTO, MultipartFile multipartFile) {
 		log.info("Updating information for user: " + userDTO.getEmail());
 		
+		String file = amazonService.uploadFile(multipartFile);
+		String fileName = file.substring(file.indexOf(" ") + 1);
 		User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth());
+		user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
+		user.setImageFileName(fileName);
 		
 		log.info("Finished updating information for user: " + userDTO.getEmail());
 		return userRepository.save(user);
@@ -104,6 +113,15 @@ public class UserService {
 		
 		log.info("Finished updating password for user: " + userDTO.getEmail());
 		return userRepository.save(user);
+	}
+
+	public List<User> getAgents() {
+		log.info("Fetching information from our agents list");
+		
+		List<User> user = userRepository.getAgents();
+		
+		log.info("Finished fetching information for our agents list");
+		return user;
 	}
 	
 }

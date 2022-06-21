@@ -11,6 +11,8 @@ public class UserDTO {
 	private int phoneNumber;
 	private Date dateBirth;
 	private String permissions;
+	private String imagePath;
+	private String imageFileName;
 	
 	public String getName() {
 		return name;
@@ -53,5 +55,17 @@ public class UserDTO {
 	}
 	public void setPermissions(String permissions) {
 		this.permissions = permissions;
+	}
+	public String getImagePath() {
+		return imagePath;
+	}
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+	public String getImageFileName() {
+		return imageFileName;
+	}
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }

@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
@@ -35,13 +37,22 @@ public class User {
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
 	@Schema(example = "My address")
+	@Column(name = "address")
 	private String address;
 	@Schema(example = "My Phone Number")
+	@Column(name = "phoneNumber")
 	private int phoneNumber;
 	@Schema(example = "My Birth Date")
+	@Column(name = "dateBirth")
 	private Date dateBirth;
 	@Schema(example = "Roles")
+	@Column(name = "permissions")
 	private String permissions;
+	@Column(name = "image")
+	private String imagePath;
+	@Column(name="imageFileName")
+	private String imageFileName;
+	
 	
 	public User() {
 
@@ -58,12 +69,24 @@ public class User {
 		this.permissions = permissions;
 	}
 	
+	//create new user
 	public User(String name, String email, String address, int phoneNumber, Date dateBirth) {
 		this.name = name;
 		this.email = email;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.dateBirth = dateBirth;
+	}
+	
+	//edit existing user
+	public User(String name, String email, String address, int phoneNumber, Date dateBirth, String imagePath, String imageFileName) {
+		this.name = name;
+		this.email = email;
+		this.address = address;
+		this.phoneNumber = phoneNumber;
+		this.dateBirth = dateBirth;
+		this.imagePath = imagePath;
+		this.imageFileName = imageFileName;
 	}
 
 	public Long getId() {
@@ -128,5 +151,21 @@ public class User {
 
 	public void setPermissions(String permissions) {
 		this.permissions = permissions;
+	}
+
+	public String getImagePath() {
+		return imagePath;
+	}
+
+	public void setImagePath(String imagePath) {
+		this.imagePath = imagePath;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
 	}
 }
