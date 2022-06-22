@@ -17,6 +17,6 @@ public interface UserRepository extends CrudRepository<User, String>{
 	Optional<User> findByEmail(String email);
 	
 	@Transactional
-	@Query("select h from User h where permissions = 'USER'")
+	@Query("select h from User h where permissions = 'ADMIN'")
 	List<User> getAgents();
 }

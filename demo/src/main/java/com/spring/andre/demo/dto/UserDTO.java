@@ -6,6 +6,8 @@ public class UserDTO {
 	
 	private String name;
 	private String email;
+	private String county;
+	private String language;
 	private String password;
 	private String address;
 	private int phoneNumber;
@@ -25,6 +27,18 @@ public class UserDTO {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getCounty() {
+		return county;
+	}
+	public void setCounty(String county) {
+		this.county = county;
+	}
+	public String getLanguage() {
+		return language;
+	}
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 	public String getPassword() {
 		return password;

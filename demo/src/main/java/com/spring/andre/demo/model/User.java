@@ -32,6 +32,10 @@ public class User {
 	@NotNull
 	@Schema(example = "andreferreira6578@gmail.com")
 	private String email;
+	@Column(name = "county")
+	private String county;
+	@Column(name = "language")
+	private String language;
 	@Column(name = "password")
 	@NotNull
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -50,15 +54,15 @@ public class User {
 	private String permissions;
 	@Column(name = "image")
 	private String imagePath;
-	@Column(name="imageFileName")
+	@Column(name = "imageFileName")
 	private String imageFileName;
-	
-	
+
 	public User() {
 
 	}
 
-	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth, String permissions) {
+	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
+			String permissions) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -68,18 +72,24 @@ public class User {
 		this.dateBirth = dateBirth;
 		this.permissions = permissions;
 	}
-	
-	//create new user
-	public User(String name, String email, String address, int phoneNumber, Date dateBirth) {
+
+	// create new user
+	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
+			String permissions, String county, String language) {
 		this.name = name;
 		this.email = email;
+		this.password = password;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.dateBirth = dateBirth;
+		this.permissions = permissions;
+		this.county = county;
+		this.language = language;
 	}
-	
-	//edit existing user
-	public User(String name, String email, String address, int phoneNumber, Date dateBirth, String imagePath, String imageFileName) {
+
+	// edit existing user
+	public User(String name, String email, String address, int phoneNumber, Date dateBirth, String imagePath,
+			String imageFileName, String county, String language) {
 		this.name = name;
 		this.email = email;
 		this.address = address;
@@ -87,6 +97,8 @@ public class User {
 		this.dateBirth = dateBirth;
 		this.imagePath = imagePath;
 		this.imageFileName = imageFileName;
+		this.county = county;
+		this.language = language;
 	}
 
 	public Long getId() {
@@ -111,6 +123,22 @@ public class User {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getCounty() {
+		return county;
+	}
+
+	public void setCounty(String county) {
+		this.county = county;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public String getPassword() {
