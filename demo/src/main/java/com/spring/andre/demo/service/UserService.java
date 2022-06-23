@@ -1,5 +1,6 @@
 package com.spring.andre.demo.service;
 
+import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -102,14 +103,24 @@ public class UserService {
 		}
 	}
 
-	public User editUser(UserDTO userDTO, MultipartFile multipartFile) {
+	public User editUser(UserDTO userDTO, MultipartFile multipartFile, Long id) {
 		log.info("Updating information for user: " + userDTO.getEmail());
+
+		Optional<User> userExists = userRepository.findById(id);
+
+		String name = userDTO.getName() == null ? userExists.get().getName() : userDTO.getName();
+		String email = userDTO.getEmail() == null ? userExists.get().getEmail() : userDTO.getEmail();
+		String address = userDTO.getAddress() == null ? userExists.get().getAddress() : userDTO.getAddress();
+		int phoneNumber = userDTO.getPhoneNumber() < 0 ? userExists.get().getPhoneNumber() : userDTO.getPhoneNumber();
+		Date dataBirth = userDTO.getDateBirth() == null ? userExists.get().getDateBirth() : userDTO.getDateBirth();
+		String county = userDTO.getCounty() == null ? userExists.get().getCounty() : userDTO.getCounty();
+		String language = userDTO.getLanguage() == null ? userExists.get().getLanguage() : userDTO.getLanguage();
+		String password = passwordEncoder().encode(userDTO.getPassword());
+		String permissions = userExists.get().getPermissions();
 
 		String file = amazonService.uploadFile(multipartFile);
 		String fileName = file.substring(file.indexOf(" ") + 1);
-		User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPhoneNumber(),
-				userDTO.getDateBirth(), userDTO.getImagePath(), userDTO.getImageFileName(), userDTO.getCounty(),
-				userDTO.getLanguage());
+		User user = new User(name, email, password, address, phoneNumber, dataBirth, county, language, permissions);
 		user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
 		user.setImageFileName(fileName);
 

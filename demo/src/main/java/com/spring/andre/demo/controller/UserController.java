@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +18,7 @@ import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.service.UserService;
+
 
 @RestController
 public class UserController {
@@ -36,8 +37,8 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/edit")
-	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file) {
-		return userService.editUser(userDTO, file);
+	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file, @RequestParam Long id) {
+		return userService.editUser(userDTO, file, id);
 	}
 	
 	@PutMapping(value = "/reset/pass")

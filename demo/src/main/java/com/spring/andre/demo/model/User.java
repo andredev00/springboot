@@ -88,17 +88,16 @@ public class User {
 	}
 
 	// edit existing user
-	public User(String name, String email, String address, int phoneNumber, Date dateBirth, String imagePath,
-			String imageFileName, String county, String language) {
+	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth, String county, String language, String permissions) {
 		this.name = name;
 		this.email = email;
+		this.password = password;
 		this.address = address;
 		this.phoneNumber = phoneNumber;
 		this.dateBirth = dateBirth;
-		this.imagePath = imagePath;
-		this.imageFileName = imageFileName;
 		this.county = county;
 		this.language = language;
+		this.permissions = permissions;
 	}
 
 	public Long getId() {
