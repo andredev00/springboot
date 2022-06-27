@@ -74,18 +74,18 @@ public class User {
 	}
 
 	// create new user
-	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
-			String permissions, String county, String language) {
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.dateBirth = dateBirth;
-		this.permissions = permissions;
-		this.county = county;
-		this.language = language;
-	}
+//	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
+//			String permissions, String county, String language) {
+//		this.name = name;
+//		this.email = email;
+//		this.password = password;
+//		this.address = address;
+//		this.phoneNumber = phoneNumber;
+//		this.dateBirth = dateBirth;
+//		this.permissions = permissions;
+//		this.county = county;
+//		this.language = language;
+//	}
 
 	// edit existing user
 	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth, String county, String language, String permissions) {
