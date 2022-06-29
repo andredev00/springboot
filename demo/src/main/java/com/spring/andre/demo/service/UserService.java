@@ -48,9 +48,7 @@ public class UserService {
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists.isEmpty()) {
-			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()),
-					userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth(), "USER", userDTO.getCounty(),
-					userDTO.getLanguage());
+			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "USER");
 
 			log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " "
 					+ userDTO.getEmail());
@@ -68,9 +66,7 @@ public class UserService {
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists == null || userExists.isEmpty()) {
-			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()),
-					userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth(), "ADMIN",
-					userDTO.getCounty(), userDTO.getLanguage());
+			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "ADMIN");
 
 			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail()
 					+ " " + userDTO.getPassword());
@@ -125,14 +121,15 @@ public class UserService {
 		user.setImageFileName(fileName);
 
 		log.info("Finished updating information for user: " + userDTO.getEmail());
-		return userRepository.save(user);
+		userRepository.updateUser(user, id);
+		return user;
 	}
 
 	public User resetPassword(UserDTO userDTO) {
 		log.info("Updating password for user: " + userDTO.getEmail());
 
 		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()),
-				userDTO.getAddress(), userDTO.getPhoneNumber(), userDTO.getDateBirth(), userDTO.getPermissions());
+				userDTO.getPermissions());
 
 		log.info("Finished updating password for user: " + userDTO.getEmail());
 		return userRepository.save(user);

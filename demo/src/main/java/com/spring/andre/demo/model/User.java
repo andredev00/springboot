@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Nationalized;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -25,31 +26,27 @@ public class User {
 	@Column(name = "id")
 	private Long id;
 	@Column(name = "name")
-	@NotNull
-	@Schema(example = "André Ferreira")
+	@Nationalized
 	private String name;
 	@Column(name = "email")
-	@NotNull
-	@Schema(example = "andreferreira6578@gmail.com")
+	@Nationalized
 	private String email;
 	@Column(name = "county")
+	@Nationalized
 	private String county;
 	@Column(name = "language")
+	@Nationalized
 	private String language;
 	@Column(name = "password")
-	@NotNull
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private String password;
-	@Schema(example = "My address")
 	@Column(name = "address")
+	@Nationalized
 	private String address;
-	@Schema(example = "My Phone Number")
 	@Column(name = "phoneNumber")
 	private int phoneNumber;
-	@Schema(example = "My Birth Date")
 	@Column(name = "dateBirth")
 	private Date dateBirth;
-	@Schema(example = "Roles")
 	@Column(name = "permissions")
 	private String permissions;
 	@Column(name = "image")
@@ -61,34 +58,17 @@ public class User {
 
 	}
 
-	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
-			String permissions) {
+	public User(String name, String email, String password, String permissions) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.dateBirth = dateBirth;
 		this.permissions = permissions;
 	}
 
-	// create new user
-//	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
-//			String permissions, String county, String language) {
-//		this.name = name;
-//		this.email = email;
-//		this.password = password;
-//		this.address = address;
-//		this.phoneNumber = phoneNumber;
-//		this.dateBirth = dateBirth;
-//		this.permissions = permissions;
-//		this.county = county;
-//		this.language = language;
-//	}
-
 	// edit existing user
-	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth, String county, String language, String permissions) {
+	public User(String name, String email, String password, String address, int phoneNumber, Date dateBirth,
+			String county, String language, String permissions) {
 		this.name = name;
 		this.email = email;
 		this.password = password;
