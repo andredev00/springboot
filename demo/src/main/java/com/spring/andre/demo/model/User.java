@@ -53,6 +53,10 @@ public class User {
 	private String imagePath;
 	@Column(name = "imageFileName")
 	private String imageFileName;
+	@Column(name = "agentType")
+	private String agentType;
+	@Column(name = "agentSociety")
+	private String agentSociety;
 
 	public User() {
 
@@ -68,7 +72,7 @@ public class User {
 
 	// edit existing user
 	public User(String name, String email, String address, int phoneNumber, Date dateBirth,
-			String county, String language, String permissions) {
+			String county, String language, String permissions, String agentType, String agentSociety) {
 		this.name = name;
 		this.email = email;
 		this.address = address;
@@ -77,6 +81,8 @@ public class User {
 		this.county = county;
 		this.language = language;
 		this.permissions = permissions;
+		this.agentType = agentType;
+		this.agentSociety = agentSociety;
 	}
 	
 	
@@ -176,4 +182,25 @@ public class User {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
+
+	public String getAgentType() {
+		return agentType;
+	}
+
+	public void setAgentType(String agentType) {
+		this.agentType = agentType;
+	}
+
+	public String getAgentSociety() {
+		return agentSociety;
+	}
+
+	public void setAgentSociety(String agentSociety) {
+		this.agentSociety = agentSociety;
+	}
+	
+	@Override
+	public String toString() { 
+		return this.name + " + " + this.email + " + " + this.county + " + " + this.language + " + " + this.address + " + " + this.phoneNumber + " + " + this.dateBirth + " + " + this.imagePath + " + " + this.imageFileName + " + " + this.agentType + " + " + this.agentSociety + " + " + "With the following id: " + this.id;
+ 	}
 }

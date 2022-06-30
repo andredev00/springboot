@@ -15,6 +15,8 @@ public class UserDTO {
 	private String permissions;
 	private String imagePath;
 	private String imageFileName;
+	private String agentType;
+	private String agentSociety;
 	
 	public String getName() {
 		return name;
@@ -82,4 +84,21 @@ public class UserDTO {
 	public void setImageFileName(String imageFileName) {
 		this.imageFileName = imageFileName;
 	}
+	public String getAgentType() {
+		return agentType;
+	}
+	public void setAgentType(String agentType) {
+		this.agentType = agentType;
+	}
+	public String getAgentSociety() {
+		return agentSociety;
+	}
+	public void setAgentSociety(String agentSociety) {
+		this.agentSociety = agentSociety;
+	}
+	
+	@Override
+	public String toString() { 
+		return this.name + " + " + this.email + " + " + this.county + " + " + this.language + " + " + this.address + " + " + this.phoneNumber + " + " + this.dateBirth + " + " + this.imagePath + " + " + this.imageFileName + " + " + this.agentType + " + " + this.agentSociety;
+ 	}
 }

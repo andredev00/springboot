@@ -15,12 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.amazonaws.services.elastictranscoder.model.Thumbnails;
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.repository.UserRepository;
 import com.spring.andre.demo.security.JWTUtil;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 @Component
 public class UserService {
@@ -113,10 +114,12 @@ public class UserService {
 		String county = userDTO.getCounty() == null ? userExists.get().getCounty() : userDTO.getCounty();
 		String language = userDTO.getLanguage() == null ? userExists.get().getLanguage() : userDTO.getLanguage();
 		String permissions = userExists.get().getPermissions();
+		String agentType = userDTO.getAgentType() == null ? userExists.get().getAgentType() : userDTO.getAgentType();
+		String agentSociety = userDTO.getAgentSociety() == null ? userExists.get().getAgentSociety() : userDTO.getAgentSociety();
 		
 		String file = amazonService.uploadFile(multipartFile);
 		String fileName = file.substring(file.indexOf(" ") + 1);
-		User user = new User(name, email, address, phoneNumber, dataBirth, county, language, permissions);
+		User user = new User(name, email, address, phoneNumber, dataBirth, county, language, permissions, agentType, agentSociety);
 		user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
 		user.setImageFileName(fileName);
 
