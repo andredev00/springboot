@@ -15,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.services.elastictranscoder.model.Thumbnails;
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
@@ -111,12 +112,11 @@ public class UserService {
 		Date dataBirth = userDTO.getDateBirth() == null ? userExists.get().getDateBirth() : userDTO.getDateBirth();
 		String county = userDTO.getCounty() == null ? userExists.get().getCounty() : userDTO.getCounty();
 		String language = userDTO.getLanguage() == null ? userExists.get().getLanguage() : userDTO.getLanguage();
-		String password = passwordEncoder().encode(userDTO.getPassword());
 		String permissions = userExists.get().getPermissions();
-
+		
 		String file = amazonService.uploadFile(multipartFile);
 		String fileName = file.substring(file.indexOf(" ") + 1);
-		User user = new User(name, email, password, address, phoneNumber, dataBirth, county, language, permissions);
+		User user = new User(name, email, address, phoneNumber, dataBirth, county, language, permissions);
 		user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
 		user.setImageFileName(fileName);
 
