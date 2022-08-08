@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,11 +47,11 @@ public class UserService {
 
 	public User registerClient(UserDTO userDTO) {
 		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getEmail());
-
+		
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists.isEmpty()) {
-			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "USER");
+			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "USER");
 
 			log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " "
 					+ userDTO.getEmail());
@@ -64,11 +65,11 @@ public class UserService {
 	public User registerUser(UserDTO userDTO) {
 		log.info("Creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " "
 				+ userDTO.getPassword());
-
+	
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists == null || userExists.isEmpty()) {
-			User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "ADMIN");
+			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "ADMIN");
 
 			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail()
 					+ " " + userDTO.getPassword());
@@ -101,21 +102,21 @@ public class UserService {
 		}
 	}
 
-	public User editUser(UserDTO userDTO, MultipartFile multipartFile, Long id) {
+	public User editUser(UserDTO userDTO, MultipartFile multipartFile, String id) {
 		log.info("Updating information for user: " + userDTO.getEmail());
 
-		Optional<User> userExists = userRepository.findById(id);
+		User userExists = userRepository.findByGuid(id);
 
-		String name = userDTO.getName() == null ? userExists.get().getName() : userDTO.getName();
-		String email = userDTO.getEmail() == null ? userExists.get().getEmail() : userDTO.getEmail();
-		String address = userDTO.getAddress() == null ? userExists.get().getAddress() : userDTO.getAddress();
-		int phoneNumber = userDTO.getPhoneNumber() < 0 ? userExists.get().getPhoneNumber() : userDTO.getPhoneNumber();
-		Date dataBirth = userDTO.getDateBirth() == null ? userExists.get().getDateBirth() : userDTO.getDateBirth();
-		String county = userDTO.getCounty() == null ? userExists.get().getCounty() : userDTO.getCounty();
-		String language = userDTO.getLanguage() == null ? userExists.get().getLanguage() : userDTO.getLanguage();
-		String permissions = userExists.get().getPermissions();
-		String agentType = userDTO.getAgentType() == null ? userExists.get().getAgentType() : userDTO.getAgentType();
-		String agentSociety = userDTO.getAgentSociety() == null ? userExists.get().getAgentSociety() : userDTO.getAgentSociety();
+		String name = userDTO.getName() == null ? userExists.getName() : userDTO.getName();
+		String email = userDTO.getEmail() == null ? userExists.getEmail() : userDTO.getEmail();
+		String address = userDTO.getAddress() == null ? userExists.getAddress() : userDTO.getAddress();
+		int phoneNumber = userDTO.getPhoneNumber() < 0 ? userExists.getPhoneNumber() : userDTO.getPhoneNumber();
+		Date dataBirth = userDTO.getDateBirth() == null ? userExists.getDateBirth() : userDTO.getDateBirth();
+		String county = userDTO.getCounty() == null ? userExists.getCounty() : userDTO.getCounty();
+		String language = userDTO.getLanguage() == null ? userExists.getLanguage() : userDTO.getLanguage();
+		String permissions = userExists.getPermissions();
+		String agentType = userDTO.getAgentType() == null ? userExists.getAgentType() : userDTO.getAgentType();
+		String agentSociety = userDTO.getAgentSociety() == null ? userExists.getAgentSociety() : userDTO.getAgentSociety();
 		
 		String file = amazonService.uploadFile(multipartFile);
 		String fileName = file.substring(file.indexOf(" ") + 1);

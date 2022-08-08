@@ -22,9 +22,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private Long id;
+	private String id;
 	@Column(name = "name")
 	@Nationalized
 	private String name;
@@ -62,6 +61,15 @@ public class User {
 
 	}
 
+	public User(String id, String name, String email, String password, String permissions) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+		this.password = password;
+		this.permissions = permissions;
+	}
+	
 	public User(String name, String email, String password, String permissions) {
 		super();
 		this.name = name;
@@ -87,11 +95,11 @@ public class User {
 	
 	
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

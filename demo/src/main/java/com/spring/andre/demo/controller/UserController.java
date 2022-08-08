@@ -37,7 +37,7 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/edit")
-	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file, @RequestParam Long id) {
+	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file, @RequestParam String id) {
 		return userService.editUser(userDTO, file, id);
 	}
 	
