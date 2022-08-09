@@ -10,6 +10,8 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,8 +23,6 @@ import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.repository.UserRepository;
 import com.spring.andre.demo.security.JWTUtil;
-
-import net.coobird.thumbnailator.Thumbnails;
 
 @Component
 public class UserService {
@@ -139,10 +139,12 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public List<User> getAgents() {
+	public List<User> getAgents(int pageNumber) {
 		log.info("Fetching information from our agents list");
 
-		List<User> user = userRepository.getAgents();
+		Pageable firstPageWithTwoElements = PageRequest.of(pageNumber, 25);
+		
+		List<User> user = userRepository.getAgents(firstPageWithTwoElements);
 
 		log.info("Finished fetching information for our agents list");
 		return user;

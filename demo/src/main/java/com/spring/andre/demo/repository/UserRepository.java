@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -20,12 +21,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	@Transactional
 	@Query("select h from User h where permissions = 'ADMIN'")
-	List<User> getAgents();
+	List<User> getAgents(Pageable pageable);
 	
-//	@Transactional
-//	@Modifying
-//	@Query("update User u set u.address= :address, u.county = :county, u.dateBirth = :dateBirth, image_file_name = :imageFileName, image = :imagePath, language = :language, phone_number = :phoneNumber where u.id = :id")
-//	void updateUser(String address, String county, Date dateBirth, String imageFileName, String imagePath, String language, int phoneNumber, Long id);
+	
 	
 	@Transactional
 	@Modifying(clearAutomatically = true)
