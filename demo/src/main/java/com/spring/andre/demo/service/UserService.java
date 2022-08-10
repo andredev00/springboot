@@ -139,12 +139,12 @@ public class UserService {
 		return userRepository.save(user);
 	}
 
-	public List<User> getAgents(int pageNumber) {
+	public List<User> getAgents() {
 		log.info("Fetching information from our agents list");
 
-		Pageable firstPageWithTwoElements = PageRequest.of(pageNumber, 25);
+		//Pageable firstPageWithTwoElements = PageRequest.of(pageNumber, 2);
 		
-		List<User> user = userRepository.getAgents(firstPageWithTwoElements);
+		List<User> user = userRepository.getAgents();
 
 		log.info("Finished fetching information for our agents list");
 		return user;

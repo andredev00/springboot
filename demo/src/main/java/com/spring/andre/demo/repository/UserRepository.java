@@ -21,7 +21,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	
 	@Transactional
 	@Query("select h from User h where permissions = 'ADMIN'")
-	List<User> getAgents(Pageable pageable);
+	List<User> getAgents();
 	
 	
 	

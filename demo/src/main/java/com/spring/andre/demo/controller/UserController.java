@@ -53,7 +53,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/agents")
-	public List<User> getAgents(@RequestParam int pageNumber) {
-		return userService.getAgents(pageNumber);
+	public List<User> getAgents() {
+		return userService.getAgents();
 	}
 }
