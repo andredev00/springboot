@@ -56,18 +56,21 @@ public class User {
 	private String agentType;
 	@Column(name = "agentSociety")
 	private String agentSociety;
+	@Column(name = "active")
+	private boolean active;
 
 	public User() {
 
 	}
 
-	public User(String id, String name, String email, String password, String permissions) {
+	public User(String id, String name, String email, String password, String permissions, boolean active) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.permissions = permissions;
+		this.active = active;
 	}
 	
 	public User(String name, String email, String password, String permissions) {
@@ -93,7 +96,9 @@ public class User {
 		this.agentSociety = agentSociety;
 	}
 	
-	
+	public User(String password) {
+		this.password = password;
+	}
 
 	public String getId() {
 		return id;
@@ -206,7 +211,15 @@ public class User {
 	public void setAgentSociety(String agentSociety) {
 		this.agentSociety = agentSociety;
 	}
-	
+
+	public boolean getActive() {
+		return active;
+	}
+
+	public void setActive(boolean active) {
+		this.active = active;
+	}
+
 	@Override
 	public String toString() { 
 		return this.name + " + " + this.email + " + " + this.county + " + " + this.language + " + " + this.address + " + " + this.phoneNumber + " + " + this.dateBirth + " + " + this.imagePath + " + " + this.imageFileName + " + " + this.agentType + " + " + this.agentSociety + " + " + "With the following id: " + this.id;

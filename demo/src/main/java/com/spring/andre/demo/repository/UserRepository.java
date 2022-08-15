@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -22,9 +21,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select h from User h where permissions = 'ADMIN'")
 	List<User> getAgents();
-	
-	
-	
+
 	@Transactional
 	@Modifying(clearAutomatically = true)
 	@Query("update User u set u.address= :#{#user.address}, u.county = :#{#user.county}, u.dateBirth = :#{#user.dateBirth}, u.imageFileName = :#{#user.imageFileName}, u.imagePath = :#{#user.imagePath}, u.language = :#{#user.language}, u.phoneNumber = :#{#user.phoneNumber}, u.agentType =  :#{#user.agentType}, u.agentSociety = :#{#user.agentSociety} where u.id = :#{#id}")
@@ -34,5 +31,15 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select u from User u where u.id = :#{#id}")
 	User findByGuid(@Param("id") String id);
+	
+	@Transactional
+	@Modifying(clearAutomatically = true)
+	@Query("update User u set u.password= :#{#password} where u.id = :#{#id}")
+	void updatePassword(@Param("password") String password, @Param("id") String id);
+
+	@Transactional
+	@Modifying(clearAutomatically =  true)
+	@Query("update User u set u.active = 'true' where u.id = :#{#id}")
+	void activeAccount(String id);
 	
 }

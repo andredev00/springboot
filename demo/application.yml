@@ -9,7 +9,7 @@ spring:
         default-encoding: UTF-8
         host: smtp-mail.outlook.com
         port: 587
-        username: andreferreira6578@outlook.pt	
+        username: andreferreira6578@outlook.pt
         password: Riotbuffoteupai123
         properties:
             mail:

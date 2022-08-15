@@ -26,20 +26,20 @@ public class EmailSenderService {
 	@Autowired
 	SpringTemplateEngine templateEngine;
 
-	public void sendHtmlMessage(Email email) throws MessagingException {
+	public void sendHtmlMessage(String from, String to, String url, String name, String emailTemplate, String subject) throws MessagingException {
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
 				StandardCharsets.UTF_8.name());
 		Context context = new Context();
-		context.setVariable("url", email.getUrl());
-		context.setVariable("name", email.getName());
-		helper.setFrom(email.getFrom());
-		helper.setTo(email.getTo());
-		helper.setSubject(email.getSubject());
-		String html = templateEngine.process(email.getTemplate(), context);
+		context.setVariable("url", url);
+		context.setVariable("name", name);
+		helper.setFrom(from);
+		helper.setTo(to);
+		helper.setSubject(subject);
+		String html = templateEngine.process(emailTemplate, context);
 		helper.setText(html, true);
 
-		log.info("Sending email: {} with html body: {}", email, html);
+		log.info("Sending email: {} with html body: {}", emailTemplate, html);
 		emailSender.send(message);
 	}
 	

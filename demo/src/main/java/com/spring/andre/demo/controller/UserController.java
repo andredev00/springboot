@@ -3,9 +3,12 @@ package com.spring.andre.demo.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,12 +30,12 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping(value = "/sign-up/client")
-	public User registerClient(@RequestBody UserDTO userDTO) {
+	public User registerClient(@RequestBody UserDTO userDTO) throws MessagingException {
 		return userService.registerClient(userDTO);
 	}
 
 	@PostMapping(value = "/sign-up/user")
-	public User registerUser(@RequestBody UserDTO userDTO) {
+	public User registerUser(@RequestBody UserDTO userDTO) throws MessagingException {
 		return userService.registerUser(userDTO);
 	}
 	
@@ -42,8 +45,8 @@ public class UserController {
 	}
 	
 	@PutMapping(value = "/reset/pass")
-	public User resetPassword(@RequestBody UserDTO userDTO) {
-		return userService.resetPassword(userDTO);
+	public void resetPassword(@RequestParam String password, @RequestParam String uuid) {
+		 userService.resetPassword(password, uuid);
 	}
 
 	// generic login for user and client
@@ -55,5 +58,10 @@ public class UserController {
 	@GetMapping("/agents")
 	public List<User> getAgents() {
 		return userService.getAgents();
+	}
+	
+	@PostMapping("/active/account/{uuid}")
+	public void activeAccount(@PathVariable("uuid") String uuid) {
+		userService.activeAccount(uuid);
 	}
 }

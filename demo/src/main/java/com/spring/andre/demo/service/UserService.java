@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -41,39 +41,49 @@ public class UserService {
 	@Autowired
 	private AmazonService amazonService;
 
+	@Autowired
+	private EmailSenderService emailService;
+	
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	public User registerClient(UserDTO userDTO) {
+	public User registerClient(UserDTO userDTO) throws MessagingException {
 		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getEmail());
-		
+
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists.isEmpty()) {
-			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "USER");
+			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
+					passwordEncoder().encode(userDTO.getPassword()), "USER", false);
 
 			log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " "
 					+ userDTO.getEmail());
 			user = userRepository.save(user);
+			emailService.sendHtmlMessage("andreferreira6578@outlook.pt", userDTO.getEmail(), "", userDTO.getName(),
+					"welcome-email", "Seja Bem-Vindo");
 			return user;
 		}
 
 		return null;
 	}
 
-	public User registerUser(UserDTO userDTO) {
+	public User registerUser(UserDTO userDTO) throws MessagingException {
 		log.info("Creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " "
 				+ userDTO.getPassword());
-	
+
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists == null || userExists.isEmpty()) {
-			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "ADMIN");
+			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
+					passwordEncoder().encode(userDTO.getPassword()), "ADMIN", false);
 
 			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail()
 					+ " " + userDTO.getPassword());
-			return userRepository.save(user);
+			user = userRepository.save(user);
+			emailService.sendHtmlMessage("andreferreira6578@outlook.pt", userDTO.getEmail(), "", userDTO.getName(),
+					"welcome-email", "Seja Bem-Vindo");
+			return user;
 		}
 
 		return null;
@@ -107,47 +117,47 @@ public class UserService {
 
 		User userExists = userRepository.findByGuid(id);
 
-		String name = userDTO.getName() == null ? userExists.getName() : userDTO.getName();
-		String email = userDTO.getEmail() == null ? userExists.getEmail() : userDTO.getEmail();
-		String address = userDTO.getAddress() == null ? userExists.getAddress() : userDTO.getAddress();
-		int phoneNumber = userDTO.getPhoneNumber() < 0 ? userExists.getPhoneNumber() : userDTO.getPhoneNumber();
-		Date dataBirth = userDTO.getDateBirth() == null ? userExists.getDateBirth() : userDTO.getDateBirth();
-		String county = userDTO.getCounty() == null ? userExists.getCounty() : userDTO.getCounty();
-		String language = userDTO.getLanguage() == null ? userExists.getLanguage() : userDTO.getLanguage();
-		String permissions = userExists.getPermissions();
-		String agentType = userDTO.getAgentType() == null ? userExists.getAgentType() : userDTO.getAgentType();
-		String agentSociety = userDTO.getAgentSociety() == null ? userExists.getAgentSociety() : userDTO.getAgentSociety();
-		
-		String file = amazonService.uploadFile(multipartFile);
-		String fileName = file.substring(file.indexOf(" ") + 1);
-		User user = new User(name, email, address, phoneNumber, dataBirth, county, language, permissions, agentType, agentSociety);
-		user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
-		user.setImageFileName(fileName);
+		if (userExists.getId() != null || !userExists.getId().equals("")) {
+			String file = amazonService.uploadFile(multipartFile);
+			String fileName = file.substring(file.indexOf(" ") + 1);
+			User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPhoneNumber(),
+					userDTO.getDateBirth(), userDTO.getCounty(), userDTO.getLanguage(), userDTO.getPermissions(),
+					userDTO.getAgentType(), userDTO.getAgentSociety());
+			user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
+			user.setImageFileName(fileName);
+			userRepository.updateUser(user, id);
+			log.info("Finished updating information for user: " + userDTO.getEmail());
+			return user;
+		} else {
+			return null;
+		}
 
-		log.info("Finished updating information for user: " + userDTO.getEmail());
-		userRepository.updateUser(user, id);
-		return user;
 	}
 
-	public User resetPassword(UserDTO userDTO) {
-		log.info("Updating password for user: " + userDTO.getEmail());
+	public void resetPassword(String password, String uuid) {
+		log.info("Updating password for user: " + uuid);
+		
+		userRepository.updatePassword(passwordEncoder().encode(password), uuid);
 
-		User user = new User(userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()),
-				userDTO.getPermissions());
-
-		log.info("Finished updating password for user: " + userDTO.getEmail());
-		return userRepository.save(user);
+		log.info("Finished updating password for user: " + uuid);
 	}
 
 	public List<User> getAgents() {
 		log.info("Fetching information from our agents list");
-
-		//Pageable firstPageWithTwoElements = PageRequest.of(pageNumber, 2);
 		
 		List<User> user = userRepository.getAgents();
 
 		log.info("Finished fetching information for our agents list");
 		return user;
+	}
+
+	public void activeAccount(String uuid) {
+		log.info("Activating account for user: " + uuid);
+		
+		userRepository.activeAccount(uuid);
+		
+		log.info("Finished activating account for user: " + uuid);
+		
 	}
 
 }

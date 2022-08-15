@@ -19,7 +19,7 @@ public class EmailSenderController {
 	
 	@PostMapping("/email/send/html")
     public void sendHtmlMessage(@RequestBody Email email) throws MessagingException {
-        emailSenderService.sendHtmlMessage(email);
+        emailSenderService.sendHtmlMessage(email.getFrom(), email.getTo(), email.getUrl(), email.getName(), email.getTemplate(), email.getSubject());
     }
 
     @PostMapping("email/send")
