@@ -54,4 +54,6 @@ public class EmailSenderService {
         emailSender.send(message);
     }
 
+	//TODO, provavelmente vai ficar aqui o envio do email do reset da password
+	
 }
