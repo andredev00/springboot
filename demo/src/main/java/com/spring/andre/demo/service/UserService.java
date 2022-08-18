@@ -1,6 +1,5 @@
 package com.spring.andre.demo.service;
 
-import java.sql.Date;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -75,8 +74,7 @@ public class UserService {
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists == null || userExists.isEmpty()) {
-			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
-					passwordEncoder().encode(userDTO.getPassword()), "ADMIN", false);
+			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "ADMIN", false);
 
 			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail()
 					+ " " + userDTO.getPassword());
