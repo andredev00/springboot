@@ -68,7 +68,7 @@ public class UserService {
 	}
 
 	public User registerUser(UserDTO userDTO) throws MessagingException {
-		log.info("Creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " "
+		log.info("Croeating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " "
 				+ userDTO.getPassword());
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
