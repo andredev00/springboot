@@ -31,7 +31,7 @@ public class JWTFilter extends OncePerRequestFilter {
 	// parameters, and if it is, it will validate the token information
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		String authHeader = request.getHeader("Authorization");
+		String authHeader = request.getHeader("authorization");
 		if (authHeader != null && !authHeader.isBlank() && authHeader.startsWith("Bearer ")) {
 			String jwt = authHeader.substring(7);
 			if (jwt == null || jwt.isBlank()) {
@@ -55,7 +55,9 @@ public class JWTFilter extends OncePerRequestFilter {
 				&& !request.getRequestURL().toString().contains("/h2-console")
 				&& !request.getRequestURL().toString().contains("/sign-up")
 				&& !request.getRequestURL().toString().contains("/login")
-				&& !request.getRequestURL().toString().contains("register")){
+				&& !request.getRequestURL().toString().contains("/register")
+				&& !request.getRequestURL().toString().contains("/agents")
+				&& !request.getRequestURL().toString().contains("/active")){
 			response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid JWT Token");
 		} else {
 		 	response.addHeader("Access-Control-Allow-Origin", "*");

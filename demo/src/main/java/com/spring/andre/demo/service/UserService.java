@@ -42,7 +42,7 @@ public class UserService {
 
 	@Autowired
 	private EmailSenderService emailService;
-	
+
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
@@ -74,7 +74,8 @@ public class UserService {
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists == null || userExists.isEmpty()) {
-			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(), passwordEncoder().encode(userDTO.getPassword()), "ADMIN", false);
+			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
+					passwordEncoder().encode(userDTO.getPassword()), "ADMIN", false);
 
 			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail()
 					+ " " + userDTO.getPassword());
@@ -134,7 +135,7 @@ public class UserService {
 
 	public void resetPassword(String password, String uuid) {
 		log.info("Updating password for user: " + uuid);
-		
+
 		userRepository.updatePassword(passwordEncoder().encode(password), uuid);
 
 		log.info("Finished updating password for user: " + uuid);
@@ -142,7 +143,7 @@ public class UserService {
 
 	public List<User> getAgents() {
 		log.info("Fetching information from our agents list");
-		
+
 		List<User> user = userRepository.getAgents();
 
 		log.info("Finished fetching information for our agents list");
@@ -151,11 +152,16 @@ public class UserService {
 
 	public void activeAccount(String uuid) {
 		log.info("Activating account for user: " + uuid);
-		
+
 		userRepository.activeAccount(uuid);
-		
+
 		log.info("Finished activating account for user: " + uuid);
-		
+
+	}
+
+	public User getAgentDetail(String name, String id) {
+		log.info("Getting details from agent with name: " + name);
+		return userRepository.getAgentDetail(name, id);
 	}
 
 }

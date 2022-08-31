@@ -61,6 +61,11 @@ public class UserController {
 		return userService.getAgents();
 	}
 	
+	@GetMapping("/agent/{name}/{id}")
+	public User agentDetails(@RequestParam String name, @RequestParam String id) {
+		return userService.getAgentDetail(name, id);
+	}
+	
 	@RequestMapping("/active/account/{uuid}")
 	public void activeAccount(@PathVariable("uuid") String uuid) {
 		userService.activeAccount(uuid);
