@@ -6,7 +6,7 @@ public class HomeDTO {
 	
 	private String location;
 	private String price;
-	private int lotTotal;
+	private String lotTotal;
 	private int room;
 	private String floor;
 	private int constructionYear;
@@ -31,10 +31,10 @@ public class HomeDTO {
 	public void setPrice(String price) {
 		this.price = price;
 	}
-	public int getLotTotal() {
+	public String getLotTotal() {
 		return lotTotal;
 	}
-	public void setLotTotal(int lotTotal) {
+	public void setLotTotal(String lotTotal) {
 		this.lotTotal = lotTotal;
 	}
 	public int getRoom() {

@@ -15,6 +15,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
 import com.spring.andre.demo.repository.UserRepository;
 import com.spring.andre.demo.service.MyUserDetailsService;;
@@ -38,16 +39,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable();
-		http.cors().disable().httpBasic().disable().authorizeRequests().antMatchers(WHITELIST).permitAll().and()
+		http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers(WHITELIST).permitAll().and()
 				.userDetailsService(uds).exceptionHandling()
 				.authenticationEntryPoint((request, response, authException) -> response
 						.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-
+		http.cors().disable();
 		http.addFilterBefore(this.filter, UsernamePasswordAuthenticationFilter.class);
-		// disabled frameOptions for h2-console
-		http.headers().frameOptions().disable();
 	}
 
 	@Bean

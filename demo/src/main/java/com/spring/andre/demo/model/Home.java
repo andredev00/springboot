@@ -22,7 +22,7 @@ public class Home {
 	@Column(name = "price")
 	private String price;
 	@Column(name = "lot_Total")
-	private int lotTotal;
+	private String lotTotal;
 	@Column(name = "room")
 	private int room;
 	@Column(name = "floor")
@@ -50,7 +50,7 @@ public class Home {
 
 	}
 
-	public Home(int id, String location, String price, int lotTotal, int room, String floor,
+	public Home(int id, String location, String price, String lotTotal, int room, String floor,
 			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
 		super();
 		this.id = id;
@@ -66,7 +66,7 @@ public class Home {
 		this.homeType = homeType;
 	}
 	
-	public Home(String location, int lotTotal, int room, String floor,
+	public Home(String location, String lotTotal, int room, String floor,
 			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
 		super();
 		this.location = location;
@@ -112,11 +112,11 @@ public class Home {
 		this.price = price;
 	}
 
-	public int getLotTotal() {
+	public String getLotTotal() {
 		return lotTotal;
 	}
 
-	public void setLotTotal(int lotTotal) {
+	public void setLotTotal(String lotTotal) {
 		this.lotTotal = lotTotal;
 	}
 
