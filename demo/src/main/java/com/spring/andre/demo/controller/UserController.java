@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
@@ -52,8 +55,13 @@ public class UserController {
 
 	// generic login for user and client
 	@PostMapping("/login")
-	public Map<String, Object> login(@RequestBody LoginCredentials body) {
-		return userService.login(body);
+	public Map<String,Object> login(@RequestBody LoginCredentials body, HttpServletResponse response) {
+		try {
+			return userService.login(body, response);			
+		} catch (Exception e) {
+			throw new ResponseStatusException(
+			          HttpStatus.NOT_FOUND, "User Not Found", e);
+		}
 	}
 	
 	@GetMapping("/agents")

@@ -7,21 +7,27 @@ import java.util.Optional;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.spring.andre.demo.dto.UserDTO;
+import com.spring.andre.demo.enums.ERole;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.repository.UserRepository;
 import com.spring.andre.demo.security.JWTUtil;
+import com.spring.andre.demo.utils.ERoleConverter;
 
 @Component
 public class UserService {
@@ -48,67 +54,66 @@ public class UserService {
 	}
 
 	public User registerClient(UserDTO userDTO) throws MessagingException {
-		log.info("Creating a new client with credentials: " + userDTO.getName() + " " + userDTO.getEmail());
+		log.info("Creating a new client {}: " + userDTO.getName() + " " + userDTO.getEmail());
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
-		if (userExists.isEmpty()) {
-			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
-					passwordEncoder().encode(userDTO.getPassword()), "USER", false);
-
-			log.info("Finished creating a new client with credenials: " + " " + userDTO.getName() + " "
-					+ userDTO.getEmail());
-			user = userRepository.save(user);
-			emailService.sendHtmlMessage("andreferreira6578@outlook.pt", userDTO.getEmail(), "", userDTO.getName(),
-					"welcome-email", "Seja Bem-Vindo");
-			return user;
+		if(!userExists.isEmpty()) {
+			return null;
 		}
+	
+		User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
+				passwordEncoder().encode(userDTO.getPassword()), ERoleConverter.roleConverter(ERole.ROLE_USER), false);
 
-		return null;
+		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " "
+				+ userDTO.getEmail());
+		user = userRepository.save(user);
+		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
+		return user;
 	}
 
 	public User registerUser(UserDTO userDTO) throws MessagingException {
-		log.info("Croeating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail() + " "
+		log.info("Croeating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
 				+ userDTO.getPassword());
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
-
-		if (userExists == null || userExists.isEmpty()) {
-			User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
-					passwordEncoder().encode(userDTO.getPassword()), "ADMIN", false);
-
-			log.info("Finished creating admin user with credentials: " + userDTO.getName() + " " + userDTO.getEmail()
-					+ " " + userDTO.getPassword());
-			user = userRepository.save(user);
-			emailService.sendHtmlMessage("andreferreira6578@outlook.pt", userDTO.getEmail(), "", userDTO.getName(),
-					"welcome-email", "Seja Bem-Vindo");
-			return user;
+		
+		if (!userExists.isEmpty()) {
+			return null;
 		}
 
-		return null;
+		User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
+				passwordEncoder().encode(userDTO.getPassword()), ERoleConverter.roleConverter(ERole.ROLE_ADMIN), false);
+
+		log.info("Finished creating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail()
+				+ " " + userDTO.getPassword());
+		user = userRepository.save(user);
+		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
+		return user;
 	}
 
 	// TODO, this is here because all the authentication logic with be refactor, for
 	// using only one object/entity, avoiding repeating code
-	public Map<String, Object> login(LoginCredentials body) {
+	public Map<String, Object> login(LoginCredentials body, HttpServletResponse response) {
+		String permissions = "";
+		String personName = "";
+		UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
+				body.getEmail(), body.getPassword());
 		try {
-			String permissions = "";
-			UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
-					body.getEmail(), body.getPassword());
-
 			authenticationManager.authenticate(authInputToken);
-
-			Optional<User> userExists = userRepository.findByEmail(body.getEmail());
-			if (userExists.isPresent()) {
-				permissions = userExists.get().getPermissions();
-			}
-
-			String token = jwtUtil.generateToken(body.getEmail(), permissions);
-
-			return Collections.singletonMap("jwt", token);
-		} catch (Exception e) {
-			throw new RuntimeException("Invalid Login Credentials");
+		} catch (AuthenticationException e) {
+			throw new ResponseStatusException(
+			          HttpStatus.NOT_FOUND, "User Not Found", e);
 		}
+		Optional<User> userExists = userRepository.findByEmail(body.getEmail());
+		if (userExists.isPresent()) {
+			permissions = userExists.get().getPermissions();
+			personName = userExists.get().getName();
+			String token = jwtUtil.generateToken(body.getEmail(), permissions, personName);
+			
+			return Collections.singletonMap("jwt", token);
+		}
+		return null;
 	}
 
 	public User editUser(UserDTO userDTO, MultipartFile multipartFile, String id) {
