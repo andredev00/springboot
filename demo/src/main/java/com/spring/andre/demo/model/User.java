@@ -4,18 +4,13 @@ import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Nationalized;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.NotNull;
-
-import io.swagger.v3.oas.annotations.media.Schema;
+import com.spring.andre.demo.dto.UserDTO;
 
 @Entity
 @Table(name = "user")
@@ -72,28 +67,21 @@ public class User {
 		this.permissions = permissions;
 		this.active = active;
 	}
-	
-	public User(String name, String email, String password, String permissions) {
-		super();
-		this.name = name;
-		this.email = email;
-		this.password = password;
-		this.permissions = permissions;
-	}
 
-	// edit existing user
-	public User(String name, String email, String address, int phoneNumber, Date dateBirth,
-			String county, String language, String permissions, String agentType, String agentSociety) {
-		this.name = name;
-		this.email = email;
-		this.address = address;
-		this.phoneNumber = phoneNumber;
-		this.dateBirth = dateBirth;
-		this.county = county;
-		this.language = language;
-		this.permissions = permissions;
-		this.agentType = agentType;
-		this.agentSociety = agentSociety;
+	public User(UserDTO userDTO) {
+		this.name = userDTO.getName();
+		this.email = userDTO.getEmail();
+		this.county = userDTO.getCounty();
+		this.language = userDTO.getLanguage();
+		this.password = userDTO.getPassword();
+		this.address = userDTO.getAddress();
+		this.phoneNumber = userDTO.getPhoneNumber();
+		this.dateBirth = userDTO.getDateBirth();
+		this.permissions = userDTO.getPermissions();
+		this.imagePath = userDTO.getImagePath();
+		this.imageFileName = userDTO.getImageFileName();
+		this.agentType = userDTO.getAgentType();
+		this.agentSociety = userDTO.getAgentSociety();
 	}
 	
 	public User(String password) {

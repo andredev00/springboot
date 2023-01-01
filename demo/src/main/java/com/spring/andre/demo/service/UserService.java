@@ -124,9 +124,7 @@ public class UserService {
 		if (userExists.getId() != null || !userExists.getId().equals("")) {
 			String file = amazonService.uploadFile(multipartFile);
 			String fileName = file.substring(file.indexOf(" ") + 1);
-			User user = new User(userDTO.getName(), userDTO.getEmail(), userDTO.getAddress(), userDTO.getPhoneNumber(),
-					userDTO.getDateBirth(), userDTO.getCounty(), userDTO.getLanguage(), userDTO.getPermissions(),
-					userDTO.getAgentType(), userDTO.getAgentSociety());
+			User user = new User(userDTO);
 			user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
 			user.setImageFileName(fileName);
 			userRepository.updateUser(user, id);
