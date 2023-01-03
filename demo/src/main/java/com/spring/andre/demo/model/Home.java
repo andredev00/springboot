@@ -2,19 +2,18 @@ package com.spring.andre.demo.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.spring.andre.demo.dto.HomeDTO;
 
 @Entity
 @Table(name = "Home")
 public class Home {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private String id;
 	@Column(name = "parameterValue")
 	private int parameterValue;
 	@Column(name = "location")
@@ -41,50 +40,31 @@ public class Home {
 	private String imagePath;
 	@Column(name="imageFileName")
 	private String imageFileName;
-	
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "user_home", referencedColumnName = "id")
-//	private User user;
 
 	public Home() {
 
 	}
 
-	public Home(int id, String location, String price, String lotTotal, int room, String floor,
-			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
+	public Home(String id, HomeDTO homeDto) {
 		super();
 		this.id = id;
-		this.location = location;
-		this.price = price;
-		this.lotTotal = lotTotal;
-		this.room = room;
-		this.floor = floor;
-		this.constructionYear = constructionYear;
-		this.wcs = wcs;
-		this.parking = parking;
-		this.description = description;
-		this.homeType = homeType;
+		this.location = homeDto.getLocation();
+		this.price = homeDto.getPrice();
+		this.lotTotal = homeDto.getLotTotal();
+		this.room = homeDto.getRoom();
+		this.floor = homeDto.getFloor();
+		this.constructionYear = homeDto.getConstructionYear();
+		this.wcs = homeDto.getWcs();
+		this.parking = homeDto.getParking();
+		this.description = homeDto.getDescription();
+		this.homeType = homeDto.getHomeType();
 	}
 	
-	public Home(String location, String lotTotal, int room, String floor,
-			int constructionYear, int wcs, Boolean parking, String description, String homeType) {
-		super();
-		this.location = location;
-		this.lotTotal = lotTotal;
-		this.room = room;
-		this.floor = floor;
-		this.constructionYear = constructionYear;
-		this.wcs = wcs;
-		this.parking = parking;
-		this.description = description;
-		this.homeType = homeType;
-	}
-
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

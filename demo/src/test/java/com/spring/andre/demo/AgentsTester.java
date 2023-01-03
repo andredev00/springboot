@@ -38,7 +38,7 @@ class AgentsTester {
 			user.setName(names[i]);	
 			user.setEmail(emails[i]);
 			user.setPassword(passwordEncoder().encode("teste"));
-			user.setPermissions("USER");
+			user.setPermissions("ADMIN");
 			userRepository.save(user);
 			assertEquals(names[i], user.getName());
 		}

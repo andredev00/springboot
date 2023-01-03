@@ -15,8 +15,6 @@ public class HomeTester {
 	@Test
 	void registerHome() {
 		
-		
-		
 	}
 	
 	@Test

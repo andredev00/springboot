@@ -1,6 +1,6 @@
 package com.spring.andre.demo.controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -40,13 +40,12 @@ public class HomeController {
 	}
 
 	@GetMapping(value = "/findHome/")
-	public ArrayList<Home> getHome(@RequestParam int id) {
-		ArrayList<Home> home = homeService.getHome(id);
-		return home;
+	public List<Home> getHome(@RequestParam String id) {
+		return homeService.getHome(id);
 	} 
 	
 	@PostMapping(value = "/update/home/{id}")
-	public void updateHome(@RequestParam int id, @RequestBody HomeDTO homeDTO) {
+	public void updateHome(@RequestParam String id, @RequestBody HomeDTO homeDTO) {
 		homeService.updateHome(id, homeDTO);
 	}
 }

@@ -1,10 +1,12 @@
 package com.spring.andre.demo.service;
 
+import static com.spring.andre.demo.utils.Constants.AWS_MACHINE_ADDRESS;
 import static com.spring.andre.demo.utils.Utils.formatterPriceEuro;
 import static com.spring.andre.demo.utils.Utils.generateRandomInt;
 
 import java.util.ArrayList;
-import java.util.concurrent.TimeUnit;
+import java.util.List;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,16 +31,15 @@ public class HomeService {
 
 	public Home registerHome(HomeDTO homeDTO, MultipartFile multiPartfile) {
 		log.info("Creating a new home");
-		Home home = new Home(homeDTO.getLocation(), homeDTO.getLotTotal(), homeDTO.getRoom(), homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(), homeDTO.getParking(), homeDTO.getDescription(), homeDTO.getHomeType());
-		
+		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
 		home.setParameterValue(generateRandomInt());
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
 		
 		String file = amazonService.uploadFile(multiPartfile);
-		
 		String fileName = file.substring(file.indexOf(" ") + 1);
-		home.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
+		home.setImagePath(AWS_MACHINE_ADDRESS + fileName);
 		home.setImageFileName(fileName);
+		
 		
 		log.info("New home created with this properties: " + home.toString());
 		return homeRepository.save(home);
@@ -55,25 +56,23 @@ public class HomeService {
 		return homeRepository.findAll();
 	}
 
-	public ArrayList<Home> getHome(int id) {
-		ArrayList<Home> home = new ArrayList<Home>();
+	public List<Home> getHome(String id) {
+		ArrayList<Home> home = new ArrayList<>();
 		try {
 			log.info("Fetchin a specific home by its id");
 			home = homeRepository.findOne(id);
 			log.info("Fetched home with following properties " + home.toString());
 		} catch (Exception e) {
-			System.out.println(e);
+			log.error("Erro ao aceder ao serviço de procurar da casa", e);
 		}
 		
 		return home;
 	}
 
-	public void updateHome(int id, HomeDTO homeDTO) {
+	public void updateHome(String id, HomeDTO homeDTO) {
 		log.info("Updating home with this id: " + id);
 		ArrayList<Home> home = homeRepository.findOne(id);
-		Home homeUpdated = new Home(home.get(0).getId(), homeDTO.getLocation(), homeDTO.getPrice(), homeDTO.getLotTotal(),
-				homeDTO.getRoom(), homeDTO.getFloor(), homeDTO.getConstructionYear(), homeDTO.getWcs(),
-				homeDTO.getParking(), homeDTO.getDescription(), homeDTO.getHomeType());
+		Home homeUpdated = new Home(home.get(0).getId(), homeDTO);
 		log.info("Finished updating home with this id: " + id);
 		homeRepository.save(homeUpdated);
 	}

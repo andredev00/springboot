@@ -8,5 +8,7 @@ public class Constants {
 	
 	public static final String RESET_EMAIL_TEMPLATE = "reset-password";
 	public static final String RESET_EMAIL_SUBJECT = "Reset a sua password";
+	
+	public static final String AWS_MACHINE_ADDRESS = "https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/";
 
 }
