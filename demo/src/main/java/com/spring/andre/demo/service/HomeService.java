@@ -39,10 +39,9 @@ public class HomeService {
 		String fileName = file.substring(file.indexOf(" ") + 1);
 		home.setImagePath(AWS_MACHINE_ADDRESS + fileName);
 		home.setImageFileName(fileName);
-		
-		
+		homeRepository.save(home);
 		log.info("New home created with this properties: " + home.toString());
-		return homeRepository.save(home);
+		return home;
 	}
 
 	public void deleteHome(Long id) {
@@ -53,7 +52,12 @@ public class HomeService {
 
 	public Iterable<Home> getAllHomes() {
 		log.info("Fetching all homes");
-		return homeRepository.findAll();
+		try {
+			return homeRepository.findAll();
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de procurar todas as casas", e);
+		}
+		return null;
 	}
 
 	public List<Home> getHome(String id) {
@@ -73,7 +77,7 @@ public class HomeService {
 		log.info("Updating home with this id: " + id);
 		ArrayList<Home> home = homeRepository.findOne(id);
 		Home homeUpdated = new Home(home.get(0).getId(), homeDTO);
-		log.info("Finished updating home with this id: " + id);
 		homeRepository.save(homeUpdated);
+		log.info("Finished updating home with this id: " + id);
 	}
 }

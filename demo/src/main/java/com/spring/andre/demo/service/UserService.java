@@ -1,5 +1,6 @@
 package com.spring.andre.demo.service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -65,10 +66,10 @@ public class UserService {
 		User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
 				passwordEncoder().encode(userDTO.getPassword()), ERoleConverter.roleConverter(ERole.ROLE_USER), false);
 
-		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " "
-				+ userDTO.getEmail());
 		user = userRepository.save(user);
 		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
+		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " "
+				+ userDTO.getEmail());
 		return user;
 	}
 
@@ -145,26 +146,35 @@ public class UserService {
 	}
 
 	public List<User> getAgents() {
+		List<User> user = new ArrayList<User>();
 		log.info("Fetching information from our agents list");
-
-		List<User> user = userRepository.getAgents();
-
+		try {
+			user = userRepository.getAgents();
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de procura de agents", e);
+		}
 		log.info("Finished fetching information for our agents list");
 		return user;
 	}
 
 	public void activeAccount(String uuid) {
 		log.info("Activating account for user: " + uuid);
-
-		userRepository.activeAccount(uuid);
-
+		try {
+			userRepository.activeAccount(uuid);
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de ativação de conta", e);
+		}
 		log.info("Finished activating account for user: " + uuid);
-
 	}
 
 	public User getAgentDetail(String name, String id) {
 		log.info("Getting details from agent with name: " + name);
-		return userRepository.getAgentDetail(name, id);
+		try {
+			return userRepository.getAgentDetail(name, id);
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de detalhes do agente", e);
+		}
+		return null;
 	}
 
 }
