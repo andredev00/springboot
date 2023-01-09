@@ -14,8 +14,6 @@ public class Home {
 	@Id
 	@Column(name = "id")
 	private String id;
-	@Column(name = "parameterValue")
-	private int parameterValue;
 	@Column(name = "location")
 	private String location;
 	@Column(name = "price")
@@ -68,14 +66,6 @@ public class Home {
 		this.id = id;
 	}
 	
-	public int getParameterValue() {
-		return parameterValue;
-	}
-
-	public void setParameterValue(int parameterValue) {
-		this.parameterValue = parameterValue;
-	}
-
 	public String getLocation() {
 		return location;
 	}

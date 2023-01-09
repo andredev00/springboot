@@ -2,7 +2,6 @@ package com.spring.andre.demo.service;
 
 import static com.spring.andre.demo.utils.Constants.AWS_MACHINE_ADDRESS;
 import static com.spring.andre.demo.utils.Utils.formatterPriceEuro;
-import static com.spring.andre.demo.utils.Utils.generateRandomInt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +31,6 @@ public class HomeService {
 	public Home registerHome(HomeDTO homeDTO, MultipartFile multiPartfile) {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
-		home.setParameterValue(generateRandomInt());
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
 		
 		String file = amazonService.uploadFile(multiPartfile);

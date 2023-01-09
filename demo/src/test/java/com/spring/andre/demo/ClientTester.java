@@ -2,6 +2,7 @@ package com.spring.andre.demo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -33,7 +34,8 @@ public class ClientTester {
 			User user = new User(UUID.randomUUID().toString(), names[i], emails[i], passwordEncoder().encode("teste"),
 					"USER", true);
 			userRepository.save(user);
-			assertEquals(names[i], user.getName());
+			Optional<User> expectedUser = userRepository.findByEmail(emails[i]);
+			assertEquals(user.getName(), expectedUser.get().getEmail());
 		}
 	}
 }

@@ -22,7 +22,7 @@ public class User {
 	@Column(name = "name")
 	@Nationalized
 	private String name;
-	@Column(name = "email")
+	@Column(name = "email", unique = true)
 	@Nationalized
 	private String email;
 	@Column(name = "county")
