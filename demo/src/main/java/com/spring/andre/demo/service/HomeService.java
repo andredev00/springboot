@@ -1,6 +1,6 @@
 package com.spring.andre.demo.service;
 
-import static com.spring.andre.demo.utils.Constants.AWS_MACHINE_ADDRESS;
+import static com.spring.andre.demo.utils.Constants.AWS_MACHINE_ADDRESS_HOME_IMAGE;
 import static com.spring.andre.demo.utils.Utils.formatterPriceEuro;
 
 import java.util.ArrayList;
@@ -15,16 +15,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.andre.demo.dto.HomeDTO;
 import com.spring.andre.demo.model.Home;
-import com.spring.andre.demo.repository.HomeRepository;;
+import com.spring.andre.demo.repository.HomeRepository;
 
 @Component
 public class HomeService {
 
 	private static final Logger log = LoggerFactory.getLogger(HomeService.class);
-	
+
 	@Autowired
 	HomeRepository homeRepository;
-	
+
 	@Autowired
 	AmazonService amazonService;
 
@@ -32,10 +32,10 @@ public class HomeService {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
-		
+
 		String file = amazonService.uploadFile(multiPartfile);
 		String fileName = file.substring(file.indexOf(" ") + 1);
-		home.setImagePath(AWS_MACHINE_ADDRESS + fileName);
+		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
 		home.setImageFileName(fileName);
 		homeRepository.save(home);
 		log.info("New home created with this properties: " + home.toString());
@@ -67,7 +67,7 @@ public class HomeService {
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de procurar da casa", e);
 		}
-		
+
 		return home;
 	}
 

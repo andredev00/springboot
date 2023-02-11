@@ -25,13 +25,13 @@ public class AmazonService {
 
 	private AmazonS3 s3client;
 
-	@Value("${amazonProperties.endpointUrl}")
+	@Value("${amazonPropertiesHome.endpointUrl}")
 	private String endpointUrl;
-	@Value("${amazonProperties.bucketName}")
+	@Value("${amazonPropertiesHome.bucketName}")
 	private String bucketName;
-	@Value("${amazonProperties.accessKey}")
+	@Value("${amazonPropertiesHome.accessKey}")
 	private String accessKey;
-	@Value("${amazonProperties.secretKey}")
+	@Value("${amazonPropertiesHome.secretKey}")
 	private String secretKey;
 
 	@PostConstruct

@@ -45,5 +45,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select h from User h where h.name = :#{#name} and h.id = :#{#id}")
 	User getAgentDetail(@Param("name") String name, @Param("id") String id);
+
+	@Transactional
+	@Query("select u.imageFileName from User u where u.id = :uuid")
+	String getProfileImage(String uuid);
 	
 }

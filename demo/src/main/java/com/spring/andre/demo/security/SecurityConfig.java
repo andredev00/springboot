@@ -1,7 +1,5 @@
 package com.spring.andre.demo.security;
 
-import static com.spring.andre.demo.utils.Utils.Security.WHITELIST;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +13,13 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.header.writers.StaticHeadersWriter;
 
-import com.spring.andre.demo.repository.UserRepository;
-import com.spring.andre.demo.service.MyUserDetailsService;;
+import com.spring.andre.demo.service.MyUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	@Autowired
-	private UserRepository userRepository;
 	@Autowired
 	private JWTFilter filter;
 	@Autowired
@@ -39,8 +33,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable().httpBasic().disable().authorizeRequests().antMatchers(WHITELIST).permitAll().and()
-				.userDetailsService(uds).exceptionHandling()
+		http.csrf().disable().httpBasic().disable().authorizeRequests()
+				.antMatchers("/sign-up/client", "/sign-up/user", "/swagger-ui.html", "/swagger-ui/", "/swagger-ui",
+						"/login", "/swagger-ui/") //TODO, alterar para uma array 
+				.permitAll().and().userDetailsService(uds).exceptionHandling()
 				.authenticationEntryPoint((request, response, authException) -> response
 						.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized"))
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);

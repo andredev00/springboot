@@ -7,8 +7,15 @@ import javax.persistence.Table;
 
 import com.spring.andre.demo.dto.HomeDTO;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 @Entity
 @Table(name = "Home")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Home {
 
 	@Id
@@ -39,10 +46,6 @@ public class Home {
 	@Column(name="imageFileName")
 	private String imageFileName;
 
-	public Home() {
-
-	}
-
 	public Home(String id, HomeDTO homeDto) {
 		super();
 		this.id = id;
@@ -58,110 +61,6 @@ public class Home {
 		this.homeType = homeDto.getHomeType();
 	}
 	
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-	
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getPrice() {
-		return price;
-	}
-
-	public void setPrice(String price) {
-		this.price = price;
-	}
-
-	public String getLotTotal() {
-		return lotTotal;
-	}
-
-	public void setLotTotal(String lotTotal) {
-		this.lotTotal = lotTotal;
-	}
-
-	public int getRoom() {
-		return room;
-	}
-
-	public void setRoom(int room) {
-		this.room = room;
-	}
-
-	public String getFloor() {
-		return floor;
-	}
-
-	public void setFloor(String floor) {
-		this.floor = floor;
-	}
-
-	public int getConstructionYear() {
-		return constructionYear;
-	}
-
-	public void setConstructionYear(int constructionYear) {
-		this.constructionYear = constructionYear;
-	}
-
-	public int getWcs() {
-		return wcs;
-	}
-
-	public void setWcs(int wcs) {
-		this.wcs = wcs;
-	}
-
-	public boolean getParking() {
-		return parking;
-	}
-
-	public void setParking(boolean parking) {
-		this.parking = parking;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public String getHomeType() {
-		return homeType;
-	}
-
-	public void setHomeType(String homeType) {
-		this.homeType = homeType;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public String getImageFileName() {
-		return imageFileName;
-	}
-
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
-
 	@Override
 	public String toString() {
 		return "location: " + this.location + " + " + "price: " + this.price + " + " + "lotTotal: "

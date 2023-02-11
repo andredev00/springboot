@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,7 +25,6 @@ import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.service.UserService;
 
-
 @RestController
 public class UserController {
 
@@ -34,46 +32,47 @@ public class UserController {
 	UserService userService;
 
 	@PostMapping(value = "/sign-up/client")
-	public User registerClient(@RequestBody UserDTO userDTO) throws MessagingException {
-		return userService.registerClient(userDTO);
+	public User registerClient(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile multiPartFile)
+			throws MessagingException {
+		return userService.registerClient(userDTO, multiPartFile);
 	}
 
 	@PostMapping(value = "/sign-up/user")
-	public User registerUser(@RequestBody UserDTO userDTO) throws MessagingException {
-		return userService.registerUser(userDTO);
-	}
-	
-	@PutMapping(value = "/edit")
-	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file, @RequestParam String id) {
-		return userService.editUser(userDTO, file, id);
-	}
-	
-	@PutMapping(value = "/reset/pass")
-	public void resetPassword(@RequestParam String password, @RequestParam String uuid) {
-		 userService.resetPassword(password, uuid);
+	public User registerUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile multiPartFile)
+			throws MessagingException {
+		return userService.registerUser(userDTO, multiPartFile);
 	}
 
-	// generic login for user and client
+	@PutMapping(value = "/edit")
+	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file,
+			@RequestParam String id) {
+		return userService.editUser(userDTO, file, id);
+	}
+
+	@PutMapping(value = "/reset/pass")
+	public void resetPassword(@RequestParam String password, @RequestParam String uuid) {
+		userService.resetPassword(password, uuid);
+	}
+
 	@PostMapping("/login")
-	public Map<String,Object> login(@RequestBody LoginCredentials body, HttpServletResponse response) {
+	public Map<String, Object> login(@RequestBody LoginCredentials body) {
 		try {
-			return userService.login(body, response);			
+			return userService.login(body);
 		} catch (Exception e) {
-			throw new ResponseStatusException(
-			          HttpStatus.NOT_FOUND, "User Not Found", e);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found", e);
 		}
 	}
-	
+
 	@GetMapping("/agents")
 	public List<User> getAgents() {
 		return userService.getAgents();
 	}
-	
+
 	@GetMapping("/agent/{name}/{id}")
 	public User agentDetails(@RequestParam String name, @RequestParam String id) {
 		return userService.getAgentDetail(name, id);
 	}
-	
+
 	@RequestMapping("/active/account/{uuid}")
 	public void activeAccount(@PathVariable("uuid") String uuid) {
 		userService.activeAccount(uuid);

@@ -1,5 +1,7 @@
 package com.spring.andre.demo.service;
 
+import static com.spring.andre.demo.utils.Constants.AWS_MACHINE_ADDRESS_PROFILE_IMAGE;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -8,11 +10,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 import javax.mail.MessagingException;
-import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -30,11 +32,21 @@ import com.spring.andre.demo.repository.UserRepository;
 import com.spring.andre.demo.security.JWTUtil;
 import com.spring.andre.demo.utils.ERoleConverter;
 
+
 @Component
 public class UserService {
 
 	private static final Logger log = LoggerFactory.getLogger(UserService.class);
-
+	
+	@Value("${amazonPropertiesProfile.endpointUrl}")
+	private String endpointUrl;
+	@Value("${amazonPropertiesProfile.bucketName}")
+	private String bucketName;
+	@Value("${amazonPropertiesProfile.accessKey}")
+	private String accessKey;
+	@Value("${amazonPropertiesProfile.secretKey}")
+	private String secretKey;
+	
 	@Autowired
 	UserRepository userRepository;
 
@@ -54,64 +66,70 @@ public class UserService {
 		return new BCryptPasswordEncoder();
 	}
 
-	public User registerClient(UserDTO userDTO) throws MessagingException {
+	public User registerClient(UserDTO userDTO, MultipartFile multiPartFile) throws MessagingException {
 		log.info("Creating a new client {}: " + userDTO.getName() + " " + userDTO.getEmail());
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
-		if(!userExists.isEmpty()) {
-			return null;
-		}
-	
-		User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
-				passwordEncoder().encode(userDTO.getPassword()), ERoleConverter.roleConverter(ERole.ROLE_USER), false);
-
-		user = userRepository.save(user);
-		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
-		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " "
-				+ userDTO.getEmail());
-		return user;
-	}
-
-	public User registerUser(UserDTO userDTO) throws MessagingException {
-		log.info("Croeating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
-				+ userDTO.getPassword());
-
-		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
-		
 		if (!userExists.isEmpty()) {
 			return null;
 		}
 
-		User user = new User(UUID.randomUUID().toString(), userDTO.getName(), userDTO.getEmail(),
-				passwordEncoder().encode(userDTO.getPassword()), ERoleConverter.roleConverter(ERole.ROLE_ADMIN), false);
+		User user = new User(userDTO);
+		user.setId(UUID.randomUUID().toString());
+		user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_USER));
+		String file = amazonService.uploadFile(multiPartFile);
+		String fileName = file.substring(file.indexOf(" ") + 1);
+		user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
+		user.setImageFileName(fileName);
+		
+		user = userRepository.save(user);
+		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
+		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " " + userDTO.getEmail());
+		return user;
+	}
 
-		log.info("Finished creating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail()
-				+ " " + userDTO.getPassword());
+	public User registerUser(UserDTO userDTO, MultipartFile multiPartFile) throws MessagingException {
+		log.info("Croeating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
+				+ userDTO.getPassword());
+
+		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
+
+		if (!userExists.isEmpty()) {
+			return null;
+		}
+
+		User user = new User(userDTO);
+		user.setId(UUID.randomUUID().toString());
+		user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_ADMIN));
+		String file = amazonService.uploadFile(multiPartFile);
+		String fileName = file.substring(file.indexOf(" ") + 1);
+		user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
+		user.setImageFileName(fileName);
+		
+		log.info("Finished creating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
+				+ userDTO.getPassword());
 		user = userRepository.save(user);
 		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
 		return user;
 	}
 
-	// TODO, this is here because all the authentication logic with be refactor, for
-	// using only one object/entity, avoiding repeating code
-	public Map<String, Object> login(LoginCredentials body, HttpServletResponse response) {
+	public Map<String, Object> login(LoginCredentials body) {
 		String permissions = "";
 		String personName = "";
-		UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(
-				body.getEmail(), body.getPassword());
+		UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.getEmail(),
+				body.getPassword());
 		try {
 			authenticationManager.authenticate(authInputToken);
 		} catch (AuthenticationException e) {
-			throw new ResponseStatusException(
-			          HttpStatus.NOT_FOUND, "User Not Found", e);
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User Not Found", e);
 		}
 		Optional<User> userExists = userRepository.findByEmail(body.getEmail());
 		if (userExists.isPresent()) {
 			permissions = userExists.get().getPermissions();
 			personName = userExists.get().getName();
 			String token = jwtUtil.generateToken(body.getEmail(), permissions, personName);
-			
+
 			return Collections.singletonMap("jwt", token);
 		}
 		return null;
@@ -146,10 +164,10 @@ public class UserService {
 	}
 
 	public List<User> getAgents() {
-		List<User> user = new ArrayList<User>();
+		List<User> user = new ArrayList<>();
 		log.info("Fetching information from our agents list");
 		try {
-			user = userRepository.getAgents();
+			return user = userRepository.getAgents();
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de procura de agents", e);
 		}
@@ -177,4 +195,14 @@ public class UserService {
 		return null;
 	}
 
+	public String getProfileImage(String uuid) {
+		log.info("Procurar imagem de profile do utilizador: " + uuid);
+		try {
+			return userRepository.getProfileImage(uuid);
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de ativação de conta", e);
+		}
+		return null;
+	}
+	
 }
