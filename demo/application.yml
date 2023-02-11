@@ -1,9 +1,9 @@
 amazonProperties:
-    endpointUrl: https://s3.us-east-2.amazonaws.com
-    accessKey: AKIAU3LSQWSZF5FTKGD6
-    secretKey: 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
-    bucketName: spring-boot-imobiliaria-images-upload
-
+    endpointUrl: https://s3.us-east-2.amazonaws.com/
+    accessKey: AKIA5ROXX3QDJRF4UXO6
+    secretKey: 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
+    bucketName: my-bucket-image-spring
+    
 spring:
     mail:
         default-encoding: UTF-8

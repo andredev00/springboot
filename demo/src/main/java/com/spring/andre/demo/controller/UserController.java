@@ -46,7 +46,7 @@ public class UserController {
 	@PutMapping(value = "/edit")
 	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file,
 			@RequestParam String id) {
-		return userService.editUser(userDTO, file, id);
+		return userService.editUser(userDTO, file, id); //TODO, this method is not working
 	}
 
 	@PutMapping(value = "/reset/pass")

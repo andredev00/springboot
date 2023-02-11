@@ -19,20 +19,21 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
+import com.spring.andre.demo.dto.HomeDTO;
 
 @Service
 public class AmazonService {
-
+	
 	private AmazonS3 s3client;
 
-	@Value("${amazonPropertiesHome.endpointUrl}")
+	@Value("${amazonProperties.endpointUrl}")
 	private String endpointUrl;
-	@Value("${amazonPropertiesHome.bucketName}")
+	@Value("${amazonProperties.bucketName}")
 	private String bucketName;
-	@Value("${amazonPropertiesHome.accessKey}")
+	@Value("${amazonProperties.accessKey}")
 	private String accessKey;
-	@Value("${amazonPropertiesHome.secretKey}")
-	private String secretKey;
+	@Value("${amazonProperties.secretKey}")
+	private String secretKey;	
 
 	@PostConstruct
 	private void initializeAmazon() {
@@ -48,8 +49,8 @@ public class AmazonService {
 		return convFile;
 	}
 
-	private String generateFileName(MultipartFile multiPart) {
-		return new Date().getTime() + "-" + multiPart.getOriginalFilename().replace(" ", "_");
+	private String generateFileName(MultipartFile multiPart, String id) {
+		return  id + "-" + multiPart.getOriginalFilename().replace(" ", "_") + new Date().getTime();
 	}
 
 	private void uploadFileTos3bucket(String fileName, File file) {
@@ -57,12 +58,12 @@ public class AmazonService {
 				new PutObjectRequest(bucketName, fileName, file).withCannedAcl(CannedAccessControlList.PublicRead));
 	}
 
-	public String uploadFile(MultipartFile multipartFile) {
+	public String uploadFile(MultipartFile multipartFile, String id) {
 		String fileUrl = "";
 		String fileName = "";
 		try {
 			File file = convertMultiPartToFile(multipartFile);
-			fileName = generateFileName(multipartFile);
+			fileName = generateFileName(multipartFile, id);
 			fileUrl = endpointUrl + "/" + bucketName + "/" + fileName;
 			uploadFileTos3bucket(fileName, file);
 			file.delete();

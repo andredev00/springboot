@@ -33,10 +33,14 @@ public class HomeService {
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
 
-		String file = amazonService.uploadFile(multiPartfile);
+		String file = amazonService.uploadFile(multiPartfile, home.getId());
 		String fileName = file.substring(file.indexOf(" ") + 1);
 		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
 		home.setImageFileName(fileName);
+		
+		//TODO, need to verify the id that is recieved from homeDTO, and validate if the user (agent) exists
+		//TODO, need to create a query to validate if the user exists and if  it is a agent
+		
 		homeRepository.save(home);
 		log.info("New home created with this properties: " + home.toString());
 		return home;

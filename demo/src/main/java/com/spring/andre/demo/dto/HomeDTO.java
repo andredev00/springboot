@@ -1,7 +1,11 @@
 package com.spring.andre.demo.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class HomeDTO {
 	
 	private String location;
@@ -18,77 +22,5 @@ public class HomeDTO {
 	private String imagePath;
 	@ApiModelProperty(hidden = true)
 	private String imageFileName;
-	
-	public String getLocation() {
-		return location;
-	}
-	public void setLocation(String location) {
-		this.location = location;
-	}
-	public String getPrice() {
-		return price;
-	}
-	public void setPrice(String price) {
-		this.price = price;
-	}
-	public String getLotTotal() {
-		return lotTotal;
-	}
-	public void setLotTotal(String lotTotal) {
-		this.lotTotal = lotTotal;
-	}
-	public int getRoom() {
-		return room;
-	}
-	public void setRoom(int room) {
-		this.room = room;
-	}
-	public String getFloor() {
-		return floor;
-	}
-	public void setFloor(String floor) {
-		this.floor = floor;
-	}
-	public int getConstructionYear() {
-		return constructionYear;
-	}
-	public void setConstructionYear(int constructionYear) {
-		this.constructionYear = constructionYear;
-	}
-	public int getWcs() {
-		return wcs;
-	}
-	public void setWcs(int wcs) {
-		this.wcs = wcs;
-	}
-	public Boolean getParking() {
-		return parking;
-	}
-	public void setParking(Boolean parking) {
-		this.parking = parking;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public String getHomeType() {
-		return homeType;
-	}
-	public void setHomeType(String homeType) {
-		this.homeType = homeType;
-	}
-	public String getImagePath() {
-		return imagePath;
-	}
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-	public String getImageFileName() {
-		return imageFileName;
-	}
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
-	}
+	private String userId;
 }

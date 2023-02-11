@@ -14,7 +14,6 @@ import javax.mail.MessagingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,21 +31,11 @@ import com.spring.andre.demo.repository.UserRepository;
 import com.spring.andre.demo.security.JWTUtil;
 import com.spring.andre.demo.utils.ERoleConverter;
 
-
 @Component
 public class UserService {
 
 	private static final Logger log = LoggerFactory.getLogger(UserService.class);
-	
-	@Value("${amazonPropertiesProfile.endpointUrl}")
-	private String endpointUrl;
-	@Value("${amazonPropertiesProfile.bucketName}")
-	private String bucketName;
-	@Value("${amazonPropertiesProfile.accessKey}")
-	private String accessKey;
-	@Value("${amazonPropertiesProfile.secretKey}")
-	private String secretKey;
-	
+
 	@Autowired
 	UserRepository userRepository;
 
@@ -78,11 +67,11 @@ public class UserService {
 		User user = new User(userDTO);
 		user.setId(UUID.randomUUID().toString());
 		user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_USER));
-		String file = amazonService.uploadFile(multiPartFile);
+		String file = amazonService.uploadFile(multiPartFile, user.getId());
 		String fileName = file.substring(file.indexOf(" ") + 1);
 		user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
 		user.setImageFileName(fileName);
-		
+
 		user = userRepository.save(user);
 		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
 		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " " + userDTO.getEmail());
@@ -102,11 +91,11 @@ public class UserService {
 		User user = new User(userDTO);
 		user.setId(UUID.randomUUID().toString());
 		user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_ADMIN));
-		String file = amazonService.uploadFile(multiPartFile);
+		String file = amazonService.uploadFile(multiPartFile, user.getId());
 		String fileName = file.substring(file.indexOf(" ") + 1);
 		user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
 		user.setImageFileName(fileName);
-		
+
 		log.info("Finished creating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
 				+ userDTO.getPassword());
 		user = userRepository.save(user);
@@ -141,7 +130,7 @@ public class UserService {
 		User userExists = userRepository.findByGuid(id);
 
 		if (userExists.getId() != null || !userExists.getId().equals("")) {
-			String file = amazonService.uploadFile(multipartFile);
+			String file = amazonService.uploadFile(multipartFile, userExists.getId());
 			String fileName = file.substring(file.indexOf(" ") + 1);
 			User user = new User(userDTO);
 			user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
@@ -204,5 +193,5 @@ public class UserService {
 		}
 		return null;
 	}
-	
+
 }

@@ -3,6 +3,8 @@ package com.spring.andre.demo.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.spring.andre.demo.dto.HomeDTO;
@@ -45,6 +47,10 @@ public class Home {
 	private String imagePath;
 	@Column(name="imageFileName")
 	private String imageFileName;
+	
+	@ManyToOne
+	@JoinColumn(name="id_user", nullable=false)
+	private User user;
 
 	public Home(String id, HomeDTO homeDto) {
 		super();
