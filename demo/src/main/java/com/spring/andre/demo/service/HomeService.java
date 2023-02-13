@@ -45,7 +45,7 @@ public class HomeService {
 		
 		if (homeDTO.getUser() != null && !homeDTO.getUser().getId().isEmpty()) {
 			User user = userRepository.findByGuid(homeDTO.getUser().getId());
-			if(user != null) {
+			if(user != null) { //TODO, tenho que validar se o utilizador existente é um agente
 				homeRepository.save(home);
 				log.info("New home created with this properties: " + home.toString());
 				
