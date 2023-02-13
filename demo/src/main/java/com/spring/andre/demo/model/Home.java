@@ -47,6 +47,8 @@ public class Home {
 	private String imagePath;
 	@Column(name="imageFileName")
 	private String imageFileName;
+	@Column(name="houseBusinessState")
+	private String houseBusinessState;
 	
 	@ManyToOne
 	@JoinColumn(name="id_user", nullable=false)
@@ -65,15 +67,17 @@ public class Home {
 		this.parking = homeDto.getParking();
 		this.description = homeDto.getDescription();
 		this.homeType = homeDto.getHomeType();
+		this.houseBusinessState = homeDto.getHouseBusinessState();
 	}
 	
 	@Override
 	public String toString() {
-		return "location: " + this.location + " + " + "price: " + this.price + " + " + "lotTotal: "
-				+ this.lotTotal + " + " + "room: " + this.room + " + " + "floor" + this.floor + " + "
-				+ "constructionYear: " + this.constructionYear + " + " + "wcs: " + this.wcs + " + " + "parking: "
-				+ this.parking + " + " + "description: " + this.description + " + " + "homeType: " + this.homeType
-				+ " + " + "imagePath: " + this.imagePath + " + " + "imageFileName: " + this.imageFileName;
+		return "location: " + this.location + " + " + "price: " + this.price + " + " + "lotTotal: " + this.lotTotal
+				+ " + " + "room: " + this.room + " + " + "floor" + this.floor + " + " + "constructionYear: "
+				+ this.constructionYear + " + " + "wcs: " + this.wcs + " + " + "parking: " + this.parking + " + "
+				+ "description: " + this.description + " + " + "homeType: " + this.homeType + " + " + "imagePath: "
+				+ this.imagePath + " + " + "imageFileName: " + this.imageFileName + " + " + "houseBusinessState: "
+				+ this.houseBusinessState;
 	}
 	
 }

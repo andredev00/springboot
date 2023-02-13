@@ -15,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.andre.demo.dto.HomeDTO;
 import com.spring.andre.demo.model.Home;
+import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.repository.HomeRepository;
+import com.spring.andre.demo.repository.UserRepository;
 
 @Component
 public class HomeService {
@@ -24,6 +26,9 @@ public class HomeService {
 
 	@Autowired
 	HomeRepository homeRepository;
+	
+	@Autowired
+	UserRepository userRepository;
 
 	@Autowired
 	AmazonService amazonService;
@@ -38,11 +43,14 @@ public class HomeService {
 		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
 		home.setImageFileName(fileName);
 		
-		//TODO, need to verify the id that is recieved from homeDTO, and validate if the user (agent) exists
-		//TODO, need to create a query to validate if the user exists and if  it is a agent
-		
-		homeRepository.save(home);
-		log.info("New home created with this properties: " + home.toString());
+		if (homeDTO.getUser() != null && !homeDTO.getUser().getId().isEmpty()) {
+			User user = userRepository.findByGuid(homeDTO.getUser().getId());
+			if(user != null) {
+				homeRepository.save(home);
+				log.info("New home created with this properties: " + home.toString());
+				
+			}
+		}
 		return home;
 	}
 
