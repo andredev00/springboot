@@ -1,5 +1,11 @@
 package com.spring.andre.demo.service;
 
+import static com.spring.andre.demo.utils.Constants.EMAIL_SENDER;
+import static com.spring.andre.demo.utils.Constants.RESET_EMAIL_SUBJECT;
+import static com.spring.andre.demo.utils.Constants.RESET_EMAIL_TEMPLATE;
+import static com.spring.andre.demo.utils.Constants.WELCOME_EMAIL_SUBJECT;
+import static com.spring.andre.demo.utils.Constants.WELCOME_EMAIL_TEMPLATE;
+
 import java.nio.charset.StandardCharsets;
 
 import javax.mail.MessagingException;
@@ -16,7 +22,6 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import com.spring.andre.demo.model.Email;
-import com.spring.andre.demo.utils.Constants;
 
 @Service
 public class EmailSenderService {
@@ -34,13 +39,13 @@ public class EmailSenderService {
 		Context context = new Context();
 		context.setVariable("url", url);
 		context.setVariable("name", name);
-		helper.setFrom(Constants.EMAIL_SENDER);
+		helper.setFrom(EMAIL_SENDER);
 		helper.setTo(email);
-		helper.setSubject(Constants.WELCOME_EMAIL_SUBJECT);
-		String html = templateEngine.process(Constants.WELCOME_EMAIL_TEMPLATE, context);
+		helper.setSubject(WELCOME_EMAIL_SUBJECT);
+		String html = templateEngine.process(WELCOME_EMAIL_TEMPLATE, context);
 		helper.setText(html, true);
 
-		log.info("Sending register email: {} with html body: {}", Constants.WELCOME_EMAIL_TEMPLATE, html);
+		log.info("Sending register email: {} with html body: {}", WELCOME_EMAIL_TEMPLATE, html);
 		emailSender.send(message);
 	}
 	
@@ -51,13 +56,13 @@ public class EmailSenderService {
 		Context context = new Context();
 		context.setVariable("url", url);
 		context.setVariable("name", name);
-		helper.setFrom(Constants.EMAIL_SENDER);
+		helper.setFrom(EMAIL_SENDER);
 		helper.setTo(email);
-		helper.setSubject(Constants.WELCOME_EMAIL_SUBJECT);
-		String html = templateEngine.process(Constants.RESET_EMAIL_TEMPLATE, context);
+		helper.setSubject(RESET_EMAIL_SUBJECT);
+		String html = templateEngine.process(RESET_EMAIL_TEMPLATE, context);
 		helper.setText(html, true);
 
-		log.info("Sending reset email: {} with html body: {}", Constants.RESET_EMAIL_TEMPLATE, html);
+		log.info("Sending reset email: {} with html body: {}", RESET_EMAIL_TEMPLATE, html);
 		emailSender.send(message);
 
 	}

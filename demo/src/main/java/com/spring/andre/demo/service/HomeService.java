@@ -1,6 +1,5 @@
 package com.spring.andre.demo.service;
 
-import static com.spring.andre.demo.utils.Constants.AWS_MACHINE_ADDRESS_HOME_IMAGE;
 import static com.spring.andre.demo.utils.Utils.formatterPriceEuro;
 
 import java.util.ArrayList;
@@ -33,18 +32,18 @@ public class HomeService {
 	@Autowired
 	AmazonService amazonService;
 
-	public Home registerHome(HomeDTO homeDTO, MultipartFile multiPartfile) {
+	public Home registerHome(HomeDTO homeDTO, MultipartFile multiPartfile, String userId) {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
 
-		String file = amazonService.uploadFile(multiPartfile, home.getId());
-		String fileName = file.substring(file.indexOf(" ") + 1);
-		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
-		home.setImageFileName(fileName);
-		
+//		String file = amazonService.uploadFile(multiPartfile, home.getId());
+//		String fileName = file.substring(file.indexOf(" ") + 1);
+//		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
+//		home.setImageFileName(fileName);
+			
 		if (homeDTO.getUser() != null && !homeDTO.getUser().getId().isEmpty()) {
-			User user = userRepository.findByGuid(homeDTO.getUser().getId());
+			User user = userRepository.findById(userId);
 			if(user != null) { //TODO, tenho que validar se o utilizador existente é um agente
 				homeRepository.save(home);
 				log.info("New home created with this properties: " + home.toString());

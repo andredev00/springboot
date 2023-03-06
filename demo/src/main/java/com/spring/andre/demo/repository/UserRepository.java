@@ -28,9 +28,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	void updateUser(@Param("user") User user, @Param("id") String id);
 	
 	
-	@Transactional
-	@Query("select u from User u where u.id = :#{#id}")
-	User findByGuid(@Param("id") String id);
+//	@Transactional
+//	@Query("select u from User u where u.id = :#{#id}")
+	User findById(String uuid);
 	
 	@Transactional
 	@Modifying(clearAutomatically = true)

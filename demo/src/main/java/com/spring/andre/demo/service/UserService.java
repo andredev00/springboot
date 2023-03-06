@@ -60,7 +60,7 @@ public class UserService {
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
-		if (!userExists.isEmpty()) {
+		if (!userExists.isPresent()) {
 			return null;
 		}
 
@@ -84,7 +84,7 @@ public class UserService {
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
-		if (!userExists.isEmpty()) {
+		if (!userExists.isPresent()) {
 			return null;
 		}
 
@@ -127,8 +127,8 @@ public class UserService {
 	public User editUser(UserDTO userDTO, MultipartFile multipartFile, String id) {
 		log.info("Updating information for user: " + userDTO.getEmail());
 
-		User userExists = userRepository.findByGuid(id);
-
+		User userExists = userRepository.findById(id);
+		
 		if (userExists.getId() != null || !userExists.getId().equals("")) {
 			String file = amazonService.uploadFile(multipartFile, userExists.getId());
 			String fileName = file.substring(file.indexOf(" ") + 1);
