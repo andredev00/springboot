@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.andre.demo.dto.HomeDTO;
+import com.spring.andre.demo.enums.ERole;
 import com.spring.andre.demo.model.Home;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.repository.HomeRepository;
@@ -22,7 +23,7 @@ import com.spring.andre.demo.repository.UserRepository;
 public class HomeService {
 
 	private static final Logger log = LoggerFactory.getLogger(HomeService.class);
-
+	
 	@Autowired
 	HomeRepository homeRepository;
 	
@@ -32,7 +33,7 @@ public class HomeService {
 	@Autowired
 	AmazonService amazonService;
 
-	public Home registerHome(HomeDTO homeDTO, MultipartFile multiPartfile, String userId) {
+	public void registerHome(HomeDTO homeDTO, MultipartFile multiPartfile, String userId) {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
@@ -42,15 +43,13 @@ public class HomeService {
 //		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
 //		home.setImageFileName(fileName);
 			
-		if (homeDTO.getUser() != null && !homeDTO.getUser().getId().isEmpty()) {
-			User user = userRepository.findById(userId);
-			if(user != null) { //TODO, tenho que validar se o utilizador existente é um agente
-				homeRepository.save(home);
-				log.info("New home created with this properties: " + home.toString());
-				
-			}
+		User user = userRepository.findById(userId);
+		if (user != null && user.getPermissions().equals("ADMIN")) {
+			home.setUser(user);
+			homeRepository.save(home);
+			log.info("New home created with this properties: " + home.toString());
+
 		}
-		return home;
 	}
 
 	public void deleteHome(Long id) {

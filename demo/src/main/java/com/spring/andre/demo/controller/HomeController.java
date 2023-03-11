@@ -25,8 +25,8 @@ public class HomeController {
 	HomeService homeService;
 
 	@PostMapping(value = "/register/home", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Home registerHome(@ModelAttribute HomeDTO homeDTO, @RequestPart("file") MultipartFile file, String userId){
-	    return homeService.registerHome(homeDTO, file, userId);
+    public void registerHome(@ModelAttribute HomeDTO homeDTO, @RequestPart("file") MultipartFile file, String userId){
+	    homeService.registerHome(homeDTO, file, userId);
     }
 	
 	@DeleteMapping(value = "/delete/{id}")

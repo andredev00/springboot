@@ -1,7 +1,5 @@
 package com.spring.andre.demo.dto;
 
-import com.spring.andre.demo.model.User;
-
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,6 +22,5 @@ public class HomeDTO {
 	private String imagePath;
 	@ApiModelProperty(hidden = true)
 	private String imageFileName;
-	private User user;
 	private String houseBusinessState;
 }
