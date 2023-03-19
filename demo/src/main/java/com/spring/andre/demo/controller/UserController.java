@@ -78,8 +78,18 @@ public class UserController {
 		userService.activeAccount(uuid);
 	}
 	
-	@GetMapping("/distinct/users")
-	public List<User> getDistinctUsers(){
+	@GetMapping("/distinct/users/counties")
+	public List<String> getDistinctUsers(){
 		return userService.getDistinctUsers();
+	}
+	
+	@GetMapping("/distinct/users/name")
+	public List<String> getDistinctName(){
+		return userService.getDistinctName();
+	}
+	
+	@GetMapping("/distinct/users/agentType")
+	public List<String> getDistinctAgentType(){
+		return userService.getDistinctAgentType();
 	}
 }

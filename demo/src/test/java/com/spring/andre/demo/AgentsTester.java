@@ -1,4 +1,5 @@
 package com.spring.andre.demo;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.UUID;
@@ -13,15 +14,14 @@ import com.spring.andre.demo.repository.UserRepository;
 
 @SpringBootTest
 class AgentsTester {
-	 
+
 	@Autowired
 	UserRepository userRepository;
-	
+
 	public static BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
+
 	String[] names = { "Andre", "Pedro", "Joao", "Roberto", "Daniel", "Sandro", "Hugo", "Joaquim", "David", "Diogo",
 			"Bernardo", "Sara", "Andre", "Andre", "Andre", "Andre", "Andre", "Andre", "Andre", "Andre", "Andre",
 			"Andre", "Andre", "Andre" };
@@ -33,14 +33,18 @@ class AgentsTester {
 			"andre.ferreira4@decode.pt", "andre.ferreira5@decode.pt", "andre.ferreira6@decode.pt",
 			"andre.ferreira7@decode.pt", "andre.ferreira8@decode.pt", "andre.ferreira9@decode.pt",
 			"andre.ferreira10@decode.pt", "andre.ferreira11@decode.pt", "andre.ferreira12@decode.pt" };
-	
+	String[] county = { "Oeiras", "Carcavelos", "Odivelas", "Cascais", "Tires", "Porto", "Maia", "Aveiro", "Coimbra",
+			"Braga", "Portimão", "Carnaxide", "Queijas", "Caxias", "Belém", "Leiria", "Évora", "Portalegre", "Santarém",
+			"Castelo Branco", "Guarda", "Viseu", "Coimbra", "Vila Real" };
+
 	@Test
 	void registerAgents() {
 		User user = new User();
-		for (int i = 0; i<24; i++) {
+		for (int i = 0; i < 24; i++) {
 			user.setId(UUID.randomUUID().toString());
-			user.setName(names[i]);	
+			user.setName(names[i]);
 			user.setEmail(emails[i]);
+			user.setCounty(county[i]);
 			user.setPassword(passwordEncoder().encode("teste"));
 			user.setPermissions("ADMIN");
 			userRepository.save(user);

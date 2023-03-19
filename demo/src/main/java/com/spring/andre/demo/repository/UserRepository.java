@@ -21,6 +21,18 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select h from User h where permissions = 'ADMIN'")
 	List<User> getAgents();
+	
+	@Transactional
+	@Query("select distinct u.county FROM User u")
+	List<String> findDistinctCounty();
+	
+	@Transactional
+	@Query("select distinct u.name FROM User u")
+	List<String> findDistinctName();
+	
+	@Transactional
+	@Query("select distinct u.agentType FROM User u")
+	List<String> findDistinctAgentType();
 
 	@Transactional
 	@Modifying(clearAutomatically = true)
@@ -49,10 +61,4 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select u.imageFileName from User u where u.id = :uuid")
 	String getProfileImage(String uuid);
-
-	
-	@Transactional
-	@Query("select distinct u.county, u.language FROM User u")
-	List<User> findDistinctCounty();
-	
 }

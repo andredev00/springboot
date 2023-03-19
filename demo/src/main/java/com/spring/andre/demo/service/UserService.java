@@ -60,7 +60,7 @@ public class UserService {
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
-		if (!userExists.isPresent()) {
+		if (userExists.isPresent()) {
 			return null;
 		}
 
@@ -84,7 +84,7 @@ public class UserService {
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
-		if (!userExists.isPresent()) {
+		if (userExists.isPresent()) {
 			return null;
 		}
 
@@ -194,14 +194,36 @@ public class UserService {
 		return null;
 	}
 
-	public List<User> getDistinctUsers() {
-		List<User> user = new ArrayList<User>();
-		log.info("Pesquisar users sem repetição");
+	public List<String> getDistinctUsers() {	
+		log.info("Pesquisar os concelhos de agentes sem repetição");
 		try {
-			user =  userRepository.findDistinctCounty();
+			List<String> counties =  userRepository.findDistinctCounty();
+			return counties;
 		} catch (Exception e) {
-			log.error("Erro ao aceder ao serviço de ativação de conta", e);
+			log.error("Erro ao aceder ao serviço de concelhos de agentes", e);
 		}
-		return user;
+		return null;
+	}
+	
+	public List<String> getDistinctName(){
+		log.info("Pesquisar users names sem repetição");
+		try {
+			List<String> name = userRepository.findDistinctName();
+			return name;
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de nomes de agentes", e);
+		}
+		return null;
+	}
+
+	public List<String> getDistinctAgentType() {
+		log.info("Pesquisar users agentType sem repetição");
+		try {
+			List<String> agentType = userRepository.findDistinctAgentType();
+			return agentType;
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de agentType", e);
+		}
+		return null;
 	}
 }
