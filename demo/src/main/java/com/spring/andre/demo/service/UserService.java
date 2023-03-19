@@ -156,7 +156,7 @@ public class UserService {
 		List<User> user = new ArrayList<>();
 		log.info("Fetching information from our agents list");
 		try {
-			return user = userRepository.getAgents();
+			user = userRepository.getAgents();
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de procura de agents", e);
 		}
@@ -194,4 +194,14 @@ public class UserService {
 		return null;
 	}
 
+	public List<User> getDistinctUsers() {
+		List<User> user = new ArrayList<User>();
+		log.info("Pesquisar users sem repetição");
+		try {
+			user =  userRepository.findDistinctCounty();
+		} catch (Exception e) {
+			log.error("Erro ao aceder ao serviço de ativação de conta", e);
+		}
+		return user;
+	}
 }

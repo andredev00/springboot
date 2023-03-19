@@ -77,4 +77,9 @@ public class UserController {
 	public void activeAccount(@PathVariable("uuid") String uuid) {
 		userService.activeAccount(uuid);
 	}
+	
+	@GetMapping("/distinct/users")
+	public List<User> getDistinctUsers(){
+		return userService.getDistinctUsers();
+	}
 }

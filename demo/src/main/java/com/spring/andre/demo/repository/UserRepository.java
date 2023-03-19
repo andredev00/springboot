@@ -49,5 +49,10 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select u.imageFileName from User u where u.id = :uuid")
 	String getProfileImage(String uuid);
+
+	
+	@Transactional
+	@Query("select distinct u.county, u.language FROM User u")
+	List<User> findDistinctCounty();
 	
 }
