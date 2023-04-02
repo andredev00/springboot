@@ -29,6 +29,9 @@ public class HomeService {
 	
 	@Autowired
 	UserRepository userRepository;
+	
+	@Autowired
+	OpenAIService openAIService;
 
 	@Autowired
 	AmazonService amazonService;
@@ -42,7 +45,9 @@ public class HomeService {
 //		String fileName = file.substring(file.indexOf(" ") + 1);
 //		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
 //		home.setImageFileName(fileName);
-			
+		
+		home.setImagePath(openAIService.generateImages(homeDTO.getDescription()));
+		
 		User user = userRepository.findById(userId);
 		if (user != null && user.getPermissions().equals("ADMIN")) {
 			home.setUser(user);
