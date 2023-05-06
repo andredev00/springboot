@@ -39,9 +39,6 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Query("update User u set u.address= :#{#user.address}, u.county = :#{#user.county}, u.dateBirth = :#{#user.dateBirth}, u.imageFileName = :#{#user.imageFileName}, u.imagePath = :#{#user.imagePath}, u.language = :#{#user.language}, u.phoneNumber = :#{#user.phoneNumber}, u.agentType =  :#{#user.agentType}, u.agentSociety = :#{#user.agentSociety} where u.id = :#{#id}")
 	void updateUser(@Param("user") User user, @Param("id") String id);
 	
-	
-//	@Transactional
-//	@Query("select u from User u where u.id = :#{#id}")
 	User findById(String uuid);
 	
 	@Transactional

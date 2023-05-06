@@ -23,7 +23,7 @@ public class MyUserDetailsService implements UserDetailsService {
 	// return information about that especific user/client
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 		Optional<User> userRes = userRepository.findByEmail(email);
-		if (userRes.isEmpty())
+		if (!userRes.isPresent())
 			throw new UsernameNotFoundException("Could not findUser with email = " + email);
 
 		User user = userRes.get();

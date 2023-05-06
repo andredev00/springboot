@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.spring.andre.demo.dto.InputDto;
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
@@ -79,17 +80,17 @@ public class UserController {
 	}
 	
 	@GetMapping("/distinct/users/counties")
-	public List<String> getDistinctUsers(){
+	public List<InputDto> getDistinctUsers(){
 		return userService.getDistinctUsers();
 	}
 	
 	@GetMapping("/distinct/users/name")
-	public List<String> getDistinctName(){
+	public List<InputDto> getDistinctName(){
 		return userService.getDistinctName();
 	}
 	
 	@GetMapping("/distinct/users/agentType")
-	public List<String> getDistinctAgentType(){
+	public List<InputDto> getDistinctAgentType(){
 		return userService.getDistinctAgentType();
 	}
 }

@@ -23,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.spring.andre.demo.dto.InputDto;
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.enums.ERole;
 import com.spring.andre.demo.model.LoginCredentials;
@@ -58,10 +59,10 @@ public class UserService {
 	public User registerClient(UserDTO userDTO, MultipartFile multiPartFile) throws MessagingException {
 		log.info("Creating a new client {}: " + userDTO.getName() + " " + userDTO.getEmail());
 
-		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
-
+		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());	
+				
 		if (userExists.isPresent()) {
-			return null;
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe um user registado com o mesmo email");
 		}
 
 		User user = new User(userDTO);
@@ -85,7 +86,7 @@ public class UserService {
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		if (userExists.isPresent()) {
-			return null;
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe um user registado com o mesmo email");
 		}
 
 		User user = new User(userDTO);
@@ -194,33 +195,63 @@ public class UserService {
 		return null;
 	}
 
-	public List<String> getDistinctUsers() {	
+	public List<InputDto> getDistinctUsers() {	
 		log.info("Pesquisar os concelhos de agentes sem repetição");
 		try {
+			InputDto inputDto = new InputDto();
+			List<InputDto> lstInputDto = new ArrayList<>();
 			List<String> counties =  userRepository.findDistinctCounty();
-			return counties;
+			
+			for (int i = 0; i < counties.size(); i++) {
+				inputDto = new InputDto();
+				inputDto.setValue(counties.get(i));
+				inputDto.setLabel(counties.get(i));
+				lstInputDto.add(inputDto);
+			}
+			
+			return lstInputDto;
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de concelhos de agentes", e);
 		}
 		return null;
 	}
 	
-	public List<String> getDistinctName(){
+	public List<InputDto> getDistinctName(){
 		log.info("Pesquisar users names sem repetição");
 		try {
+			InputDto inputDto = new InputDto();
+			List<InputDto> lstInputDto = new ArrayList<>();
 			List<String> name = userRepository.findDistinctName();
-			return name;
+			
+			for (int i = 0; i < name.size(); i++) {
+				inputDto = new InputDto();
+				inputDto.setValue(name.get(i));
+				inputDto.setLabel(name.get(i));
+				lstInputDto.add(inputDto);
+			}
+			
+			return lstInputDto;
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de nomes de agentes", e);
 		}
 		return null;
 	}
 
-	public List<String> getDistinctAgentType() {
+	public List<InputDto> getDistinctAgentType() {
 		log.info("Pesquisar users agentType sem repetição");
 		try {
+			InputDto inputDto = new InputDto();
+			List<InputDto> lstInputDto = new ArrayList<>();
 			List<String> agentType = userRepository.findDistinctAgentType();
-			return agentType;
+			
+			for (int i = 0; i < agentType.size(); i++) {
+				inputDto = new InputDto();
+				inputDto.setValue(agentType.get(i));
+				inputDto.setLabel(agentType.get(i));
+				lstInputDto.add(inputDto);
+			}
+			
+			return lstInputDto;
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de agentType", e);
 		}
