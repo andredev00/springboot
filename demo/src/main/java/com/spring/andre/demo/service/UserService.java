@@ -195,7 +195,7 @@ public class UserService {
 		return null;
 	}
 
-	public List<InputDto> getDistinctUsers() {	
+	public List<InputDto> getDistinctCounty() {	
 		log.info("Pesquisar os concelhos de agentes sem repetição");
 		try {
 			InputDto inputDto = new InputDto();

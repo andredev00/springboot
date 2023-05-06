@@ -81,7 +81,7 @@ public class UserController {
 	
 	@GetMapping("/distinct/users/counties")
 	public List<InputDto> getDistinctUsers(){
-		return userService.getDistinctUsers();
+		return userService.getDistinctCounty();
 	}
 	
 	@GetMapping("/distinct/users/name")
