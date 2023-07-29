@@ -5,10 +5,21 @@ services:
     image: mysql:8
     restart: unless-stopped
     environment:
-      - MYSQL_ROOT_PASSWORD=B7@,Nc`g-7Z:M/ZP
+      - MYSQL_ROOT_PASSWORD=teste
       - MYSQL_DATABASE=imobiliaria
     ports:
-      - "3307:3306"
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  sonarqube: 
+    platform: linux/amd64
+    image: sonarqube:latest
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+
   app:
     depends_on:
       - mysqldb
@@ -17,5 +28,9 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: B7@,Nc`g-7Z:M/ZP
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=teste
+
+volumes:
+  mysql_data:
+  sonarqube_data:
