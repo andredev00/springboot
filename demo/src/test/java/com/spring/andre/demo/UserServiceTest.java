@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.spring.andre.demo.dto.InputDto;
-import com.spring.andre.demo.interfaces.UserService;
+import com.spring.imobiliaria.dto.InputDto;
+import com.spring.imobiliaria.interfaces.UserService;
 
 @SpringBootTest
 @ActiveProfiles("test")

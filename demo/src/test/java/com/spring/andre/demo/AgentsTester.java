@@ -5,14 +5,19 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit4.SpringRunner;
 
-import com.spring.andre.demo.model.User;
-import com.spring.andre.demo.repository.UserRepository;
+import com.spring.imobiliaria.model.User;
+import com.spring.imobiliaria.repository.UserRepository;
 
 @SpringBootTest
+@ActiveProfiles("test")
+@RunWith(SpringRunner.class)
 class AgentsTester {
 
 	@Autowired

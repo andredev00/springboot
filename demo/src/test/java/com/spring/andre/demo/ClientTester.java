@@ -10,9 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.spring.andre.demo.dto.UserDTO;
-import com.spring.andre.demo.model.User;
-import com.spring.andre.demo.repository.UserRepository;
+import com.spring.imobiliaria.dto.UserDTO;
+import com.spring.imobiliaria.model.User;
+import com.spring.imobiliaria.repository.UserRepository;
 
 @SpringBootTest
 public class ClientTester {
