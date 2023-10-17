@@ -4,25 +4,15 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.spring.andre.demo.enums.ERole;
+import com.spring.andre.demo.interfaces.UserService;
 
 public class Utils {
-	
-    private Utils() {
-        throw new UnsupportedOperationException("This is a utility class and method cannot be instantiated");
-    }
-	
-    @Getter
-    @Setter
-	public static class Security {
-		
-	    public Security() {
-	        throw new UnsupportedOperationException("This is a utility class and cannot be instantiated");
-	    }
-		
-		protected final String[] WHITELIST = { "/sign-up/client", "/sign-up/user", "/swagger-ui.html",
-				"/swagger-ui/", "/swagger-ui", "/login", "/swagger-ui/" };
+
+	UserService userService;
+
+	private Utils() {
+		throw new UnsupportedOperationException("This is a utility class and method cannot be instantiated");
 	}
 
 	public static int generateRandomInt() {
@@ -40,6 +30,14 @@ public class Utils {
 		formatter.setMinimumFractionDigits(2);
 		formatter.setMaximumFractionDigits(2);
 		return formatter.format(Integer.valueOf(price));
+	}	
+
+	public static Enum<ERole> convertToEnum(String role) {
+		if (role.equals("ADMIN") || role.equals("admin")) {
+			return ERole.ROLE_ADMIN;
+		} else {
+			return ERole.ROLE_USER;
+		}
 	}
 
 }

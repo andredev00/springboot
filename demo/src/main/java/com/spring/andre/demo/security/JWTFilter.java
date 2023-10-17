@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.spring.andre.demo.service.MyUserDetailsService;
+import com.spring.andre.demo.service.impl.MyUserDetailsService;
 
 @Component
 public class JWTFilter extends OncePerRequestFilter {

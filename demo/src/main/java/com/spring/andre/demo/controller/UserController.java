@@ -3,8 +3,6 @@ package com.spring.andre.demo.controller;
 import java.util.List;
 import java.util.Map;
 
-import javax.mail.MessagingException;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,26 +22,19 @@ import com.spring.andre.demo.dto.InputDto;
 import com.spring.andre.demo.dto.UserDTO;
 import com.spring.andre.demo.model.LoginCredentials;
 import com.spring.andre.demo.model.User;
-import com.spring.andre.demo.service.UserService;
+import com.spring.andre.demo.service.impl.UserServiceImpl;
 
 @RestController
 public class UserController {
 
 	@Autowired
-	UserService userService;
+	UserServiceImpl userService;
 
-	@PostMapping(value = "/sign-up/client")
-	public User registerClient(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile multiPartFile)
-			throws MessagingException {
-		return userService.registerClient(userDTO, multiPartFile);
+	@PostMapping(value = "/sign-up")
+	public void signUp(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile multiPartFile) {
+		userService.createUser(userDTO, multiPartFile);
 	}
-
-	@PostMapping(value = "/sign-up/user")
-	public User registerUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile multiPartFile)
-			throws MessagingException {
-		return userService.registerUser(userDTO, multiPartFile);
-	}
-
+	
 	@PutMapping(value = "/edit")
 	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file,
 			@RequestParam String id) {

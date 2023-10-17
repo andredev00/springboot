@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.andre.demo.dto.HomeDTO;
 import com.spring.andre.demo.model.Home;
-import com.spring.andre.demo.service.HomeService;
+import com.spring.andre.demo.service.impl.HomeService;
 
 @RestController
 public class HomeController {
