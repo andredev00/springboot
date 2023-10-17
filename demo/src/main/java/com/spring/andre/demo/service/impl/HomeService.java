@@ -1,4 +1,4 @@
-package com.spring.andre.demo.service;
+package com.spring.andre.demo.service.impl;
 
 import static com.spring.andre.demo.utils.Utils.formatterPriceEuro;
 
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.andre.demo.dto.HomeDTO;
-import com.spring.andre.demo.enums.ERole;
 import com.spring.andre.demo.model.Home;
 import com.spring.andre.demo.model.User;
 import com.spring.andre.demo.repository.HomeRepository;
 import com.spring.andre.demo.repository.UserRepository;
+import com.spring.andre.demo.service.AmazonService;
 
 @Component
 public class HomeService {
