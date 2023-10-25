@@ -2,15 +2,14 @@ package com.spring.andre.demo;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.spring.imobiliaria.dto.InputDto;
+import com.spring.imobiliaria.dto.UserDTO;
 import com.spring.imobiliaria.interfaces.UserService;
+import com.spring.imobiliaria.model.User;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -36,10 +35,18 @@ public class UserServiceTest {
 //		User user = userService.getAgentDetail("Bernardo", "7b2fae87-178a-4a4a-a328-9f94a026bb28");
 //		assertEquals(user.getName(), "Bernardo");
 //	}
+//	
+//	@Test
+//	void getDistinctName() {
+//		List<InputDto> name = userService.getDistinctName();
+//		assertEquals(name.get(0).getLabel(), "Bernardo");
+//	}
 	
 	@Test
-	void getDistinctName() {
-		List<InputDto> name = userService.getDistinctName();
-		assertEquals(name.get(0).getLabel(), "Bernardo");
+	void editUser() {
+		UserDTO userDTO = new UserDTO();
+		userDTO.setName("Pedro");
+		User user = userService.editUser(userDTO, null, "7b2fae87-178a-4a4a-a328-9f94a026bb28");
+		assertEquals(user.getName(), "Pedro");
 	}
 }

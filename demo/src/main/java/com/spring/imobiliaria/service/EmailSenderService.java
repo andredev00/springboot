@@ -38,9 +38,9 @@ public class EmailSenderService {
 				StandardCharsets.UTF_8.name());
 		Context context = new Context();
 		context.setVariable("url", url);
-		context.setVariable("name", name);
+		context.setVariable("name", "yes");
 		helper.setFrom(EMAIL_SENDER);
-		helper.setTo(email);
+		helper.setTo("andreferreira6578@outlook.pt");
 		helper.setSubject(WELCOME_EMAIL_SUBJECT);
 		String html = templateEngine.process(WELCOME_EMAIL_TEMPLATE, context);
 		helper.setText(html, true);

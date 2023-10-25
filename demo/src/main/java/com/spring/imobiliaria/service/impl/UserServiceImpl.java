@@ -240,15 +240,14 @@ public class UserServiceImpl implements UserService {
 		log.info("Pesquisar os concelhos de agentes sem repetição");
 		try {
 			List<String> counties = userRepository.findDistinctCounty();
-			
+
 			List<InputDto> lstInputDto = counties.stream().map(n -> {
 				InputDto inputDto = new InputDto();
 				inputDto.setValue(n);
 				inputDto.setLabel(n);
 				return inputDto;
 			}).collect(Collectors.toList());
-			
-			
+
 			return lstInputDto;
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de concelhos de agentes", e);
@@ -267,7 +266,7 @@ public class UserServiceImpl implements UserService {
 				inputDto.setLabel(n);
 				return inputDto;
 			}).collect(Collectors.toList());
-			
+
 			return lstInputDto;
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de nomes de agentes", e);
