@@ -116,6 +116,30 @@
 						<configuration>
 							<rules>
 								<DependencyConvergence />
+								<requireUpperBoundDeps>
+									<!-- 'uniqueVersions' (default:false) can be
+									set to true if you want to compare the
+									timestamped SNAPSHOTs  -->
+									<uniqueVersions>true</uniqueVersions>
+									<!-- If you wish to ignore certain cases:
+									<excludes>
+									<exclude>com.google.guava:guava</exclude>
+									</excludes>
+                  -->
+									<!-- If you include specific cases only
+									these will be checked: (when omitted
+									everything is included)
+                  <includes>
+									<include>com.google.guava:guava</include>
+									</includes>
+                  -->
+									<!-- only artifacts with provided scope will
+									be excluded
+                  <excludedScopes>
+									<excludedScope>provided</excludedScopes>
+									</excludedScopes>
+                  -->
+								</requireUpperBoundDeps>
 							</rules>
 						</configuration>
 						<goals>
