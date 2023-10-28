@@ -49,7 +49,7 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Modifying(clearAutomatically =  true)
 	@Query("update User u set u.active = 'true' where u.id = :#{#id}")
-	boolean activeAccount(String id);
+	int activeAccount(String id);
 	
 	@Transactional
 	@Query("select h from User h where h.name = :#{#name} and h.id = :#{#id}")

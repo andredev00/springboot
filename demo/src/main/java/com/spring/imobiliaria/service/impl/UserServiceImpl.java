@@ -207,7 +207,8 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public boolean activeAccount(String uuid) {
 		log.info("Activating account for user: " + uuid);
-		return userRepository.activeAccount(uuid);
+		int rowNum = userRepository.activeAccount(uuid);
+		return rowNum > 0;
 	}
 
 	public User getAgentDetail(String name, String uuid) {
