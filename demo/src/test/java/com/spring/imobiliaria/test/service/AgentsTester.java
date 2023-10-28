@@ -1,4 +1,4 @@
-package com.spring.andre.demo;
+package com.spring.imobiliaria.test.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
