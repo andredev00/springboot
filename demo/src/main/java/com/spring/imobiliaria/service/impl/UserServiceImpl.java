@@ -205,14 +205,9 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void activeAccount(String uuid) {
+	public boolean activeAccount(String uuid) {
 		log.info("Activating account for user: " + uuid);
-		try {
-			userRepository.activeAccount(uuid);
-		} catch (Exception e) {
-			log.error("Erro ao aceder ao serviço de ativação de conta", e);
-		}
-		log.info("Finished activating account for user: " + uuid);
+		return userRepository.activeAccount(uuid);
 	}
 
 	public User getAgentDetail(String name, String uuid) {

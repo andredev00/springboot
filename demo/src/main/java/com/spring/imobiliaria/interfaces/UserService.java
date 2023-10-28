@@ -24,7 +24,7 @@ public interface UserService {
 	
 	User getAgentDetail(String name, String uuid);
 	
-	void activeAccount(String uuid);
+	boolean activeAccount(String uuid);
 	
 	void resetPassword(String password, String uuid);
 	
