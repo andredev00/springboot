@@ -1,4 +1,4 @@
-package com.spring.andre.demo;
+package com.spring.imobiliaria.test.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

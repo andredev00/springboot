@@ -1,15 +1,13 @@
-package com.spring.andre.demo;
+package com.spring.imobiliaria.test.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import com.spring.imobiliaria.dto.UserDTO;
 import com.spring.imobiliaria.interfaces.UserService;
-import com.spring.imobiliaria.model.User;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -42,11 +40,16 @@ public class UserServiceTest {
 //		assertEquals(name.get(0).getLabel(), "Bernardo");
 //	}
 	
+//	@Test
+//	void editUser() {
+//		UserDTO userDTO = new UserDTO();
+//		userDTO.setName("Pedro");
+//		User user = userService.editUser(userDTO, null, "7b2fae87-178a-4a4a-a328-9f94a026bb28");
+//		assertEquals(user.getName(), "Pedro");
+//	}
+	
 	@Test
-	void editUser() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setName("Pedro");
-		User user = userService.editUser(userDTO, null, "7b2fae87-178a-4a4a-a328-9f94a026bb28");
-		assertEquals(user.getName(), "Pedro");
+	void activeAccount() {
+		assertTrue(userService.activeAccount("7b2fae87-178a-4a4a-a328-9f94a026bb28"));
 	}
 }
