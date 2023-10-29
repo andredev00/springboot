@@ -16,13 +16,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.imobiliaria.dto.HomeDTO;
 import com.spring.imobiliaria.model.Home;
-import com.spring.imobiliaria.service.impl.HomeService;
+import com.spring.imobiliaria.service.impl.HomeServiceImpl;
 
 @RestController
 public class HomeController {
 	
 	@Autowired
-	HomeService homeService;
+	HomeServiceImpl homeService;
 
 	@PostMapping(value = "/register/home", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public void registerHome(@ModelAttribute HomeDTO homeDTO, @RequestPart("file") MultipartFile file, String userId){

@@ -18,11 +18,12 @@ import com.spring.imobiliaria.model.User;
 import com.spring.imobiliaria.repository.HomeRepository;
 import com.spring.imobiliaria.repository.UserRepository;
 import com.spring.imobiliaria.service.AmazonService;
+import com.spring.imobiliaria.service.HomeService;
 
 @Component
-public class HomeService {
+public class HomeServiceImpl implements HomeService{
 
-	private static final Logger log = LoggerFactory.getLogger(HomeService.class);
+	private static final Logger log = LoggerFactory.getLogger(HomeServiceImpl.class);
 	
 	@Autowired
 	HomeRepository homeRepository;
@@ -36,6 +37,7 @@ public class HomeService {
 	@Autowired
 	AmazonService amazonService;
 
+	@Override
 	public void registerHome(HomeDTO homeDTO, MultipartFile multiPartfile, String userId) {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
@@ -57,12 +59,14 @@ public class HomeService {
 		}
 	}
 
+	@Override
 	public void deleteHome(Long id) {
 		log.info("Deleting home " + id);
 		homeRepository.deleteById(id);
 		log.info("Home deleted");
 	}
 
+	@Override
 	public Iterable<Home> getAllHomes() {
 		log.info("Fetching all homes");
 		try {
@@ -73,6 +77,7 @@ public class HomeService {
 		return null;
 	}
 
+	@Override
 	public List<Home> getHome(String id) {
 		ArrayList<Home> home = new ArrayList<>();
 		try {
@@ -86,6 +91,7 @@ public class HomeService {
 		return home;
 	}
 
+	@Override
 	public void updateHome(String id, HomeDTO homeDTO) {
 		log.info("Updating home with this id: " + id);
 		ArrayList<Home> home = homeRepository.findOne(id);
@@ -93,4 +99,6 @@ public class HomeService {
 		homeRepository.save(homeUpdated);
 		log.info("Finished updating home with this id: " + id);
 	}
+
+	
 }
