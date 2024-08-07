@@ -46,10 +46,10 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Query("update User u set u.password= :#{#password} where u.id = :#{#id}")
 	void updatePassword(@Param("password") String password, @Param("id") String id);
 
-	@Transactional
-	@Modifying(clearAutomatically =  true)
-	@Query("update User u set u.active = 'true' where u.id = :#{#id}")
-	int activeAccount(String id);
+//	@Transactional
+//	@Modifying(clearAutomatically =  true)
+//	@Query("update User u set u.active = 'true' where u.id = :#{#id}")
+//	int activeAccount(String id);
 	
 	@Transactional
 	@Query("select h from User h where h.name = :#{#name} and h.id = :#{#id}")

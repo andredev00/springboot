@@ -1,17 +1,17 @@
 package com.spring.imobiliaria.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,9 +30,10 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
+
 	@PostMapping(value = "/sign-up")
-	public void signUp(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile multiPartFile) {
-		userService.createUser(userDTO, multiPartFile);
+	public ResponseEntity<UserDTO> signUp(@ModelAttribute UserDTO userDTO, @RequestPart("file") ArrayList<MultipartFile> multiPartFile) {
+		return userService.createUser(userDTO, multiPartFile);
 	}
 	
 	@PutMapping(value = "/edit")
@@ -40,11 +41,11 @@ public class UserController {
 			@RequestParam String id) {
 		return userService.editUser(userDTO, file, id); //TODO, this method is not working
 	}
-
-	@PutMapping(value = "/reset/pass")
-	public void resetPassword(@RequestParam String password, @RequestParam String uuid) {
-		userService.resetPassword(password, uuid);
-	}
+//
+//	@PutMapping(value = "/reset/pass")
+//	public void resetPassword(@RequestParam String password, @RequestParam String uuid) {
+//		userService.resetPassword(password, uuid);
+//	}
 
 	@PostMapping("/login")
 	public Map<String, Object> login(@RequestBody LoginCredentials body) {
@@ -65,10 +66,10 @@ public class UserController {
 		return userService.getAgentDetail(name, id);
 	}
 
-	@RequestMapping("/active/account/{uuid}")
-	public void activeAccount(@PathVariable("uuid") String uuid) {
-		userService.activeAccount(uuid);
-	}
+//	@RequestMapping("/active/account/{uuid}")
+//	public void activeAccount(@PathVariable("uuid") String uuid) {
+//		userService.activeAccount(uuid);
+//	}
 	
 	@GetMapping("/distinct/users/counties")
 	public List<InputDto> getDistinctUsers(){

@@ -58,17 +58,17 @@ public class User {
 	private String agentType;
 	@Column(name = "agentSociety")
 	private String agentSociety;
-	@Column(name = "active")
-	private boolean active;
+//	@Column(name = "active")
+//	private boolean active;
 	
-	public User(String id, String name, String email, String password, String permissions, boolean active) {
+	public User(String id, String name, String email, String password, String permissions) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.password = password;
 		this.permissions = permissions;
-		this.active = active;
+//		this.active = active;
 	}
 
 	public User(UserDTO userDTO) {

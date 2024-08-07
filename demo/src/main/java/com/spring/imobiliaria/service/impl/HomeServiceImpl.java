@@ -51,7 +51,13 @@ public class HomeServiceImpl implements HomeService{
 //		home.setImagePath(openAIService.generateImages(homeDTO.getDescription()));
 		
 		User user = userRepository.findById(userId);
-		if (user != null && user.getPermissions().equals("ADMIN")) {
+//		if (user != null && user.getPermissions().equals("ADMIN")) {
+//			home.setUser(user);
+//			homeRepository.save(home);
+//			log.info("New home created with this properties: " + home.toString());
+//
+//		}
+		if (user != null) {
 			home.setUser(user);
 			homeRepository.save(home);
 			log.info("New home created with this properties: " + home.toString());

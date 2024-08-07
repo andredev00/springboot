@@ -4,11 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,10 +27,10 @@ public class HomeController {
 	    homeService.registerHome(homeDTO, file, userId);
     }
 	
-	@DeleteMapping(value = "/delete/{id}")
-	public void deleteHome(@RequestParam Long id) {
-		homeService.deleteHome(id);
-	}
+//	@DeleteMapping(value = "/delete/{id}")
+//	public void deleteHome(@RequestParam Long id) {
+//		homeService.deleteHome(id);
+//	}
 
 	@GetMapping(value = "/allHomes")
 	public Iterable<Home> getAllHomes() {
@@ -44,8 +42,8 @@ public class HomeController {
 		return homeService.getHome(id);
 	} 
 	
-	@PostMapping(value = "/update/home/{id}")
-	public void updateHome(@RequestParam String id, @RequestBody HomeDTO homeDTO) {
-		homeService.updateHome(id, homeDTO);
-	}
+//	@PostMapping(value = "/update/home/{id}")
+//	public void updateHome(@RequestParam String id, @RequestBody HomeDTO homeDTO) {
+//		homeService.updateHome(id, homeDTO);
+//	}
 }

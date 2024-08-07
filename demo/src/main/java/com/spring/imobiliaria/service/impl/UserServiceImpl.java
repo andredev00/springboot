@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
@@ -62,34 +63,34 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void createUser(UserDTO userDTO, MultipartFile multiPartFile) {
+	public ResponseEntity<UserDTO> createUser(UserDTO userDTO, ArrayList<MultipartFile> multiPartFile) {
 		log.info("Creating a new client {}: " + userDTO.getName() + " " + userDTO.getEmail());
 
 		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
 
 		try {
 			if (userExists.isPresent()) {
-				throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-						"Já existe um user registado com o mesmo email");
+				throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um user registado com o mesmo email");
 			}
 
 			User user = new User(userDTO);
 			user.setId(UUID.randomUUID().toString());
 			user.setPermissions(Utils.convertToEnum(userDTO.getPermissions()).toString());
 //			user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_USER));
-			String file = amazonService.uploadFile(multiPartFile, user.getId());
-			String fileName = file.substring(file.indexOf(" ") + 1);
-			user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
-			user.setImageFileName(fileName);
+//			String file = amazonService.uploadFile(multiPartFile, user.getId());
+//			String fileName = file.substring(file.indexOf(" ") + 1);
+//			user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
+//			user.setImageFileName(fileName);
 
 			user = userRepository.save(user);
 			emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
 		} catch (Exception e) {
-			log.error("Erro ao criar conta de utilizador  : ");
-			log.error("Causa de erro: " + e);
+			log.error("Erro ao criar conta de utilizador: ", e);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
 		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " " + userDTO.getEmail());
+		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 	}
 
 	public User registerClient(UserDTO userDTO, MultipartFile multiPartFile) throws MessagingException {
@@ -206,9 +207,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public boolean activeAccount(String uuid) {
-		log.info("Activating account for user: " + uuid);
-		int rowNum = userRepository.activeAccount(uuid);
-		return rowNum > 0;
+//		log.info("Activating account for user: " + uuid);
+//		int rowNum = userRepository.activeAccount(uuid);
+//		return rowNum > 0;
+		return false;
 	}
 
 	public User getAgentDetail(String name, String uuid) {

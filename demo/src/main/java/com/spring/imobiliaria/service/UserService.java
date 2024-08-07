@@ -165,15 +165,15 @@ public class UserService {
 		return user;
 	}
 
-	public void activeAccount(String uuid) {
-		log.info("Activating account for user: " + uuid);
-		try {
-			userRepository.activeAccount(uuid);
-		} catch (Exception e) {
-			log.error("Erro ao aceder ao serviço de ativação de conta", e);
-		}
-		log.info("Finished activating account for user: " + uuid);
-	}
+//	public void activeAccount(String uuid) {
+//		log.info("Activating account for user: " + uuid);
+//		try {
+//			userRepository.activeAccount(uuid);
+//		} catch (Exception e) {
+//			log.error("Erro ao aceder ao serviço de ativação de conta", e);
+//		}
+//		log.info("Finished activating account for user: " + uuid);
+//	}
 
 	public User getAgentDetail(String name, String id) {
 		log.info("Getting details from agent with name: " + name);

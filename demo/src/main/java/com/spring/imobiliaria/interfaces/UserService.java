@@ -1,7 +1,9 @@
 package com.spring.imobiliaria.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.imobiliaria.dto.InputDto;
@@ -10,7 +12,7 @@ import com.spring.imobiliaria.model.User;
 
 public interface UserService {
 	
-	void createUser(UserDTO userDTO, MultipartFile multipartFile);
+	ResponseEntity<UserDTO> createUser(UserDTO userDTO, ArrayList<MultipartFile> multipartFile);
 	
 	List<User> getAgents();
 
