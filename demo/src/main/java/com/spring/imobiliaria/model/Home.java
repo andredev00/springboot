@@ -1,5 +1,6 @@
 package com.spring.imobiliaria.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Home {
 
-	@Id
+	@Id 
 	@Column(name = "id")
 	private String id;
 	@Column(name = "location")
@@ -43,15 +44,11 @@ public class Home {
 	private String description;
 	@Column(name = "homeType")
 	private String homeType;
-	@Column(name = "image")
-	private String imagePath;
-	@Column(name="imageFileName")
-	private String imageFileName;
-	@Column(name="houseBusinessState")
+	@Column(name = "houseBusinessState")
 	private String houseBusinessState;
-	
-	@ManyToOne
-	@JoinColumn(name="id_user", nullable=false)
+
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "id_user", nullable = false)
 	private User user;
 
 	public Home(String id, HomeDTO homeDto) {
@@ -69,15 +66,14 @@ public class Home {
 		this.homeType = homeDto.getHomeType();
 		this.houseBusinessState = homeDto.getHouseBusinessState();
 	}
-	
+
 	@Override
 	public String toString() {
 		return "location: " + this.location + " + " + "price: " + this.price + " + " + "lotTotal: " + this.lotTotal
 				+ " + " + "room: " + this.room + " + " + "floor" + this.floor + " + " + "constructionYear: "
 				+ this.constructionYear + " + " + "wcs: " + this.wcs + " + " + "parking: " + this.parking + " + "
-				+ "description: " + this.description + " + " + "homeType: " + this.homeType + " + " + "imagePath: "
-				+ this.imagePath + " + " + "imageFileName: " + this.imageFileName + " + " + "houseBusinessState: "
-				+ this.houseBusinessState;
+				+ "description: " + this.description + " + " + "homeType: " + this.homeType + " + "
+				+ "houseBusinessState: " + this.houseBusinessState;
 	}
-	
+
 }

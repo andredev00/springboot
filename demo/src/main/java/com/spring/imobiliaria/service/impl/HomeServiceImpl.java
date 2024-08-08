@@ -2,6 +2,7 @@ package com.spring.imobiliaria.service.impl;
 
 import static com.spring.imobiliaria.utils.Utils.formatterPriceEuro;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.imobiliaria.dto.HomeDTO;
 import com.spring.imobiliaria.model.Home;
+import com.spring.imobiliaria.model.HomeImage;
 import com.spring.imobiliaria.model.User;
+import com.spring.imobiliaria.repository.HomeImageRepository;
 import com.spring.imobiliaria.repository.HomeRepository;
 import com.spring.imobiliaria.repository.UserRepository;
 import com.spring.imobiliaria.service.AmazonService;
@@ -30,26 +33,20 @@ public class HomeServiceImpl implements HomeService{
 	
 	@Autowired
 	UserRepository userRepository;
-	
-//	@Autowired
-//	OpenAIService openAIService;
 
+	@Autowired
+	HomeImageRepository homeImageRepository;
+	
 	@Autowired
 	AmazonService amazonService;
 
 	@Override
-	public void registerHome(HomeDTO homeDTO, MultipartFile multiPartfile, String userId) {
+	public void registerHome(HomeDTO homeDTO, String userId) {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
+		HomeImage homeImage = new HomeImage(UUID.randomUUID().toString());
 		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
 
-//		String file = amazonService.uploadFile(multiPartfile, home.getId());
-//		String fileName = file.substring(file.indexOf(" ") + 1);
-//		home.setImagePath(AWS_MACHINE_ADDRESS_HOME_IMAGE + fileName);
-//		home.setImageFileName(fileName);
-		
-//		home.setImagePath(openAIService.generateImages(homeDTO.getDescription()));
-		
 		User user = userRepository.findById(userId);
 //		if (user != null && user.getPermissions().equals("ADMIN")) {
 //			home.setUser(user);
@@ -61,9 +58,39 @@ public class HomeServiceImpl implements HomeService{
 			home.setUser(user);
 			homeRepository.save(home);
 			log.info("New home created with this properties: " + home.toString());
-
+		}
+		
+		for (MultipartFile multipartFile : homeDTO.getHomeImage()) {
+			homeImage.setHome(home);
+			homeImage.setImageFileName(multipartFile.getName());
+			homeImage.setHomeImage(parseHomeImageToByte(multipartFile));
+			homeImageRepository.save(homeImage);
 		}
 	}
+	
+	
+
+	private byte[] parseHomeImageToByte(MultipartFile multipartFile) {
+		 byte[] targetArray = null;
+		try {
+			ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+
+		    int nRead;
+		    byte[] data = new byte[4];
+
+		    while ((nRead = multipartFile.getInputStream().read(data, 0, data.length)) != -1) {
+		        buffer.write(data, 0, nRead);
+		    }
+
+		    buffer.flush();
+		    targetArray = buffer.toByteArray();	
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return targetArray;
+	}
+
+
 
 	@Override
 	public void deleteHome(Long id) {

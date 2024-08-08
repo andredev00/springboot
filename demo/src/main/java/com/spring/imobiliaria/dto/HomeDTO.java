@@ -1,5 +1,9 @@
 package com.spring.imobiliaria.dto;
 
+import java.util.ArrayList;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
@@ -23,4 +27,5 @@ public class HomeDTO {
 	@ApiModelProperty(hidden = true)
 	private String imageFileName;
 	private String houseBusinessState;
+	private ArrayList<MultipartFile> homeImage;
 }
