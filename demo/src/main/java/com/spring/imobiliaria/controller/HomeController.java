@@ -1,8 +1,9 @@
 package com.spring.imobiliaria.controller;
 
-import java.util.List;
+import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +21,8 @@ public class HomeController {
 	HomeServiceImpl homeService;
 
     @PostMapping(value = "/register/home", consumes = {"multipart/form-data"})
-    public void registerHome(@ModelAttribute HomeDTO homeDTO, String userId){
-	    homeService.registerHome(homeDTO, userId);
+    public ResponseEntity<HomeDTO> registerHome(@ModelAttribute HomeDTO homeDTO, String userId) throws IOException{
+	   return homeService.registerHome(homeDTO, userId);
     }
 	
 //	@DeleteMapping(value = "/delete/{id}")
@@ -35,7 +36,7 @@ public class HomeController {
 	}
 
 	@GetMapping(value = "/findHome/")
-	public List<Home> getHome(@RequestParam String id) {
+	public ResponseEntity<Home> getHome(@RequestParam String id) {
 		return homeService.getHome(id);
 	} 
 	
