@@ -40,6 +40,8 @@ public class HomeController {
 		return homeService.getHome(id);
 	} 
 	
+	//TODO, este metodo faria mais sentido para atualizar a descricao do imovel, 
+	//alguns pormonores e adicionar mais imagens relativamente ao imovel
 //	@PostMapping(value = "/update/home/{id}")
 //	public void updateHome(@RequestParam String id, @RequestBody HomeDTO homeDTO) {
 //		homeService.updateHome(id, homeDTO);

@@ -2,12 +2,14 @@ package com.spring.imobiliaria.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.spring.imobiliaria.converter.BooleanToStringConverter;
 import com.spring.imobiliaria.dto.HomeDTO;
 
 import lombok.Getter;
@@ -24,28 +26,29 @@ public class Home {
 	@Id 
 	@Column(name = "id")
 	private String id;
-	@Column(name = "location")
-	private String location;
-	@Column(name = "price")
-	private String price;
-	@Column(name = "lot_Total")
-	private String lotTotal;
-	@Column(name = "room")
-	private int room;
-	@Column(name = "floor")
-	private String floor;
-	@Column(name = "constructionYear")
-	private int constructionYear;
+	@Column(name = "localizacao")
+	private String localizacao;
+	@Column(name = "preco")
+	private String preco;
+	@Column(name = "tamanhoTotal")
+	private String tamanhoTotal;
+	@Column(name = "quartos")
+	private int quartos;
+	@Column(name = "andar")
+	private String andar;
+	@Column(name = "anoConstrucao")
+	private int anoConstrucao;
 	@Column(name = "wcs")
 	private int wcs;
-	@Column(name = "parking")
-	private boolean parking;
-	@Column(name = "description")
-	private String description;
-	@Column(name = "homeType")
-	private String homeType;
-	@Column(name = "houseBusinessState")
-	private String houseBusinessState;
+	@Convert(converter=BooleanToStringConverter.class)
+	@Column(name = "estacionamento")
+	private boolean estacionamento;
+	@Column(name = "descricao")
+	private String descricao;
+	@Column(name = "tipoImovel")
+	private String tipoImovel;
+	@Column(name = "tipoDeNegocio")
+	private String tipoDeNegocio;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_user", nullable = false)
@@ -54,26 +57,26 @@ public class Home {
 	public Home(String id, HomeDTO homeDto) {
 		super();
 		this.id = id;
-		this.location = homeDto.getLocation();
-		this.price = homeDto.getPrice();
-		this.lotTotal = homeDto.getLotTotal();
-		this.room = homeDto.getRoom();
-		this.floor = homeDto.getFloor();
-		this.constructionYear = homeDto.getConstructionYear();
+		this.localizacao = homeDto.getLocalizacao();
+		this.preco = homeDto.getPreco();
+		this.tamanhoTotal = homeDto.getTamanhoTotal();
+		this.quartos = homeDto.getQuartos();
+		this.andar = homeDto.getAndar();
+		this.anoConstrucao = homeDto.getAnoConstrucao();
 		this.wcs = homeDto.getWcs();
-		this.parking = homeDto.getParking();
-		this.description = homeDto.getDescription();
-		this.homeType = homeDto.getHomeType();
-		this.houseBusinessState = homeDto.getHouseBusinessState();
+		this.estacionamento = homeDto.isEstacionamento();
+		this.descricao = homeDto.getDescricao();
+		this.tipoImovel = homeDto.getTipoImovel();
+		this.tipoDeNegocio = homeDto.getTipoDeNegocio();
 	}
 
 	@Override
 	public String toString() {
-		return "location: " + this.location + " + " + "price: " + this.price + " + " + "lotTotal: " + this.lotTotal
-				+ " + " + "room: " + this.room + " + " + "floor" + this.floor + " + " + "constructionYear: "
-				+ this.constructionYear + " + " + "wcs: " + this.wcs + " + " + "parking: " + this.parking + " + "
-				+ "description: " + this.description + " + " + "homeType: " + this.homeType + " + "
-				+ "houseBusinessState: " + this.houseBusinessState;
+		return "localizacao: " + this.localizacao + " + " + "preco: " + this.preco + " + " + "tamanhoTotal: " + this.tamanhoTotal
+				+ " + " + "quartos: " + this.quartos + " + " + "andar" + this.andar + " + " + "anoConstrucao: "
+				+ this.anoConstrucao + " + " + "wcs: " + this.wcs + " + " + "estacionamento: " + this.estacionamento + " + "
+				+ "descricao: " + this.descricao + " + " + "tipoImovel: " + this.tipoImovel + " + "
+				+ "tipoDeNegocio: " + this.tipoDeNegocio;
 	}
 
 }

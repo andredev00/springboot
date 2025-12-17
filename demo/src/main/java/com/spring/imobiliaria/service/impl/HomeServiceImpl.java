@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.imobiliaria.dto.HomeDTO;
 import com.spring.imobiliaria.model.Home;
@@ -46,24 +45,33 @@ public class HomeServiceImpl implements HomeService {
 	public ResponseEntity<HomeDTO> registerHome(HomeDTO homeDTO, String userId) throws IOException {
 		log.info("Creating a new home");
 		Home home = new Home(UUID.randomUUID().toString(), homeDTO);
-		home.setPrice(formatterPriceEuro(homeDTO.getPrice()));
+		home.setPreco(formatterPriceEuro(homeDTO.getPreco()));
 
 		User user = userRepository.findById(userId);
 		if (user != null) {
 			home.setUser(user);
 			homeRepository.save(home);
-			log.info("New home created with this properties: " + home.toString());
+			log.info("Criação de novo imóvel: " + home.toString());
+			return new ResponseEntity<HomeDTO>(homeDTO, HttpStatus.CREATED);
 		}
 
-		for (MultipartFile multipartFile : homeDTO.getHomeImage()) {
-			HomeImage homeImage = new HomeImage(UUID.randomUUID().toString());
-			homeImage.setHome(home);
-			homeImage.setImageFileName(multipartFile.getName());
-			homeImage.setHomeImage(IOUtils.toByteArray(multipartFile.getInputStream()));
-			homeImageRepository.save(homeImage);
+		if (homeDTO.getHomeImage() != null) {
+			homeDTO.getHomeImage().forEach(multipartFile -> {
+				try {
+					HomeImage homeImage = new HomeImage(UUID.randomUUID().toString());
+					homeImage.setHome(home);
+					homeImage.setImageFileName(multipartFile.getName());
+					homeImage.setHomeImage(IOUtils.toByteArray(multipartFile.getInputStream()));
+					homeImageRepository.save(homeImage);
+				} catch (IOException e) {
+					log.error("Erro ao processar as imagens do imóvel: ", e);
+					e.printStackTrace();
+				}
+			});
 		}
-		
-		return new ResponseEntity<HomeDTO>(homeDTO, HttpStatus.OK);
+
+		log.error("Não existe nenhum agente associado ao imóvel");
+		return new ResponseEntity<HomeDTO>(HttpStatus.BAD_REQUEST);
 	}
 
 	@Override

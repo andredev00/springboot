@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,20 +11,20 @@ import lombok.Setter;
 @Setter
 public class HomeDTO {
 	
-	private String location;
-	private String price;
-	private String lotTotal;
-	private int room;
-	private String floor;
-	private int constructionYear;
+	private String localizacao;
+	private String preco;
+	private String tamanhoTotal;
+	private int quartos;
+	private String andar;
+	private int anoConstrucao;
 	private int wcs;
-	private Boolean parking;
-	private String description;
-	private String homeType;
-	@ApiModelProperty(hidden = true)
-	private String imagePath;
-	@ApiModelProperty(hidden = true)
-	private String imageFileName;
-	private String houseBusinessState;
+	private boolean estacionamento;
+	//TODO, criar um enum para passar a processar o tipoEstacionamento
+//	private Enum tipoEstacionamento;
+	private String descricao;
+	//TODO, faz sentido conveter para um enum. Apartamento/Terreno/Moradia
+	private String tipoImovel;
+	//TODO, faz sentido converter para um enum. Venda/Arrendamento/Investimento
+	private String tipoDeNegocio;
 	private ArrayList<MultipartFile> homeImage;
 }

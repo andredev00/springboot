@@ -14,7 +14,7 @@ import com.spring.imobiliaria.model.Home;
 @Repository
 public interface HomeRepository extends JpaRepository<Home, Serializable> {
 
-	Home findByLocation(String location);
+	Home findByLocalizacao(String location);
 
 	@Transactional
 	@Query("select h from Home h where id = :id")
