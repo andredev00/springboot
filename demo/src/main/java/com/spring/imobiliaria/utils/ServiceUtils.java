@@ -7,11 +7,11 @@ import java.util.Random;
 import com.spring.imobiliaria.enums.ERole;
 import com.spring.imobiliaria.interfaces.UserService;
 
-public class Utils {
+public class ServiceUtils {
 
 	UserService userService;
 
-	private Utils() {
+	private ServiceUtils() {
 		throw new UnsupportedOperationException("This is a utility class and method cannot be instantiated");
 	}
 

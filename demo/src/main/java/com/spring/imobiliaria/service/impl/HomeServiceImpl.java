@@ -1,9 +1,10 @@
 package com.spring.imobiliaria.service.impl;
 
-import static com.spring.imobiliaria.utils.Utils.formatterPriceEuro;
+import static com.spring.imobiliaria.utils.ServiceUtils.formatterPriceEuro;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.commons.io.IOUtils;
@@ -76,44 +77,56 @@ public class HomeServiceImpl implements HomeService {
 
 	@Override
 	public void deleteHome(Long id) {
-		log.info("Deleting home " + id);
-		homeRepository.deleteById(id);
-		log.info("Home deleted");
+		log.info("Apagar imóvel com id:  " + id);
+		try {
+			homeRepository.deleteById(id);			
+		} catch (Exception e) {
+			log.error("Ocorreu um erro ao apagar o imóvel com o id: " + id, e);
+		}
+		
+		log.info("Imóvel apagado com o id: " + id);
 	}
 
 	@Override
-	public Iterable<Home> getAllHomes() {
-		log.info("Fetching all homes");
+	public ResponseEntity<List<Home>> getAllHomes() {
+		log.info("A procurar todos os imóveis");
+		List<Home> lstHome = new ArrayList<>();
 		try {
-			return homeRepository.findAll();
+			//lstHome = homeRepository.findAll();
+			throw new Exception();
 		} catch (Exception e) {
-			log.error("Erro ao aceder ao serviço de procurar todas as casas", e);
+			log.error("Ocorreu um erro ao procurar todos os imóveis", e);
+			return new ResponseEntity<List<Home>>(new ArrayList<Home>(), HttpStatus.BAD_REQUEST);
 		}
-		return null;
+		//return new ResponseEntity<List<Home>>(lstHome, HttpStatus.OK);
 	}
 
 	@Override
 	public ResponseEntity<Home> getHome(String id) {
 		ArrayList<Home> home = new ArrayList<>();
 		try {
-			log.info("Fetchin a specific home by its id");
+			log.info("A procurar imóvel com o id: " + id);
 			home = homeRepository.findOne(id);
-			log.info("Fetched home with following properties " + home.toString());
+			log.info("Foi encontrado o imóvel com as seguintes propriedades " + home.toString());
 		} catch (Exception e) {
-			log.error("Erro ao aceder ao serviço de procurar da casa", e);
-			return new ResponseEntity<Home>(HttpStatus.BAD_REQUEST);
+			log.error("Ocorreu um erro ao procurar o imóvel com o id: " + id, e);
+			return new ResponseEntity<Home>(HttpStatus.BAD_REQUEST); 
 		}
-
 		return new ResponseEntity<Home>(home.get(0), HttpStatus.OK);
 	}
 
 	@Override
 	public void updateHome(String id, HomeDTO homeDTO) {
-		log.info("Updating home with this id: " + id);
+		log.info("A atualizar o imóvel com o id : " + id);
 		ArrayList<Home> home = homeRepository.findOne(id);
 		Home homeUpdated = new Home(home.get(0).getId(), homeDTO);
-		homeRepository.save(homeUpdated);
-		log.info("Finished updating home with this id: " + id);
+		try {
+			homeRepository.save(homeUpdated);			
+		} catch (Exception e) {
+			log.error("Ocorreu um erro a atualizar o imóvel com o id: " + id);
+		}
+		
+		log.info("Foi atualizado o imóvel com o id: " + id);
 	}
 
 }

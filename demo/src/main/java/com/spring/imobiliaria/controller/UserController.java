@@ -1,6 +1,5 @@
 package com.spring.imobiliaria.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -30,16 +29,17 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
-
+	//TODO, este metodo não está a aceitar request multipart.
+	//os requests multipart estão a ser usados para que os utilizadores consiga adicionar uma imagem de perfil§
 	@PostMapping(value = "/sign-up")
-	public ResponseEntity<UserDTO> signUp(@ModelAttribute UserDTO userDTO, @RequestPart("file") ArrayList<MultipartFile> multiPartFile) {
-		return userService.createUser(userDTO, multiPartFile);
+	public ResponseEntity<UserDTO> signUp(@ModelAttribute UserDTO userDTO) {
+		return userService.createUser(userDTO);
 	}
-	
+
 	@PutMapping(value = "/edit")
 	public User editUser(@ModelAttribute UserDTO userDTO, @RequestPart("file") MultipartFile file,
 			@RequestParam String id) {
-		return userService.editUser(userDTO, file, id); //TODO, this method is not working
+		return userService.editUser(userDTO, file, id); // TODO, this method is not working
 	}
 //
 //	@PutMapping(value = "/reset/pass")
@@ -70,19 +70,21 @@ public class UserController {
 //	public void activeAccount(@PathVariable("uuid") String uuid) {
 //		userService.activeAccount(uuid);
 //	}
-	
+
+	//TODO: ADICIONAR CACHEABLE RESULT NESTES CASOS ABAIXO
+	//Nunca vai existir concelhos novos, nunca vao ser criados users novos constantemente e nunca vao ser criadas equipas novas constantemente
 	@GetMapping("/distinct/users/counties")
-	public List<InputDto> getDistinctUsers(){
+	public List<InputDto> getDistinctUsers() {
 		return userService.getDistinctCounty();
 	}
-	
+
 	@GetMapping("/distinct/users/name")
-	public List<InputDto> getDistinctName(){
+	public List<InputDto> getDistinctName() {
 		return userService.getDistinctName();
 	}
-	
+
 	@GetMapping("/distinct/users/agentType")
-	public List<InputDto> getDistinctAgentType(){
+	public List<InputDto> getDistinctAgentType() {
 		return userService.getDistinctAgentType();
 	}
 }

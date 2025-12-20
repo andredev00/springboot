@@ -14,7 +14,7 @@ public interface HomeService {
 	
 	void deleteHome(Long id);
 	
-	Iterable<Home> getAllHomes();
+	ResponseEntity<List<Home>> getAllHomes();
 	
 	ResponseEntity<Home> getHome(String id);
 	
