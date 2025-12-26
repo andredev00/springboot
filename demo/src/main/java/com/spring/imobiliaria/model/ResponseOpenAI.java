@@ -10,12 +10,26 @@ import lombok.Setter;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @SuppressWarnings("rawtypes")
-@Getter
-@Setter
 public class ResponseOpenAI {
 	@JsonProperty("created")
 	private long created;
 
 	@JsonProperty("data")
 	private ArrayList data;
+
+	public long getCreated() {
+		return created;
+	}
+
+	public void setCreated(long created) {
+		this.created = created;
+	}
+
+	public ArrayList getData() {
+		return data;
+	}
+
+	public void setData(ArrayList data) {
+		this.data = data;
+	}
 }
