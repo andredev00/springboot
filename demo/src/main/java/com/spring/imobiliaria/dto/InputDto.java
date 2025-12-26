@@ -1,8 +1,5 @@
 package com.spring.imobiliaria.dto;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class InputDto {
 
 	private String value;

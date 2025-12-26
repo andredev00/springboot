@@ -1,10 +1,5 @@
 package com.spring.imobiliaria.model;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@NoArgsConstructor
 public class Email {
 
 //	@Schema(example = "andreferreira6578@gmail.com")

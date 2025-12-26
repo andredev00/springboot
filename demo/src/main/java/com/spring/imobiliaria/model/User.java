@@ -12,10 +12,6 @@ import org.hibernate.annotations.Nationalized;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.spring.imobiliaria.dto.UserDTO;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "user")
 

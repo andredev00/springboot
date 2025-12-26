@@ -2,9 +2,6 @@ package com.spring.imobiliaria.dto;
 
 import com.spring.imobiliaria.model.Home;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class HomeImageDTO {
 
 	private String id;

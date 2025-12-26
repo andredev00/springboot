@@ -2,9 +2,6 @@ package com.spring.imobiliaria.dto;
 
 import java.sql.Date;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class UserDTO {
 
 	private String name;

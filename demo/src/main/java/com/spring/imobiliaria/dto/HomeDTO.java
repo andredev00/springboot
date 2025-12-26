@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import lombok.Getter;
-import lombok.Setter;
-
 public class HomeDTO {
 
 	private String localizacao;

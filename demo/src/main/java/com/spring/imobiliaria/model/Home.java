@@ -12,13 +12,8 @@ import javax.persistence.Table;
 import com.spring.imobiliaria.converter.BooleanToStringConverter;
 import com.spring.imobiliaria.dto.HomeDTO;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "Home")
-@NoArgsConstructor
 public class Home {
 
 	@Id
