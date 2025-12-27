@@ -11,15 +11,8 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 @Entity
 @Table(name = "HomeImage")
-@Getter
-@Setter
-@NoArgsConstructor
 public class HomeImage {
 
 	@Id
@@ -39,5 +32,37 @@ public class HomeImage {
 	public HomeImage(String id) {
 		super();
 		this.id = id;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public byte[] getHomeImage() {
+		return homeImage;
+	}
+
+	public void setHomeImage(byte[] homeImage) {
+		this.homeImage = homeImage;
+	}
+
+	public String getImageFileName() {
+		return imageFileName;
+	}
+
+	public void setImageFileName(String imageFileName) {
+		this.imageFileName = imageFileName;
+	}
+
+	public Home getHome() {
+		return home;
+	}
+
+	public void setHome(Home home) {
+		this.home = home;
 	}
 }
