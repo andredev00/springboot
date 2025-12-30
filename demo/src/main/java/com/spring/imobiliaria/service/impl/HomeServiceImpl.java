@@ -76,15 +76,17 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public void deleteHome(Long id) {
+	public ResponseEntity<Boolean> deleteHome(Long id) {
 		log.info("Apagar imóvel com id:  " + id);
 		try {
-			homeRepository.deleteById(id);			
+			homeRepository.deleteById(id);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("Ocorreu um erro ao apagar o imóvel com o id: " + id, e);
 		}
 		
 		log.info("Imóvel apagado com o id: " + id);
+		return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
 	}
 
 	@Override
@@ -92,13 +94,12 @@ public class HomeServiceImpl implements HomeService {
 		log.info("A procurar todos os imóveis");
 		List<Home> lstHome = new ArrayList<>();
 		try {
-			//lstHome = homeRepository.findAll();
-			throw new Exception();
+			lstHome = homeRepository.findAll();
 		} catch (Exception e) {
 			log.error("Ocorreu um erro ao procurar todos os imóveis", e);
 			return new ResponseEntity<List<Home>>(new ArrayList<Home>(), HttpStatus.BAD_REQUEST);
 		}
-		//return new ResponseEntity<List<Home>>(lstHome, HttpStatus.OK);
+		return new ResponseEntity<List<Home>>(lstHome, HttpStatus.OK);
 	}
 
 	@Override
@@ -116,17 +117,18 @@ public class HomeServiceImpl implements HomeService {
 	}
 
 	@Override
-	public void updateHome(String id, HomeDTO homeDTO) {
+	public ResponseEntity<Boolean> updateHome(String id, HomeDTO homeDTO) {
 		log.info("A atualizar o imóvel com o id : " + id);
 		ArrayList<Home> home = homeRepository.findOne(id);
 		Home homeUpdated = new Home(home.get(0).getId(), homeDTO);
 		try {
-			homeRepository.save(homeUpdated);			
+			homeRepository.save(homeUpdated);
+			log.info("Foi atualizado o imóvel com o id: " + id);
+			return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("Ocorreu um erro a atualizar o imóvel com o id: " + id);
 		}
-		
-		log.info("Foi atualizado o imóvel com o id: " + id);
+		return new ResponseEntity<Boolean>(false, HttpStatus.BAD_REQUEST);
 	}
 
 }

@@ -36,7 +36,7 @@ import com.spring.imobiliaria.security.JWTUtil;
 import com.spring.imobiliaria.service.AmazonService;
 import com.spring.imobiliaria.service.EmailSenderService;
 import com.spring.imobiliaria.utils.ERoleConverter;
-import com.spring.imobiliaria.utils.Utils;
+import com.spring.imobiliaria.utils.ServiceUtils;
 
 @Component
 public class UserServiceImpl implements UserService {
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
 			User user = new User(userDTO);
 			user.setId(UUID.randomUUID().toString());
-			user.setPermissions(Utils.convertToEnum(userDTO.getPermissions()).toString());
+			user.setPermissions(ServiceUtils.convertToEnum(userDTO.getPermissions()).toString());
 //			user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_USER));
 //			String file = amazonService.uploadFile(multiPartFile, user.getId());
 //			String fileName = file.substring(file.indexOf(" ") + 1);
@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
 //			user.setImageFileName(fileName);
 
 			user = userRepository.save(user);
-			emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
+//			emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
 		} catch (Exception e) {
 			log.error("Erro ao criar conta de utilizador: ", e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
