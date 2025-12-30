@@ -12,12 +12,12 @@ public interface HomeService {
 
 	ResponseEntity<HomeDTO> registerHome(HomeDTO homeDTO, String userId) throws IOException;
 	
-	void deleteHome(Long id);
+	ResponseEntity<Boolean> deleteHome(Long id);
 	
 	ResponseEntity<List<Home>> getAllHomes();
 	
 	ResponseEntity<Home> getHome(String id);
 	
-	void updateHome(String id, HomeDTO homeDTO);
+	ResponseEntity<Boolean> updateHome(String id, HomeDTO homeDTO);
 	
 }

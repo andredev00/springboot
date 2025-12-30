@@ -46,6 +46,10 @@ public class Home {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_user", nullable = false)
 	private User user;
+	
+	public Home() {
+		super();
+	}
 
 	public Home(String id, HomeDTO homeDto) {
 		super();

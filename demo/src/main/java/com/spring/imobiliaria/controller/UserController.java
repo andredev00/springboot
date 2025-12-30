@@ -1,5 +1,6 @@
 package com.spring.imobiliaria.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,11 +30,12 @@ public class UserController {
 	@Autowired
 	UserServiceImpl userService;
 
-	//TODO, este metodo não está a aceitar request multipart.
-	//os requests multipart estão a ser usados para que os utilizadores consiga adicionar uma imagem de perfil§
+	// TODO, este metodo não está a aceitar request multipart.
+	// os requests multipart estão a ser usados para que os utilizadores consiga
+	// adicionar uma imagem de perfil§
 	@PostMapping(value = "/sign-up")
-	public ResponseEntity<UserDTO> signUp(@ModelAttribute UserDTO userDTO) {
-		return userService.createUser(userDTO);
+	public ResponseEntity<UserDTO> signUp(@ModelAttribute UserDTO userDTO, ArrayList<MultipartFile> multiPartFile) {
+		return userService.createUser(userDTO, null);
 	}
 
 	@PutMapping(value = "/edit")
@@ -71,8 +73,9 @@ public class UserController {
 //		userService.activeAccount(uuid);
 //	}
 
-	//TODO: ADICIONAR CACHEABLE RESULT NESTES CASOS ABAIXO
-	//Nunca vai existir concelhos novos, nunca vao ser criados users novos constantemente e nunca vao ser criadas equipas novas constantemente
+	// TODO: ADICIONAR CACHEABLE RESULT NESTES CASOS ABAIXO
+	// Nunca vai existir concelhos novos, nunca vao ser criados users novos
+	// constantemente e nunca vao ser criadas equipas novas constantemente
 	@GetMapping("/distinct/users/counties")
 	public List<InputDto> getDistinctUsers() {
 		return userService.getDistinctCounty();
