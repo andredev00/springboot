@@ -22,7 +22,6 @@ import com.spring.imobiliaria.model.User;
 import com.spring.imobiliaria.repository.HomeImageRepository;
 import com.spring.imobiliaria.repository.HomeRepository;
 import com.spring.imobiliaria.repository.UserRepository;
-import com.spring.imobiliaria.service.AmazonService;
 import com.spring.imobiliaria.service.HomeService;
 
 @Component
@@ -38,9 +37,6 @@ public class HomeServiceImpl implements HomeService {
 
 	@Autowired
 	HomeImageRepository homeImageRepository;
-
-	@Autowired
-	AmazonService amazonService;
 
 	@Override
 	public ResponseEntity<HomeDTO> registerHome(HomeDTO homeDTO, String userId) throws IOException {

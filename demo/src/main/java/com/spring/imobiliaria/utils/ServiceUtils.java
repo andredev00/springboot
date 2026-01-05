@@ -4,8 +4,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 import java.util.Random;
 
-import com.spring.imobiliaria.enums.ERole;
-import com.spring.imobiliaria.interfaces.UserService;
+import com.spring.imobiliaria.enums.PermissionsEnum;
+import com.spring.imobiliaria.service.UserService;
 
 public class ServiceUtils {
 
@@ -32,11 +32,11 @@ public class ServiceUtils {
 		return formatter.format(Integer.valueOf(price));
 	}	
 
-	public static Enum<ERole> convertToEnum(String role) {
-		if (role.equals("ADMIN") || role.equals("admin")) {
-			return ERole.ROLE_ADMIN;
+	public static Enum<PermissionsEnum> convertToEnum(String role) {
+		if (role.equals("ADMIN")) {
+			return PermissionsEnum.ADMIN;
 		} else {
-			return ERole.ROLE_USER;
+			return PermissionsEnum.USER;
 		}
 	}
 

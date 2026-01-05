@@ -1,7 +1,5 @@
 package com.spring.imobiliaria.service.impl;
 
-import static com.spring.imobiliaria.utils.Constants.AWS_MACHINE_ADDRESS_PROFILE_IMAGE;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -9,8 +7,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
-
-import javax.mail.MessagingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,15 +23,13 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.spring.imobiliaria.dto.InputDto;
 import com.spring.imobiliaria.dto.UserDTO;
-import com.spring.imobiliaria.enums.ERole;
-import com.spring.imobiliaria.interfaces.UserService;
+import com.spring.imobiliaria.enums.PermissionsEnum;
 import com.spring.imobiliaria.model.LoginCredentials;
 import com.spring.imobiliaria.model.User;
 import com.spring.imobiliaria.repository.UserRepository;
 import com.spring.imobiliaria.security.JWTUtil;
-import com.spring.imobiliaria.service.AmazonService;
 import com.spring.imobiliaria.service.EmailSenderService;
-import com.spring.imobiliaria.utils.ERoleConverter;
+import com.spring.imobiliaria.service.UserService;
 import com.spring.imobiliaria.utils.ServiceUtils;
 
 @Component
@@ -53,9 +47,6 @@ public class UserServiceImpl implements UserService {
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
-	private AmazonService amazonService;
-
-	@Autowired
 	private EmailSenderService emailService;
 
 	public static BCryptPasswordEncoder passwordEncoder() {
@@ -63,86 +54,34 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public ResponseEntity<UserDTO> createUser(UserDTO userDTO, ArrayList<MultipartFile> multiPartFile) {
-		log.info("Creating a new client {}: " + userDTO.getName() + " " + userDTO.getEmail());
+	public ResponseEntity<UserDTO> createUser(UserDTO userDto) {
+		log.info("A criar um novo utilizador com o email: " + userDto.getEmail());
 
-		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
+		Optional<User> userExists = userRepository.findByEmail(userDto.getEmail());
 
 		try {
 			if (userExists.isPresent()) {
-				throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um user registado com o mesmo email");
+				throw new ResponseStatusException(HttpStatus.CONFLICT,
+						"Já existe um user registado com o mesmo email: " + userDto.getEmail());
 			}
 
-			User user = new User(userDTO);
+			User user = new User(userDto, passwordEncoder().encode(userDto.getPassword()));
 			user.setId(UUID.randomUUID().toString());
-			user.setPermissions(ServiceUtils.convertToEnum(userDTO.getPermissions()).toString());
-//			user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_USER));
-//			String file = amazonService.uploadFile(multiPartFile, user.getId());
-//			String fileName = file.substring(file.indexOf(" ") + 1);
-//			user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
-//			user.setImageFileName(fileName);
+			user.setPermissions(userDto.getPermissions());
 
 			user = userRepository.save(user);
-//			emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
+//			emailService.sendHtmlMessage(userDto.getName(), userDto.getEmail(), "");
 		} catch (Exception e) {
 			log.error("Erro ao criar conta de utilizador: ", e);
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 
-		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " " + userDTO.getEmail());
-		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
-	}
-
-	public User registerClient(UserDTO userDTO, MultipartFile multiPartFile) throws MessagingException {
-		log.info("Creating a new client {}: " + userDTO.getName() + " " + userDTO.getEmail());
-
-		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
-
-		if (userExists.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe um user registado com o mesmo email");
-		}
-
-		User user = new User(userDTO);
-		user.setId(UUID.randomUUID().toString());
-		user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_USER));
-		String file = amazonService.uploadFile(multiPartFile, user.getId());
-		String fileName = file.substring(file.indexOf(" ") + 1);
-		user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
-		user.setImageFileName(fileName);
-
-		user = userRepository.save(user);
-		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
-		log.info("Finished creating a new client {} " + " " + userDTO.getName() + " " + userDTO.getEmail());
-		return user;
-	}
-
-	public User registerUser(UserDTO userDTO, MultipartFile multiPartFile) throws MessagingException {
-		log.info("Creating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
-				+ userDTO.getPassword());
-
-		Optional<User> userExists = userRepository.findByEmail(userDTO.getEmail());
-
-		if (userExists.isPresent()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe um user registado com o mesmo email");
-		}
-
-		User user = new User(userDTO);
-		user.setId(UUID.randomUUID().toString());
-		user.setPermissions(ERoleConverter.roleConverter(ERole.ROLE_ADMIN));
-		String file = amazonService.uploadFile(multiPartFile, user.getId());
-		String fileName = file.substring(file.indexOf(" ") + 1);
-		user.setImagePath(AWS_MACHINE_ADDRESS_PROFILE_IMAGE + fileName);
-		user.setImageFileName(fileName);
-
-		log.info("Finished creating admin user {}: " + userDTO.getName() + " " + userDTO.getEmail() + " "
-				+ userDTO.getPassword());
-		user = userRepository.save(user);
-		emailService.sendHtmlMessage(userDTO.getName(), userDTO.getEmail(), "");
-		return user;
+		log.info("Fim da criação de utilizador com sucesso para o email: " + userDto.getEmail());
+		return new ResponseEntity<UserDTO>(userDto, HttpStatus.OK);
 	}
 
 	public Map<String, Object> login(LoginCredentials body) {
-		String permissions = "";
+		PermissionsEnum permissions;
 		String personName = "";
 		UsernamePasswordAuthenticationToken authInputToken = new UsernamePasswordAuthenticationToken(body.getEmail(),
 				body.getPassword());
@@ -162,26 +101,26 @@ public class UserServiceImpl implements UserService {
 		return null;
 	}
 
-	@Override
-	public User editUser(UserDTO userDTO, MultipartFile multipartFile, String uuid) {
-		log.info("Updating information for user: " + userDTO.getEmail());
-
-		User userExists = userRepository.findById(uuid);
-
-		if (userExists.getId() != null || !userExists.getId().equals("")) {
-			String file = amazonService.uploadFile(multipartFile, userExists.getId());
-			String fileName = file.substring(file.indexOf(" ") + 1);
-			User user = new User(userDTO);
-			user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
-			user.setImageFileName(fileName);
-			userRepository.updateUser(user, uuid);
-			log.info("Finished updating information for user: " + userDTO.getEmail());
-			return user;
-		} else {
-			return null;
-		}
-
-	}
+//	@Override
+//	public User editUser(UserDTO userDTO, MultipartFile multipartFile, String uuid) {
+//		log.info("Updating information for user: " + userDTO.getEmail());
+//
+//		User userExists = userRepository.findById(uuid);
+//
+//		if (userExists.getId() != null || !userExists.getId().equals("")) {
+//			String file = amazonService.uploadFile(multipartFile, userExists.getId());
+//			String fileName = file.substring(file.indexOf(" ") + 1);
+//			User user = new User(userDTO);
+//			user.setImagePath("https://spring-boot-imobiliaria-images-upload.s3.eu-west-2.amazonaws.com/" + fileName);
+//			user.setImageFileName(fileName);
+//			userRepository.updateUser(user, uuid);
+//			log.info("Finished updating information for user: " + userDTO.getEmail());
+//			return user;
+//		} else {
+//			return null;
+//		}
+//
+//	}
 
 	@Override
 	public void resetPassword(String password, String uuid) {
@@ -227,7 +166,8 @@ public class UserServiceImpl implements UserService {
 	public String getProfileImage(String uuid) {
 		log.info("Procurar imagem de profile do utilizador: " + uuid);
 		try {
-			return userRepository.getProfileImage(uuid);
+//			return userRepository.getProfileImage(uuid);
+			return "";
 		} catch (Exception e) {
 			log.error("Erro ao aceder ao serviço de ativação de conta", e);
 		}

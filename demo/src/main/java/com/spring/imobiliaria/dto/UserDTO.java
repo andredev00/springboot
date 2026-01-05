@@ -2,6 +2,8 @@ package com.spring.imobiliaria.dto;
 
 import java.sql.Date;
 
+import com.spring.imobiliaria.enums.PermissionsEnum;
+
 public class UserDTO {
 
 	private String name;
@@ -12,9 +14,7 @@ public class UserDTO {
 	private String address;
 	private int phoneNumber;
 	private Date dateBirth;
-	private String permissions;
-	private String imagePath;
-	private String imageFileName;
+	private PermissionsEnum permissions;
 	private String agentType;
 	private String agentSociety;
 
@@ -82,28 +82,12 @@ public class UserDTO {
 		this.dateBirth = dateBirth;
 	}
 
-	public String getPermissions() {
+	public PermissionsEnum getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(String permissions) {
+	public void setPermissions(PermissionsEnum permissions) {
 		this.permissions = permissions;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public String getImageFileName() {
-		return imageFileName;
-	}
-
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
 	}
 
 	public String getAgentType() {
@@ -125,8 +109,8 @@ public class UserDTO {
 	@Override
 	public String toString() {
 		return this.name + " + " + this.email + " + " + this.county + " + " + this.language + " + " + this.address
-				+ " + " + this.phoneNumber + " + " + this.dateBirth + " + " + this.imagePath + " + "
-				+ this.imageFileName + " + " + this.agentType + " + " + this.agentSociety;
+				+ " + " + this.phoneNumber + " + " + this.dateBirth + " + " + this.agentType + " + "
+				+ this.agentSociety;
 	}
 
 }

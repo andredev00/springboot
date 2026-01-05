@@ -34,9 +34,10 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Query("select distinct u.agentType FROM User u")
 	List<String> findDistinctAgentType();
 
+	//TODO, não precisamos de estar a criar uma query nova à mao para fazer o update de algum tipo de utilizador. com o save ao passar o mesmo id o spring data consegue alterar a informação desse mesmo resultado
 	@Transactional
 	@Modifying(clearAutomatically = true)
-	@Query("update User u set u.address= :#{#user.address}, u.county = :#{#user.county}, u.dateBirth = :#{#user.dateBirth}, u.imageFileName = :#{#user.imageFileName}, u.imagePath = :#{#user.imagePath}, u.language = :#{#user.language}, u.phoneNumber = :#{#user.phoneNumber}, u.agentType =  :#{#user.agentType}, u.agentSociety = :#{#user.agentSociety} where u.id = :#{#id}")
+	@Query("update User u set u.address= :#{#user.address}, u.county = :#{#user.county}, u.dateBirth = :#{#user.dateBirth}, u.language = :#{#user.language}, u.phoneNumber = :#{#user.phoneNumber}, u.agentType =  :#{#user.agentType}, u.agentSociety = :#{#user.agentSociety} where u.id = :#{#id}")
 	void updateUser(@Param("user") User user, @Param("id") String id);
 	
 	User findById(String uuid);
@@ -54,8 +55,4 @@ public interface UserRepository extends CrudRepository<User, Long>{
 	@Transactional
 	@Query("select h from User h where h.name = :#{#name} and h.id = :#{#id}")
 	User getAgentDetail(@Param("name") String name, @Param("id") String id);
-
-	@Transactional
-	@Query("select u.imageFileName from User u where u.id = :uuid")
-	String getProfileImage(String uuid);
 }

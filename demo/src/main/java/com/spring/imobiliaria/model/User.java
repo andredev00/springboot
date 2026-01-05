@@ -3,6 +3,7 @@ package com.spring.imobiliaria.model;
 import java.sql.Date;
 
 import javax.persistence.Column;
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -10,7 +11,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Nationalized;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.spring.imobiliaria.converter.BooleanToStringConverter;
+import com.spring.imobiliaria.converter.PermissionsToStringConventer;
 import com.spring.imobiliaria.dto.UserDTO;
+import com.spring.imobiliaria.enums.PermissionsEnum;
 
 @Entity
 @Table(name = "user")
@@ -43,11 +47,8 @@ public class User {
 	@Column(name = "dateBirth")
 	private Date dateBirth;
 	@Column(name = "permissions")
-	private String permissions;
-	@Column(name = "image")
-	private String imagePath;
-	@Column(name = "imageFileName")
-	private String imageFileName;
+	@Convert(converter = PermissionsToStringConventer.class)
+	private PermissionsEnum permissions;
 	@Column(name = "agentType")
 	private String agentType;
 	@Column(name = "agentSociety")
@@ -59,7 +60,7 @@ public class User {
 		super();
 	}
 
-	public User(String id, String name, String email, String password, String permissions) {
+	public User(String id, String name, String email, String password, PermissionsEnum permissions) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -69,18 +70,15 @@ public class User {
 //		this.active = active;
 	}
 
-	public User(UserDTO userDTO) {
+	public User(UserDTO userDTO, String encryptedPass) {
 		this.name = userDTO.getName();
 		this.email = userDTO.getEmail();
 		this.county = userDTO.getCounty();
 		this.language = userDTO.getLanguage();
-		this.password = userDTO.getPassword();
+		this.password = encryptedPass;
 		this.address = userDTO.getAddress();
 		this.phoneNumber = userDTO.getPhoneNumber();
 		this.dateBirth = userDTO.getDateBirth();
-		this.permissions = userDTO.getPermissions();
-		this.imagePath = userDTO.getImagePath();
-		this.imageFileName = userDTO.getImageFileName();
 		this.agentType = userDTO.getAgentType();
 		this.agentSociety = userDTO.getAgentSociety();
 	}
@@ -157,28 +155,12 @@ public class User {
 		this.dateBirth = dateBirth;
 	}
 
-	public String getPermissions() {
+	public PermissionsEnum getPermissions() {
 		return permissions;
 	}
 
-	public void setPermissions(String permissions) {
+	public void setPermissions(PermissionsEnum permissions) {
 		this.permissions = permissions;
-	}
-
-	public String getImagePath() {
-		return imagePath;
-	}
-
-	public void setImagePath(String imagePath) {
-		this.imagePath = imagePath;
-	}
-
-	public String getImageFileName() {
-		return imageFileName;
-	}
-
-	public void setImageFileName(String imageFileName) {
-		this.imageFileName = imageFileName;
 	}
 
 	public String getAgentType() {
@@ -200,8 +182,7 @@ public class User {
 	@Override
 	public String toString() {
 		return this.name + " + " + this.email + " + " + this.county + " + " + this.language + " + " + this.address
-				+ " + " + this.phoneNumber + " + " + this.dateBirth + " + " + this.imagePath + " + "
-				+ this.imageFileName + " + " + this.agentType + " + " + this.agentSociety + " + "
+				+ " + " + this.phoneNumber + " + " + this.dateBirth + " + " + " + " + this.agentType + " + " + this.agentSociety + " + "
 				+ "With the following id: " + this.id;
 	}
 }

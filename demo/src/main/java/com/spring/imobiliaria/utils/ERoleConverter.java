@@ -1,17 +1,17 @@
 package com.spring.imobiliaria.utils;
 
-import com.spring.imobiliaria.enums.ERole;
+import com.spring.imobiliaria.enums.PermissionsEnum;
 
 public class ERoleConverter {
 
-	public static String roleConverter(ERole role) {
+	public static String roleConverter(PermissionsEnum role) {
 		String roleString = null;
 		
 		switch (role) {
-			case ROLE_USER:
+			case USER:
 				 roleString = "USER";
 				break;
-			case ROLE_ADMIN:
+			case ADMIN:
 				roleString = "ADMIN";
 				break;
 			default:
